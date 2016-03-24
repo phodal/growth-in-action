@@ -110,6 +110,21 @@ Superuser created successfully.
 ```
 
 
+$ django-admin startapp blogpost
+
+```
+.
+├── __init__.py
+├── admin.py
+├── apps.py
+├── migrations
+│   └── __init__.py
+├── models.py
+├── tests.py
+└── views.py
+```
+
+
 ###virtualenv
 
 Django应用架构
