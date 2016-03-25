@@ -1,13 +1,11 @@
 深入浅出Django
-===
-
-Django介绍
 ---
 
-Django hello,world
----
+###Django介绍
 
-###安装Django
+###Django hello,world
+
+####安装Django
 
 
 To install virtualenv via pip
@@ -40,7 +38,7 @@ Collecting django
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
 
-###创建项目
+####创建项目
 
 $ django-admin startproject blog
 
@@ -110,7 +108,6 @@ Password (again):
 Superuser created successfully.
 ```
 
-###virtualenv
+####virtualenv
 
-Django应用架构
----
+###Django应用架构
