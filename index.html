@@ -235,23 +235,23 @@ Superuser created successfully.</code></pre>
 ├── tests.py
 └── views.py</code></pre>
 <h2 id="model">Model</h2>
-<pre><code>from django.db import models
-from django.db.models import permalink
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.db <span class="im">import</span> models
+<span class="im">from</span> django.db.models <span class="im">import</span> permalink
 
 
-class Blogpost(models.Model):
-    title = models.CharField(max_length=100, unique=True)
-    author = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, unique=True)
-    body = models.TextField()
-    posted = models.DateField(db_index=True, auto_now_add=True)
+<span class="kw">class</span> Blogpost(models.Model):
+    title <span class="op">=</span> models.CharField(max_length<span class="op">=</span><span class="dv">100</span>, unique<span class="op">=</span><span class="va">True</span>)
+    author <span class="op">=</span> models.CharField(max_length<span class="op">=</span><span class="dv">100</span>, unique<span class="op">=</span><span class="va">True</span>)
+    slug <span class="op">=</span> models.SlugField(max_length<span class="op">=</span><span class="dv">100</span>, unique<span class="op">=</span><span class="va">True</span>)
+    body <span class="op">=</span> models.TextField()
+    posted <span class="op">=</span> models.DateField(db_index<span class="op">=</span><span class="va">True</span>, auto_now_add<span class="op">=</span><span class="va">True</span>)
 
-    def __unicode__(self):
-        return &#39;%s&#39; % self.title
+    <span class="kw">def</span> <span class="fu">__unicode__</span>(<span class="va">self</span>):
+        <span class="cf">return</span> <span class="st">&#39;</span><span class="sc">%s</span><span class="st">&#39;</span> <span class="op">%</span> <span class="va">self</span>.title
 
-    @permalink
-    def get_absolute_url(self):
-        return (&#39;view_blog_post&#39;, None, { &#39;slug&#39;: self.slug })</code></pre>
+    <span class="at">@permalink</span>
+    <span class="kw">def</span> get_absolute_url(<span class="va">self</span>):
+        <span class="cf">return</span> (<span class="st">&#39;view_blog_post&#39;</span>, <span class="va">None</span>, { <span class="st">&#39;slug&#39;</span>: <span class="va">self</span>.slug })</code></pre></div>
 <h2 id="template">Template</h2>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
 {% block head_title %}{{ post.title }}{% endblock %}
@@ -271,18 +271,18 @@ class Blogpost(models.Model):
     <span class="kw">&lt;/div&gt;</span>
 {% endblock %}</code></pre></div>
 <h2 id="view">View</h2>
-<pre><code># Create your views here.
-from blogpost.models import Blogpost
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Create your views here.</span>
+<span class="im">from</span> blogpost.models <span class="im">import</span> Blogpost
 
-def index(request):
-    return render_to_response(&#39;index.html&#39;, {
-        &#39;posts&#39;: Blogpost.objects.all()[:5]
+<span class="kw">def</span> index(request):
+    <span class="cf">return</span> render_to_response(<span class="st">&#39;index.html&#39;</span>, {
+        <span class="st">&#39;posts&#39;</span>: Blogpost.objects.<span class="bu">all</span>()[:<span class="dv">5</span>]
     })
 
-def view_post(request, slug):
-    return render_to_response(&#39;blogpost_detail.html&#39;, {
-        &#39;post&#39;: get_object_or_404(Blogpost, slug=slug)
-    })</code></pre>
+<span class="kw">def</span> view_post(request, slug):
+    <span class="cf">return</span> render_to_response(<span class="st">&#39;blogpost_detail.html&#39;</span>, {
+        <span class="st">&#39;post&#39;</span>: get_object_or_404(Blogpost, slug<span class="op">=</span>slug)
+    })</code></pre></div>
 <h1 id="功能测试">功能测试</h1>
 <h2 id="selenium">Selenium</h2>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.test <span class="im">import</span> LiveServerTestCase

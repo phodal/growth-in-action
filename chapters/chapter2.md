@@ -20,7 +20,7 @@ $ django-admin startapp blogpost
 Model
 ---
 
-```
+```python
 from django.db import models
 from django.db.models import permalink
 
@@ -66,7 +66,7 @@ Template
 View
 ---
 
-```
+```python
 # Create your views here.
 from blogpost.models import Blogpost
 
