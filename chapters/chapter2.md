@@ -16,3 +16,13 @@ $ django-admin startapp blogpost
 ├── tests.py
 └── views.py
 ```
+
+Model
+---
+
+Template
+---
+
+View
+---
+

@@ -13,41 +13,6 @@ Steps in Thinking:
 8. Cycle
 9. Done
 
-
-TOC
----
-
- - Head First Django
-   * Introduction Django
-   * Django hello,world
-   * Django Application Architecture
- - Django Blog MVC (TDD)
-   * create Model
-   * create View / Template
-   * create Controller /View
- - Functional Test
-   * UI test
- - More Feature
-   * Comments
-   * Social
-   * Practise
- - Frontend Choice
-   * Tech choice
- - API Create
-   * RESTful
-   * CORS
- - Mobile Application
-   * Ionic
-   * App
-   * Login
-   * Json Web Tokens
- - Frontend Refactor
-   * MVVM
-   * UI
-   * UX
- - New Technology
-   * Retro
-
 License
 ---
 

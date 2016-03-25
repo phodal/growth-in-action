@@ -1,2 +1,8 @@
 API
 ===
+
+RESTful
+---
+
+CORS
+---
