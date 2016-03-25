@@ -4,6 +4,10 @@
 Django介绍
 ---
 
+Django是一个高级的Python Web开发框架，它的目标是使得开发复杂的、数据库驱动的网站变得更加简单。
+
+![使用Django的网站](images/who-use-django.jpg)
+
 Django hello,world
 ---
 
@@ -77,6 +81,8 @@ Not Found: /favicon.ico
 ```
 
 ###Django后台
+
+![Django后台](images/django-backend.jpg)
 
 $ python manage.py migrate
 
