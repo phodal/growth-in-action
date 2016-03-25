@@ -1,4 +1,4 @@
-Growth In Action
+Growth In Action Django
 ===
 
 Steps in Thinking:
@@ -20,7 +20,7 @@ TOC
  - Head First Django
    * Introduction Django
    * Django hello,world
-   * Django Appliction Architecture
+   * Django Application Architecture
  - Django Blog MVC (TDD)
    * create Model
    * create View / Template
