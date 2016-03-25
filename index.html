@@ -28,10 +28,14 @@
 </div>
 <nav id="TOC">
 <ul>
-<li><a href="#growth-in-action-django">Growth In Action Django</a><ul>
+<li><a href="#growth-in-action-django">Growth In Action Django</a></li>
 <li><a href="#深入浅出django">深入浅出Django</a><ul>
 <li><a href="#django介绍">Django介绍</a></li>
-<li><a href="#django-helloworld">Django hello,world</a></li>
+<li><a href="#django-helloworld">Django hello,world</a><ul>
+<li><a href="#安装django">安装Django</a></li>
+<li><a href="#创建项目">创建项目</a></li>
+<li><a href="#django后台">Django后台</a></li>
+</ul></li>
 <li><a href="#django应用架构">Django应用架构</a></li>
 </ul></li>
 <li><a href="#django创建博客应用">Django创建博客应用</a><ul>
@@ -44,14 +48,14 @@
 <li><a href="#移动应用">移动应用</a></li>
 <li><a href="#前端重构">前端重构</a></li>
 <li><a href="#回顾">回顾</a></li>
-</ul></li>
 </ul>
 </nav>
 <h1 id="growth-in-action-django">Growth In Action Django</h1>
-<h2 id="深入浅出django">深入浅出Django</h2>
-<h3 id="django介绍">Django介绍</h3>
-<h3 id="django-helloworld">Django hello,world</h3>
-<h4 id="安装django">安装Django</h4>
+<h1 id="深入浅出django">深入浅出Django</h1>
+<h2 id="django介绍">Django介绍</h2>
+<h2 id="django-helloworld">Django hello,world</h2>
+<h3 id="安装django">安装Django</h3>
+<p><strong>virtualenv</strong></p>
 <p>To install virtualenv via pip $ pip3 install virtualenv</p>
 <p>Note that virtualenv installs to the python3 directory. For me it’s: $ /usr/local/share/python3/virtualenv</p>
 <p>Create a virtualenvs directory to store all virtual environments $ mkdir somewhere/virtualenvs</p>
@@ -63,7 +67,7 @@
 <pre><code>Collecting django
   Downloading Django-1.9.4-py2.py3-none-any.whl (6.6MB)
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02</code></pre>
-<h4 id="创建项目">创建项目</h4>
+<h3 id="创建项目">创建项目</h3>
 <p>$ django-admin startproject blog</p>
 <p>Toc</p>
 <pre><code>.
@@ -89,7 +93,7 @@ Not Found: /
 [24/Mar/2016 03:07:35] &quot;GET / HTTP/1.1&quot; 200 1767
 Not Found: /favicon.ico
 [24/Mar/2016 03:07:36] &quot;GET /favicon.ico HTTP/1.1&quot; 404 1934</code></pre>
-<p>Django后台</p>
+<h3 id="django后台">Django后台</h3>
 <p>$ python manage.py migrate</p>
 <pre><code>Operations to perform:
   Apply all migrations: sessions, admin, auth, contenttypes
@@ -114,9 +118,8 @@ Email address: h@phodal.com
 Password:
 Password (again):
 Superuser created successfully.</code></pre>
-<h4 id="virtualenv">virtualenv</h4>
-<h3 id="django应用架构">Django应用架构</h3>
-<h2 id="django创建博客应用">Django创建博客应用</h2>
+<h2 id="django应用架构">Django应用架构</h2>
+<h1 id="django创建博客应用">Django创建博客应用</h1>
 <h3 id="实战">实战</h3>
 <p>$ django-admin startapp blogpost</p>
 <pre><code>.
@@ -128,12 +131,12 @@ Superuser created successfully.</code></pre>
 ├── models.py
 ├── tests.py
 └── views.py</code></pre>
-<h2 id="功能测试">功能测试</h2>
-<h2 id="更多功能">更多功能</h2>
-<h2 id="前端框架">前端框架</h2>
-<h2 id="api">API</h2>
-<h2 id="移动应用">移动应用</h2>
-<h2 id="前端重构">前端重构</h2>
-<h2 id="回顾">回顾</h2>
+<h1 id="功能测试">功能测试</h1>
+<h1 id="更多功能">更多功能</h1>
+<h1 id="前端框架">前端框架</h1>
+<h1 id="api">API</h1>
+<h1 id="移动应用">移动应用</h1>
+<h1 id="前端重构">前端重构</h1>
+<h1 id="回顾">回顾</h1>
 </body>
 </html>

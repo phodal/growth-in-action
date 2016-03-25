@@ -1,12 +1,15 @@
 深入浅出Django
+===
+
+Django介绍
 ---
 
-###Django介绍
+Django hello,world
+---
 
-###Django hello,world
+###安装Django
 
-####安装Django
-
+**virtualenv**
 
 To install virtualenv via pip
 $ pip3 install virtualenv
@@ -38,7 +41,7 @@ Collecting django
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
 
-####创建项目
+###创建项目
 
 $ django-admin startproject blog
 
@@ -73,7 +76,7 @@ Not Found: /favicon.ico
 [24/Mar/2016 03:07:36] "GET /favicon.ico HTTP/1.1" 404 1934
 ```
 
-Django后台
+###Django后台
 
 $ python manage.py migrate
 
@@ -108,6 +111,5 @@ Password (again):
 Superuser created successfully.
 ```
 
-####virtualenv
-
-###Django应用架构
+Django应用架构
+---
