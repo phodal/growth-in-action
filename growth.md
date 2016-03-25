@@ -5,12 +5,25 @@ Growth In Action Django
 深入浅出Django
 ===
 
-Django介绍
+Django简介
 ---
 
 Django是一个高级的Python Web开发框架，它的目标是使得开发复杂的、数据库驱动的网站变得更加简单。
 
+由于Django最初是被开发来用于管理劳伦斯出版集团旗下的一些以新闻内容为主的网站的。所以，我们可以发现在使用Django的很多网站里，都是用于作为CMS（内容管理系统）来使用的。使用Django的一些比较知名的网站如下图所示：
+
 ![使用Django的网站](images/who-use-django.jpg)
+
+Django是一个MTC框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：
+
+传统的MVC架构| Django 架构
+-----------|-----------
+Model      | Model(Data Access Logic)
+View       |Template(Presentation Logic)
+View       | View(Business Logic)
+Controller | Django itself
+
+在Django中View只用来描述你要看到的内容，Template才是最后用于显示的内容。而在MVC架构中，这只相当于是View层。
 
 Django hello,world
 ---
@@ -143,25 +156,214 @@ $ django-admin startapp blogpost
 └── views.py
 ```
 
+Model
+---
+
+```
+from django.db import models
+from django.db.models import permalink
+
+
+class Blogpost(models.Model):
+    title = models.CharField(max_length=100, unique=True)
+    author = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True)
+    body = models.TextField()
+    posted = models.DateField(db_index=True, auto_now_add=True)
+
+    def __unicode__(self):
+        return '%s' % self.title
+
+    @permalink
+    def get_absolute_url(self):
+        return ('view_blog_post', None, { 'slug': self.slug })
+```
+
+Template
+---
+
+```html
+{% extends 'base.html' %}
+{% block head_title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <div class="mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+         <h2 class="mdl-card__title-text"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+          {{post.body}}
+      </div>
+      <div class="mdl-card__actions">
+         {{post.posted}} - By {{post.author}}
+      </div>
+    </div>
+{% endblock %}
+```
+
+View
+---
+
+```
+# Create your views here.
+from blogpost.models import Blogpost
+
+def index(request):
+    return render_to_response('index.html', {
+        'posts': Blogpost.objects.all()[:5]
+    })
+
+def view_post(request, slug):
+    return render_to_response('blogpost_detail.html', {
+        'post': get_object_or_404(Blogpost, slug=slug)
+    })
+```
+
+
+
 功能测试
 ===
 
+Selenium
+---
+
+```python
+from django.test import LiveServerTestCase
+from selenium import webdriver
+
+class HomepageTestCase(LiveServerTestCase):
+    def setUp(self):
+        self.selenium = webdriver.Firefox()
+        self.selenium.maximize_window()
+        super(HomepageTestCase, self).setUp()
+
+    def tearDown(self):
+        self.selenium.quit()
+        super(HomepageTestCase, self).tearDown()
+
+    def test_create_user(self):
+        self.selenium.get(
+            '%s%s' % (self.live_server_url,  "/")
+        )
+
+        self.assertIn("Welcome to my blog", self.selenium.title)
+```
+
+
+
+```
+class BlogpostFromHomepageCase(LiveServerTestCase):
+    def setUp(self):
+        Blogpost.objects.create(
+            title='hello',
+            author='admin',
+            slug='this_is_a_test',
+            body='This is a blog',
+            posted=datetime.now
+        )
+
+        self.selenium = webdriver.Firefox()
+        self.selenium.maximize_window()
+        super(BlogpostFromHomepageCase, self).setUp()
+
+    def tearDown(self):
+        self.selenium.quit()
+        super(BlogpostFromHomepageCase, self).tearDown()
+
+    def test_visit_blog_post(self):
+        self.selenium.get(
+            '%s%s' % (self.live_server_url,  "/")
+        )
+
+        self.selenium.find_element_by_link_text("hello").click()
+        self.assertIn("hello", self.selenium.title)
+```
+
+```
+
+class BlogpostDetailCase(LiveServerTestCase):
+    def setUp(self):
+        Blogpost.objects.create(
+            title='hello',
+            author='admin',
+            slug='this_is_a_test',
+            body='This is a blog',
+            posted=datetime.now
+        )
+
+        self.selenium = webdriver.Firefox()
+        self.selenium.maximize_window()
+        super(BlogpostDetailCase, self).setUp()
+
+    def tearDown(self):
+        self.selenium.quit()
+        super(BlogpostDetailCase, self).tearDown()
+
+    def test_visit_blog_post(self):
+        self.selenium.get(
+            '%s%s' % (self.live_server_url,  "/blog/this_is_a_test.html")
+        )
+
+        self.assertIn("hello", self.selenium.title)
+```
+        
 
 更多功能
 ===
 
+Comments
+---
+
+Category
+---   
+
+Practise
+---
+
+###Monthly
+
+###SEO
 
 前端框架
 ===
 
+技能选型
+---
+
 API
 ===
+
+RESTful
+---
+
+CORS
+---
 
 移动应用
 ===
 
+Ionic 2
+---
+
+Login
+---
+
+###Json Web Tokens
+
+
+TODO
+---
+
+
 前端重构
 ===
+
+MVVM
+---
+
+UX
+---
 
 回顾
 ===
