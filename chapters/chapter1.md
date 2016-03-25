@@ -40,6 +40,7 @@ Collecting django
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
 
+###创建项目
 
 $ django-admin startproject blog
 
@@ -108,22 +109,6 @@ Password:
 Password (again):
 Superuser created successfully.
 ```
-
-
-$ django-admin startapp blogpost
-
-```
-.
-├── __init__.py
-├── admin.py
-├── apps.py
-├── migrations
-│   └── __init__.py
-├── models.py
-├── tests.py
-└── views.py
-```
-
 
 ###virtualenv
 
