@@ -14,7 +14,7 @@ Django是一个高级的Python Web开发框架，它的目标是使得开发复�
 
 ![使用Django的网站](images/who-use-django.jpg)
 
-Django是一个MTC框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：
+Django是一个MTV框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：
 
 传统的MVC架构| Django 架构
 -----------|-----------
@@ -23,7 +23,21 @@ View       |Template(Presentation Logic)
 View       | View(Business Logic)
 Controller | Django itself
 
-在Django中View只用来描述你要看到的内容，Template才是最后用于显示的内容。而在MVC架构中，这只相当于是View层。
+在Django中View只用来描述你要看到的内容，Template才是最后用于显示的内容。而在MVC架构中，这只相当于是View层。它的核心包含下面的四部分：
+
+ - 一个 对象关系映射，作为数据模型和关系性数据库间的媒介（Model层）；
+ - 一个基于正则表达式的URL分发器（即MVC中的Controller)；
+ - 一个用于处理HTTP请求的系统，含web模板系统(View层)；
+
+其核心框架还包含：
+
+ - 一个轻量级的、独立的Web服务器，只用于开发和测试。
+ - 一个表单序列化及验证系统，用于将HTML表单转换成适用于数据库存储的数据。
+ - 一个缓存框架，并且可以从几种缓存方式中选择。
+ - 中间件支持，能对请求处理的各个阶段进行处理。
+ - 内置的分发系统允许应用程序中的组件采用预定义的信号进行相互间的通信。
+ - 一个序列化系统，能够生成或读取采用XML或JSON表示的Django模型实例。
+ - 一个用于扩展模板引擎的能力的系统。
 
 Django hello,world
 ---
@@ -310,6 +324,18 @@ class BlogpostDetailCase(LiveServerTestCase):
 
 更多功能
 ===
+
+在Django框架中，内置了很多应用在它的"contrib"包中，这些包括：
+
+ - 一个可扩展的认证系统
+ - 动态站点管理页面
+ - 一组产生RSS和Atom的工具
+ - 一个灵活的评论系统
+ - 产生Google站点地图（Google Sitemaps）的工具
+ - 防止跨站请求伪造（cross-site request forgery）的工具
+ - 一套支持轻量级标记语言（Textile和Markdown）的模板库
+ - 一套协助创建地理信息系统（GIS）的基础框架
+
 
 Comments
 ---

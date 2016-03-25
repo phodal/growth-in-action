@@ -125,7 +125,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <figure>
 <img src="images/who-use-django.jpg" alt="使用Django的网站" /><figcaption>使用Django的网站</figcaption>
 </figure>
-<p>Django是一个MTC框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：</p>
+<p>Django是一个MTV框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：</p>
 <table>
 <thead>
 <tr class="header">
@@ -152,7 +152,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 </tbody>
 </table>
-<p>在Django中View只用来描述你要看到的内容，Template才是最后用于显示的内容。而在MVC架构中，这只相当于是View层。</p>
+<p>在Django中View只用来描述你要看到的内容，Template才是最后用于显示的内容。而在MVC架构中，这只相当于是View层。它的核心包含下面的四部分：</p>
+<ul>
+<li>一个 对象关系映射，作为数据模型和关系性数据库间的媒介（Model层）；</li>
+<li>一个基于正则表达式的URL分发器（即MVC中的Controller)；</li>
+<li>一个用于处理HTTP请求的系统，含web模板系统(View层)；</li>
+</ul>
+<p>其核心框架还包含：</p>
+<ul>
+<li>一个轻量级的、独立的Web服务器，只用于开发和测试。</li>
+<li>一个表单序列化及验证系统，用于将HTML表单转换成适用于数据库存储的数据。</li>
+<li>一个缓存框架，并且可以从几种缓存方式中选择。</li>
+<li>中间件支持，能对请求处理的各个阶段进行处理。</li>
+<li>内置的分发系统允许应用程序中的组件采用预定义的信号进行相互间的通信。</li>
+<li>一个序列化系统，能够生成或读取采用XML或JSON表示的Django模型实例。</li>
+<li>一个用于扩展模板引擎的能力的系统。</li>
+</ul>
 <h2 id="django-helloworld">Django hello,world</h2>
 <h3 id="安装django">安装Django</h3>
 <p><strong>virtualenv</strong></p>
@@ -354,6 +369,17 @@ Superuser created successfully.</code></pre>
 
         <span class="va">self</span>.assertIn(<span class="st">&quot;hello&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
 <h1 id="更多功能">更多功能</h1>
+<p>在Django框架中，内置了很多应用在它的“contrib”包中，这些包括：</p>
+<ul>
+<li>一个可扩展的认证系统</li>
+<li>动态站点管理页面</li>
+<li>一组产生RSS和Atom的工具</li>
+<li>一个灵活的评论系统</li>
+<li>产生Google站点地图（Google Sitemaps）的工具</li>
+<li>防止跨站请求伪造（cross-site request forgery）的工具</li>
+<li>一套支持轻量级标记语言（Textile和Markdown）的模板库</li>
+<li>一套协助创建地理信息系统（GIS）的基础框架</li>
+</ul>
 <h2 id="comments">Comments</h2>
 <h2 id="category">Category</h2>
 <h2 id="practise">Practise</h2>
