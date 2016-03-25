@@ -96,8 +96,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#技能选型">技能选型</a></li>
 </ul></li>
 <li><a href="#api">API</a><ul>
-<li><a href="#restful">RESTful</a></li>
-<li><a href="#cors">CORS</a></li>
+<li><a href="#restful">RESTful</a><ul>
+<li><a href="#django-rest-framework">Django REST Framework</a></li>
+</ul></li>
+<li><a href="#cors">CORS</a><ul>
+<li><a href="#django-cors-header">Django CORS Header</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#移动应用">移动应用</a><ul>
 <li><a href="#ionic-2">Ionic 2</a></li>
@@ -300,56 +304,55 @@ def view_post(request, slug):
         )
 
         <span class="va">self</span>.assertIn(<span class="st">&quot;Welcome to my blog&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
-<pre><code>class BlogpostFromHomepageCase(LiveServerTestCase):
-    def setUp(self):
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostFromHomepageCase(LiveServerTestCase):
+    <span class="kw">def</span> setUp(<span class="va">self</span>):
         Blogpost.objects.create(
-            title=&#39;hello&#39;,
-            author=&#39;admin&#39;,
-            slug=&#39;this_is_a_test&#39;,
-            body=&#39;This is a blog&#39;,
-            posted=datetime.now
+            title<span class="op">=</span><span class="st">&#39;hello&#39;</span>,
+            author<span class="op">=</span><span class="st">&#39;admin&#39;</span>,
+            slug<span class="op">=</span><span class="st">&#39;this_is_a_test&#39;</span>,
+            body<span class="op">=</span><span class="st">&#39;This is a blog&#39;</span>,
+            posted<span class="op">=</span>datetime.now
         )
 
-        self.selenium = webdriver.Firefox()
-        self.selenium.maximize_window()
-        super(BlogpostFromHomepageCase, self).setUp()
+        <span class="va">self</span>.selenium <span class="op">=</span> webdriver.Firefox()
+        <span class="va">self</span>.selenium.maximize_window()
+        <span class="bu">super</span>(BlogpostFromHomepageCase, <span class="va">self</span>).setUp()
 
-    def tearDown(self):
-        self.selenium.quit()
-        super(BlogpostFromHomepageCase, self).tearDown()
+    <span class="kw">def</span> tearDown(<span class="va">self</span>):
+        <span class="va">self</span>.selenium.quit()
+        <span class="bu">super</span>(BlogpostFromHomepageCase, <span class="va">self</span>).tearDown()
 
-    def test_visit_blog_post(self):
-        self.selenium.get(
-            &#39;%s%s&#39; % (self.live_server_url,  &quot;/&quot;)
+    <span class="kw">def</span> test_visit_blog_post(<span class="va">self</span>):
+        <span class="va">self</span>.selenium.get(
+            <span class="st">&#39;</span><span class="sc">%s%s</span><span class="st">&#39;</span> <span class="op">%</span> (<span class="va">self</span>.live_server_url,  <span class="st">&quot;/&quot;</span>)
         )
 
-        self.selenium.find_element_by_link_text(&quot;hello&quot;).click()
-        self.assertIn(&quot;hello&quot;, self.selenium.title)</code></pre>
-<pre><code>
-class BlogpostDetailCase(LiveServerTestCase):
-    def setUp(self):
+        <span class="va">self</span>.selenium.find_element_by_link_text(<span class="st">&quot;hello&quot;</span>).click()
+        <span class="va">self</span>.assertIn(<span class="st">&quot;hello&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostDetailCase(LiveServerTestCase):
+    <span class="kw">def</span> setUp(<span class="va">self</span>):
         Blogpost.objects.create(
-            title=&#39;hello&#39;,
-            author=&#39;admin&#39;,
-            slug=&#39;this_is_a_test&#39;,
-            body=&#39;This is a blog&#39;,
-            posted=datetime.now
+            title<span class="op">=</span><span class="st">&#39;hello&#39;</span>,
+            author<span class="op">=</span><span class="st">&#39;admin&#39;</span>,
+            slug<span class="op">=</span><span class="st">&#39;this_is_a_test&#39;</span>,
+            body<span class="op">=</span><span class="st">&#39;This is a blog&#39;</span>,
+            posted<span class="op">=</span>datetime.now
         )
 
-        self.selenium = webdriver.Firefox()
-        self.selenium.maximize_window()
-        super(BlogpostDetailCase, self).setUp()
+        <span class="va">self</span>.selenium <span class="op">=</span> webdriver.Firefox()
+        <span class="va">self</span>.selenium.maximize_window()
+        <span class="bu">super</span>(BlogpostDetailCase, <span class="va">self</span>).setUp()
 
-    def tearDown(self):
-        self.selenium.quit()
-        super(BlogpostDetailCase, self).tearDown()
+    <span class="kw">def</span> tearDown(<span class="va">self</span>):
+        <span class="va">self</span>.selenium.quit()
+        <span class="bu">super</span>(BlogpostDetailCase, <span class="va">self</span>).tearDown()
 
-    def test_visit_blog_post(self):
-        self.selenium.get(
-            &#39;%s%s&#39; % (self.live_server_url,  &quot;/blog/this_is_a_test.html&quot;)
+    <span class="kw">def</span> test_visit_blog_post(<span class="va">self</span>):
+        <span class="va">self</span>.selenium.get(
+            <span class="st">&#39;</span><span class="sc">%s%s</span><span class="st">&#39;</span> <span class="op">%</span> (<span class="va">self</span>.live_server_url,  <span class="st">&quot;/blog/this_is_a_test.html&quot;</span>)
         )
 
-        self.assertIn(&quot;hello&quot;, self.selenium.title)</code></pre>
+        <span class="va">self</span>.assertIn(<span class="st">&quot;hello&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
 <h1 id="更多功能">更多功能</h1>
 <h2 id="comments">Comments</h2>
 <h2 id="category">Category</h2>
@@ -360,11 +363,51 @@ class BlogpostDetailCase(LiveServerTestCase):
 <h2 id="技能选型">技能选型</h2>
 <h1 id="api">API</h1>
 <h2 id="restful">RESTful</h2>
+<h3 id="django-rest-framework">Django REST Framework</h3>
+<blockquote>
+<p>Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。</p>
+</blockquote>
+<pre><code>pip install djangorestframework
+pip install markdown       # Markdown support for the browsable API.
+pip install django-filter  # Filtering support</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">INSTALLED_APPS <span class="op">=</span> (
+    ...
+    <span class="st">&#39;rest_framework&#39;</span>,
+)</code></pre></div>
+<p>如下所示：</p>
+<pre><code>INSTALLED_APPS = (
+    &#39;django.contrib.admin&#39;,
+    &#39;django.contrib.auth&#39;,
+    &#39;django.contrib.contenttypes&#39;,
+    &#39;django.contrib.sessions&#39;,
+    &#39;django.contrib.messages&#39;,
+    &#39;django.contrib.staticfiles&#39;,
+    &#39;rest_framework&#39;,
+    &#39;blogpost&#39;
+)</code></pre>
+<pre><code>urlpatterns = [
+    ...
+    url(r&#39;^api-auth/&#39;, include(&#39;rest_framework.urls&#39;, namespace=&#39;rest_framework&#39;))
+]</code></pre>
 <h2 id="cors">CORS</h2>
+<h3 id="django-cors-header">Django CORS Header</h3>
+<pre><code>pip install django-cors-headers</code></pre>
+<pre><code>INSTALLED_APPS = (
+    ...
+    &#39;corsheaders&#39;,
+    ...
+)</code></pre>
 <h1 id="移动应用">移动应用</h1>
 <h2 id="ionic-2">Ionic 2</h2>
 <h2 id="login">Login</h2>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
+<pre><code>pip install djangorestframework-jwt</code></pre>
+<pre><code>urlpatterns = patterns(
+    &#39;&#39;,
+    # ...
+
+    url(r&#39;^api-token-auth/&#39;, &#39;rest_framework_jwt.views.obtain_jwt_token&#39;),
+)</code></pre>
 <h2 id="todo">TODO</h2>
 <h1 id="前端重构">前端重构</h1>
 <h2 id="mvvm">MVVM</h2>

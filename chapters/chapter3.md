@@ -28,7 +28,7 @@ class HomepageTestCase(LiveServerTestCase):
 
 
 
-```
+```python
 class BlogpostFromHomepageCase(LiveServerTestCase):
     def setUp(self):
         Blogpost.objects.create(
@@ -56,8 +56,7 @@ class BlogpostFromHomepageCase(LiveServerTestCase):
         self.assertIn("hello", self.selenium.title)
 ```
 
-```
-
+```python
 class BlogpostDetailCase(LiveServerTestCase):
     def setUp(self):
         Blogpost.objects.create(
@@ -83,4 +82,4 @@ class BlogpostDetailCase(LiveServerTestCase):
 
         self.assertIn("hello", self.selenium.title)
 ```
-        
+
