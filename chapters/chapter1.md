@@ -1,12 +1,25 @@
 深入浅出Django
 ===
 
-Django介绍
+Django简介
 ---
 
 Django是一个高级的Python Web开发框架，它的目标是使得开发复杂的、数据库驱动的网站变得更加简单。
 
+由于Django最初是被开发来用于管理劳伦斯出版集团旗下的一些以新闻内容为主的网站的。所以，我们可以发现在使用Django的很多网站里，都是用于作为CMS（内容管理系统）来使用的。使用Django的一些比较知名的网站如下图所示：
+
 ![使用Django的网站](images/who-use-django.jpg)
+
+Django是一个MTC框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：
+
+传统的MVC架构| Django 架构
+-----------|-----------
+Model      | Model(Data Access Logic)
+View       |Template(Presentation Logic)
+View       | View(Business Logic)
+Controller | Django itself
+
+在Django中View只用来描述你要看到的内容，Template才是最后用于显示的内容。而在MVC架构中，这只相当于是View层。
 
 Django hello,world
 ---
