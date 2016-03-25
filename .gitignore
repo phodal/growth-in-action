@@ -60,3 +60,9 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+*.pdf
+*.epub
+*.rtf
+*.mobi
+

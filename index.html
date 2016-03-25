@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Growth 实战篇 Django版 - </title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="style.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<h1>Growth 实战篇 Django版</h1>
+<p>By <a href="https://www.phodal.com/">Phodal</a>(Follow me: <a href="http://weibo.com/phodal">微博</a>、<a href="https://www.zhihu.com/people/phodal">知乎</a>、<a href="https://segmentfault.com/u/phodal">SegmentFault</a>)
+</p>
+
+<p>GitHub: <a href="https://github.com/phodal/growth-ebook">Growth 实战篇 Django版</a></p>
+
+<p>
+<strong>下载</strong>：
+<a href="https://github.com/phodal/growth-ebook/releases/download/0.2.5/growth.epub">Epub版</a>、<a href="https://github.com/phodal/growth-ebook/releases/download/0.2.5/growth.mobi">Mobi版</a>、<a href="https://github.com/phodal/growth-ebook/releases/download/0.2.5/growth.pdf">PDF版</a>、<a href="https://github.com/phodal/growth-ebook/releases/download/0.2.5/growth.rtf">RTF版</a>	
+</p>
+
+<p>微信公众号</p>
+<p><img src="https://raw.githubusercontent.com/phodal/growth/master/www/img/wechat.jpg" alt=""/></p>
+<div style="width:800px">
+
+<iframe src="http://ghbtns.com/github-btn.html?user=phodal&repo=growth-ebook&type=watch&count=true"
+        allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
+</div>
+<nav id="TOC">
+<ul>
+<li><a href="#深入浅出django">深入浅出Django</a><ul>
+<li><a href="#django介绍">Django介绍</a></li>
+<li><a href="#django-helloworld">Django hello,world</a><ul>
+<li><a href="#安装django">安装Django</a></li>
+<li><a href="#创建项目">创建项目</a></li>
+<li><a href="#virtualenv">virtualenv</a></li>
+</ul></li>
+<li><a href="#django应用架构">Django应用架构</a></li>
+<li><a href="#django创建博客应用">Django创建博客应用</a><ul>
+<li><a href="#实战">实战</a></li>
+</ul></li>
+<li><a href="#功能测试">功能测试</a></li>
+<li><a href="#更多功能">更多功能</a></li>
+<li><a href="#前端框架">前端框架</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#移动应用">移动应用</a></li>
+<li><a href="#前端重构">前端重构</a></li>
+<li><a href="#回顾">回顾</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="深入浅出django">深入浅出Django</h1>
+<h2 id="django介绍">Django介绍</h2>
+<h2 id="django-helloworld">Django hello,world</h2>
+<h3 id="安装django">安装Django</h3>
+<p>To install virtualenv via pip $ pip3 install virtualenv</p>
+<p>Note that virtualenv installs to the python3 directory. For me it’s: $ /usr/local/share/python3/virtualenv</p>
+<p>Create a virtualenvs directory to store all virtual environments $ mkdir somewhere/virtualenvs</p>
+<p>Make a new virtual environment with no packages $ virtualenv somewhere/virtualenvs/<project-name> –no-site-packages</p>
+<p>To use the virtual environment $ cd somewhere/virtualenvs/<project-name>/bin $ source activate</p>
+<p>You are now using the virtual environment for <project-name>. To stop: $ deactivate</p>
+<p>Install Django $ pip install django</p>
+<p>Process</p>
+<pre><code>Collecting django
+  Downloading Django-1.9.4-py2.py3-none-any.whl (6.6MB)
+    94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02</code></pre>
+<h3 id="创建项目">创建项目</h3>
+<p>$ django-admin startproject blog</p>
+<p>Toc</p>
+<pre><code>.
+├── blog
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── manage.py</code></pre>
+<p>$ python manage.py runserver</p>
+<pre><code>Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have unapplied migrations; your app may not work properly until they are applied.
+Run &#39;python manage.py migrate&#39; to apply them.
+
+March 24, 2016 - 03:07:34
+Django version 1.9.4, using settings &#39;blog.settings&#39;
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Not Found: /
+[24/Mar/2016 03:07:35] &quot;GET / HTTP/1.1&quot; 200 1767
+Not Found: /favicon.ico
+[24/Mar/2016 03:07:36] &quot;GET /favicon.ico HTTP/1.1&quot; 404 1934</code></pre>
+<p>Django后台</p>
+<p>$ python manage.py migrate</p>
+<pre><code>Operations to perform:
+  Apply all migrations: sessions, admin, auth, contenttypes
+Running migrations:
+  Rendering model states... DONE
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying sessions.0001_initial... OK
+(growth-django)</code></pre>
+<p>$ python manage.py createsuperuser</p>
+<pre><code>Username (leave blank to use &#39;fdhuang&#39;): root
+Email address: h@phodal.com
+Password:
+Password (again):
+Superuser created successfully.</code></pre>
+<h3 id="virtualenv">virtualenv</h3>
+<h2 id="django应用架构">Django应用架构</h2>
+<h2 id="django创建博客应用">Django创建博客应用</h2>
+<h3 id="实战">实战</h3>
+<p>$ django-admin startapp blogpost</p>
+<pre><code>.
+├── __init__.py
+├── admin.py
+├── apps.py
+├── migrations
+│   └── __init__.py
+├── models.py
+├── tests.py
+└── views.py</code></pre>
+<h2 id="功能测试">功能测试</h2>
+<h2 id="更多功能">更多功能</h2>
+<h2 id="前端框架">前端框架</h2>
+<h2 id="api">API</h2>
+<h2 id="移动应用">移动应用</h2>
+<h2 id="前端重构">前端重构</h2>
+<h2 id="回顾">回顾</h2>
+</body>
+</html>
