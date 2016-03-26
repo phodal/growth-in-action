@@ -116,7 +116,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#mvvm">MVVM</a></li>
 <li><a href="#ux">UX</a></li>
 </ul></li>
-<li><a href="#回顾">回顾</a></li>
+<li><a href="#部署">部署</a><ul>
+<li><a href="#fabric">Fabric</a></li>
+</ul></li>
 </ul>
 </nav>
 <h1 id="growth-in-action-django">Growth In Action Django</h1>
@@ -450,6 +452,16 @@ pip install django-filter  # Filtering support</code></pre>
 <h1 id="前端重构">前端重构</h1>
 <h2 id="mvvm">MVVM</h2>
 <h2 id="ux">UX</h2>
-<h1 id="回顾">回顾</h1>
+<h1 id="部署">部署</h1>
+<h2 id="fabric">Fabric</h2>
+<ul>
+<li>NGINX - public facing web server</li>
+<li>gunicorn - internal HTTP application server</li>
+<li>PostgreSQL - database server</li>
+<li>memcached - in-memory caching server</li>
+<li>supervisord - process control and monitor</li>
+<li>virtualenv - isolated Python environments for each project</li>
+<li>git or mercurial - version control systems (optional)</li>
+</ul>
 </body>
 </html>
