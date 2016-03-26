@@ -35,6 +35,8 @@ Controller | Django itself
  - 一个序列化系统，能够生成或读取采用XML或JSON表示的Django模型实例。
  - 一个用于扩展模板引擎的能力的系统。
 
+说了这么多，还不如从一个hello,world开始。
+
 Django hello,world
 ---
 
