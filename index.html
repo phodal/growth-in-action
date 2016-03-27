@@ -82,6 +82,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#model">Model</a></li>
 <li><a href="#template">Template</a></li>
 <li><a href="#view">View</a></li>
+<li><a href="#测试">测试</a></li>
 </ul></li>
 <li><a href="#功能测试">功能测试</a><ul>
 <li><a href="#selenium">Selenium</a></li>
@@ -312,6 +313,9 @@ Superuser created successfully.</code></pre>
     <span class="cf">return</span> render_to_response(<span class="st">&#39;blogpost_detail.html&#39;</span>, {
         <span class="st">&#39;post&#39;</span>: get_object_or_404(Blogpost, slug<span class="op">=</span>slug)
     })</code></pre></div>
+<h2 id="测试">测试</h2>
+<p>TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。</p>
+<p>在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。</p>
 <h1 id="功能测试">功能测试</h1>
 <h2 id="selenium">Selenium</h2>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.test <span class="im">import</span> LiveServerTestCase
