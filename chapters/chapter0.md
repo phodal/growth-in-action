@@ -12,3 +12,4 @@ Growth In Action Django
  - Firefox浏览器——用于运行功能测试。
  - Git版本控制器——用于代码版本控制。
  - 一个开发工具。（PS: 在这里笔者使用的是PyCharm的社区版）
+ 

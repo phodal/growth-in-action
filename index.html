@@ -185,8 +185,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>说了这么多，还不如从一个hello,world开始。</p>
 <h2 id="django-helloworld">Django hello,world</h2>
 <h3 id="安装django">安装Django</h3>
+<p>安装Django之前，我们可以用virtualenv工具来创建一个虚拟的Python运行环境。环境问题是一个很复杂的问题，在我们使用Python的过程中，我们会不断地安装一些库，而这些库可能会有不同的版本。并且在安装Python库的过程中，我们会遇到权限问题——即我们需要超级用户的权限才能将库安装到系统的环境之下。随后在这个软件的生涯中，我们还需要保证这个项目所依赖的模块不会发生变动。而这些都是很棘手的一些事，这时候我们就需要创建一个虚拟的运行环境，而virtualenv就是这样的一个工具。</p>
 <p><strong>virtualenv</strong></p>
-<p>To install virtualenv via pip $ pip3 install virtualenv</p>
+<p>安装Python包我们需要用到pip命令，它是Python语言中的一个包管理工具。如果你没有安装的话，可以使用下面的命令来安装：</p>
+<pre><code>curl https://bootstrap.pypa.io/get-pip.py | python</code></pre>
+<p>在不同的Python环境中，我们可能需要使用不同的pip，如下所示是笔者使用的Python3的pip命令pip3</p>
+<pre><code>$ pip3 install virtualenv</code></pre>
+<p>如果是Python2.7的话，对应会有:</p>
+<pre><code>$ pip install virtualenv</code></pre>
 <p>Note that virtualenv installs to the python3 directory. For me it’s: $ /usr/local/share/python3/virtualenv</p>
 <p>Create a virtualenvs directory to store all virtual environments $ mkdir somewhere/virtualenvs</p>
 <p>Make a new virtual environment with no packages $ virtualenv somewhere/virtualenvs/<project-name> –no-site-packages</p>

@@ -13,6 +13,7 @@ Growth In Action Django
  - Firefox浏览器——用于运行功能测试。
  - Git版本控制器——用于代码版本控制。
  - 一个开发工具。（PS: 在这里笔者使用的是PyCharm的社区版）
+ 
 
 深入浅出Django
 ===
@@ -58,10 +59,27 @@ Django hello,world
 
 ###安装Django
 
+安装Django之前，我们可以用virtualenv工具来创建一个虚拟的Python运行环境。环境问题是一个很复杂的问题，在我们使用Python的过程中，我们会不断地安装一些库，而这些库可能会有不同的版本。并且在安装Python库的过程中，我们会遇到权限问题——即我们需要超级用户的权限才能将库安装到系统的环境之下。随后在这个软件的生涯中，我们还需要保证这个项目所依赖的模块不会发生变动。而这些都是很棘手的一些事，这时候我们就需要创建一个虚拟的运行环境，而virtualenv就是这样的一个工具。
+
 **virtualenv**
 
-To install virtualenv via pip
+安装Python包我们需要用到pip命令，它是Python语言中的一个包管理工具。如果你没有安装的话，可以使用下面的命令来安装：
+
+```
+curl https://bootstrap.pypa.io/get-pip.py | python
+```
+
+在不同的Python环境中，我们可能需要使用不同的pip，如下所示是笔者使用的Python3的pip命令pip3
+
+```
 $ pip3 install virtualenv
+```
+
+如果是Python2.7的话，对应会有:
+
+```
+$ pip install virtualenv
+```
 
 Note that virtualenv installs to the python3 directory. For me it's:
 $ /usr/local/share/python3/virtualenv
