@@ -1,18 +1,51 @@
 Growth In Action Django
 ===
 
-Steps in Thinking:
+[Growh Ebook](https://github.com/phodal/growth-ebook)
 
-1. Tasking
-2. Business Analytics / Kick Off
-3. Architecture
-4. Technology Choice
-5. Boilerplate
-6. Coding
-7. Feature / TDD
-8. Cycle
-9. Done
-
+目录
+---
+*   [Growth In Action Django](#growth-in-action-django)
+    *   [准备工作和工具](#准备工作和工具)
+*   [深入浅出Django](#深入浅出django)
+    *   [Django简介](#django简介)
+    *   [Django hello,world](#django-helloworld)
+        *   [安装Django](#安装django)
+        *   [创建项目](#创建项目)
+        *   [Django后台](#django后台)
+    *   [Django应用架构](#django应用架构)
+*   [Django创建博客应用](#django创建博客应用)
+    *   [实战](#实战)
+    *   [Model](#model)
+    *   [Template](#template)
+    *   [View](#view)
+    *   [测试](#测试)
+*   [功能测试](#功能测试)
+    *   [Selenium](#selenium)
+*   [更多功能](#更多功能)
+    *   [Comments](#comments)
+    *   [Category](#category)
+    *   [Practise](#practise)
+        *   [Monthly](#monthly)
+        *   [SEO](#seo)
+*   [前端框架](#前端框架)
+    *   [技能选型](#技能选型)
+*   [API](#api)
+    *   [RESTful](#restful)
+        *   [Django REST Framework](#django-rest-framework)
+    *   [CORS](#cors)
+        *   [Django CORS Header](#django-cors-header)
+*   [移动应用](#移动应用)
+    *   [Ionic 2](#ionic-2)
+    *   [Login](#login)
+        *   [Json Web Tokens](#json-web-tokens)
+    *   [TODO](#todo)
+*   [前端重构](#前端重构)
+    *   [MVVM](#mvvm)
+    *   [UX](#ux)
+*   [部署](#部署)
+    *   [Fabric](#fabric)
+    
 License
 ---
 
