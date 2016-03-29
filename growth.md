@@ -61,7 +61,7 @@ Django hello,world
 
 安装Django之前，我们可以用virtualenv工具来创建一个虚拟的Python运行环境。环境问题是一个很复杂的问题，在我们使用Python的过程中，我们会不断地安装一些库，而这些库可能会有不同的版本。并且在安装Python库的过程中，我们会遇到权限问题——即我们需要超级用户的权限才能将库安装到系统的环境之下。随后在这个软件的生涯中，我们还需要保证这个项目所依赖的模块不会发生变动。而这些都是很棘手的一些事，这时候我们就需要创建一个虚拟的运行环境，而virtualenv就是这样的一个工具。
 
-**virtualenv**
+####virtualenv
 
 安装Python包我们需要用到pip命令，它是Python语言中的一个包管理工具。如果你没有安装的话，可以使用下面的命令来安装：
 
@@ -81,32 +81,68 @@ $ pip3 install virtualenv
 $ pip install virtualenv
 ```
 
-Note that virtualenv installs to the python3 directory. For me it's:
+需要注意的是这将会安装到Python所在的目录，如我的目录是:
+
+```
+$ /usr/local/bin/virtualenv
+```
+
+有的可能会是：
+
+```
 $ /usr/local/share/python3/virtualenv
+```
 
-Create a virtualenvs directory to store all virtual environments
+在创建我们的这个虚拟环境之前，我们可以创建一个存储所有virtualenv的目录：
+
+```
 $ mkdir somewhere/virtualenvs
+```
 
-Make a new virtual environment with no packages
+现在，我们就可以创建一个新的虚拟环境：
+
+```
 $ virtualenv somewhere/virtualenvs/<project-name> --no-site-packages
+```
 
-To use the virtual environment
+如果你想使用不同的Python版本的话，那么需要指定Python版本的路径
+
+```
+$ virtualenv --distribute -p /usr/local/bin/python3.3 somewhere/virtualenvs/<project-name>
+```
+
+通过到相应的目录下执行激活就可以使用这个虚拟环境了：
+
+```
 $ cd somewhere/virtualenvs/<project-name>/bin
 $ source activate
+```
 
-You are now using the virtual environment for <project-name>. To stop:
+停止使用只使用执行下面的命令即可：
+
+```
 $ deactivate
+```
 
-Install Django
+####安装Django
+
+准备了这么久我们终于安装Django了，执行：
+
+```
 $ pip install django
+```
 
+那么我们并会开始下最新版本的Django，如下所示：
 
-Process
 ```
 Collecting django
   Downloading Django-1.9.4-py2.py3-none-any.whl (6.6MB)
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
+
+等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。
+
+django-admin命令介绍：
 
 ###创建项目
 
