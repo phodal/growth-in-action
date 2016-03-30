@@ -1,6 +1,11 @@
 部署
 ===
 
+配置管理 
+---
+
+local_settings.py
+
 Fabric
 ---
 
