@@ -222,10 +222,47 @@ Not Found: /favicon.ico
 
 ###Django后台
 
-![Django后台](images/django-backend.jpg)
+Django很适合CMS的另外一个原因，就是它自带了一个后台管理系统。为了启用这个后台管理系统，我们需要配置我们的数据库，并创建相应的超级用户。如下所示的是settings.py中的默认数据库配置：
+
+```
+# Database
+# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+```
+
+上面的配置中我们使用的是SQLite3作为数据库，并使用了当前目录下的``db.sqlite3``作为数据库文件。Django内建支持下面的一些数据库：
+
+```
+'django.db.backends.postgresql_psycopg2'
+'django.db.backends.mysql'
+'django.db.backends.sqlite3'
+'django.db.backends.oracle'
+```
+
+如果我们想使用别的数据库，那么可以在网上寻找的解决方案，如用于支持使用MongoDB的django-nonrel项目。不同的数据库有不同的配置，如下所示的是使用PostgreSQL的配置。
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mydatabase',
+        'USER': 'mydatabaseuser',
+        'PASSWORD': 'mypassword',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+```
+
+接着，我们就可以运行数据库迁移，只需要运行相应的脚本即可：
 
 $ python manage.py migrate
-
 
 ```
 Operations to perform:
@@ -247,6 +284,10 @@ Running migrations:
 (growth-django)
 ```
 
+在上面的过程中，我们会创建相应的数据库模型，并依据迁移脚本来创建一些相应的数据，如默认的配置等等。
+
+最后，我们可以创建一个相应的超级用户来登陆后台。
+
 $ python manage.py createsuperuser
 
 ```
@@ -257,5 +298,11 @@ Password (again):
 Superuser created successfully.
 ```
 
+输入相应的用户名和密码，即可完成创建。然后访问 [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)，输入上面的用户名和密码就可以来到后台：
+
+![Django后台](images/django-backend.jpg)
+
 Django应用架构
 ---
+
+
