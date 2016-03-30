@@ -305,4 +305,7 @@ Superuser created successfully.
 Django应用架构
 ---
 
+Django的每一个模块在内部都称之为APP，在每个APP里都有自己的三层结构。如下图所示：
+
+![Django 应用架构](images/django_app_arch.jpg)
 

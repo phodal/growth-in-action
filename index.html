@@ -291,9 +291,33 @@ Not Found: /favicon.ico
 [24/Mar/2016 03:07:36] &quot;GET /favicon.ico HTTP/1.1&quot; 404 1934</code></pre>
 <p>现在，我们只需要在浏览器中打开<a href="http://127.0.0.1:8000/" class="uri">http://127.0.0.1:8000/</a>，便可以访问我们的应用程序。</p>
 <h3 id="django后台">Django后台</h3>
-<figure>
-<img src="images/django-backend.jpg" alt="Django后台" /><figcaption>Django后台</figcaption>
-</figure>
+<p>Django很适合CMS的另外一个原因，就是它自带了一个后台管理系统。为了启用这个后台管理系统，我们需要配置我们的数据库，并创建相应的超级用户。如下所示的是settings.py中的默认数据库配置：</p>
+<pre><code># Database
+# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
+DATABASES = {
+    &#39;default&#39;: {
+        &#39;ENGINE&#39;: &#39;django.db.backends.sqlite3&#39;,
+        &#39;NAME&#39;: os.path.join(BASE_DIR, &#39;db.sqlite3&#39;),
+    }
+}</code></pre>
+<p>上面的配置中我们使用的是SQLite3作为数据库，并使用了当前目录下的<code>db.sqlite3</code>作为数据库文件。Django内建支持下面的一些数据库：</p>
+<pre><code>&#39;django.db.backends.postgresql_psycopg2&#39;
+&#39;django.db.backends.mysql&#39;
+&#39;django.db.backends.sqlite3&#39;
+&#39;django.db.backends.oracle&#39;</code></pre>
+<p>如果我们想使用别的数据库，那么可以在网上寻找的解决方案，如用于支持使用MongoDB的django-nonrel项目。不同的数据库有不同的配置，如下所示的是使用PostgreSQL的配置。</p>
+<pre><code>DATABASES = {
+    &#39;default&#39;: {
+        &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,
+        &#39;NAME&#39;: &#39;mydatabase&#39;,
+        &#39;USER&#39;: &#39;mydatabaseuser&#39;,
+        &#39;PASSWORD&#39;: &#39;mypassword&#39;,
+        &#39;HOST&#39;: &#39;127.0.0.1&#39;,
+        &#39;PORT&#39;: &#39;5432&#39;,
+    }
+}</code></pre>
+<p>接着，我们就可以运行数据库迁移，只需要运行相应的脚本即可：</p>
 <p>$ python manage.py migrate</p>
 <pre><code>Operations to perform:
   Apply all migrations: sessions, admin, auth, contenttypes
@@ -312,13 +336,23 @@ Running migrations:
   Applying auth.0007_alter_validators_add_error_messages... OK
   Applying sessions.0001_initial... OK
 (growth-django)</code></pre>
+<p>在上面的过程中，我们会创建相应的数据库模型，并依据迁移脚本来创建一些相应的数据，如默认的配置等等。</p>
+<p>最后，我们可以创建一个相应的超级用户来登陆后台。</p>
 <p>$ python manage.py createsuperuser</p>
 <pre><code>Username (leave blank to use &#39;fdhuang&#39;): root
 Email address: h@phodal.com
 Password:
 Password (again):
 Superuser created successfully.</code></pre>
+<p>输入相应的用户名和密码，即可完成创建。然后访问 <a href="http://127.0.0.1:8000/admin" class="uri">http://127.0.0.1:8000/admin</a>，输入上面的用户名和密码就可以来到后台：</p>
+<figure>
+<img src="images/django-backend.jpg" alt="Django后台" /><figcaption>Django后台</figcaption>
+</figure>
 <h2 id="django应用架构">Django应用架构</h2>
+<p>Django的每一个模块在内部都称之为APP，在每个APP里都有自己的三层结构。如下图所示：</p>
+<figure>
+<img src="images/django_app_arch.jpg" alt="Django 应用架构" /><figcaption>Django 应用架构</figcaption>
+</figure>
 <h1 id="django创建博客应用">Django创建博客应用</h1>
 <h3 id="实战">实战</h3>
 <p>$ django-admin startapp blogpost</p>
