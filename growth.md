@@ -140,15 +140,62 @@ Collecting django
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
 
-等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。
+等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。
 
-django-admin命令介绍：
+通过这个命令，我们不仅仅可以用它来创建项目、创建app、运行服务、数据库迁移，还可以执行各种SQL工具等等。django-admin用法如下：
+
+```
+$ django-admin <command> [options]
+```
+
+下面是django-admin自带的一些命令：
+
+```
+[django]
+    check
+    compilemessages
+    createcachetable
+    dbshell
+    diffsettings
+    dumpdata
+    flush
+    inspectdb
+    loaddata
+    makemessages
+    makemigrations
+    migrate
+    runfcgi
+    runserver
+    shell
+    sql
+    sqlall
+    sqlclear
+    sqlcustom
+    sqldropindexes
+    sqlflush
+    sqlindexes
+    sqlinitialdata
+    sqlmigrate
+    sqlsequencereset
+    squashmigrations
+    startapp
+    startproject
+    syncdb
+    test
+    testserver
+    validate
+```
+
+现在，让我们来看看这个强大的工具。
 
 ###创建项目
 
+在这些命令中startproject可以用于创建项目，在这里我们的项目名是blog，那么我们的命令如下：
+
 $ django-admin startproject blog
 
-Toc
+这个命令将创建下面的文件内容，而这些是Django项目的一些必须文件。
+
 ```
 .
 ├── blog
@@ -158,6 +205,15 @@ Toc
 │   └── wsgi.py
 └── manage.py
 ```
+
+blog目录对应的就是blog这个项目，将会放置这个项目的一些相关配置：
+
+1. settings.py包含了这个项目的相关配置。如数据库环境、启用的插件等等。
+2. urls.py即URL Dispatcher的配置，指明了某个URL应该指向某个函数来处理。
+3. wsgi.py用于部署。WSGI（Python Web Server Gateway Interface，Web服务器网关接口）是为Python语言定义的Web服务器和Web应用程序或框架之间的一种简单而通用的接口。
+4. __init__.py指明了这是一个Python模块。
+
+manage.py 会在每个Django项目中自动生成，它可以和django-admin做类似的事。如我们可以用manage.py来启动测试环境的服务器：
 
 $ python manage.py runserver
 
@@ -178,6 +234,8 @@ Not Found: /
 Not Found: /favicon.ico
 [24/Mar/2016 03:07:36] "GET /favicon.ico HTTP/1.1" 404 1934
 ```
+
+现在，我们只需要在浏览器中打开[http://127.0.0.1:8000/](http://127.0.0.1:8000/)，便可以访问我们的应用程序。
 
 ###Django后台
 
@@ -538,6 +596,11 @@ UX
 
 部署
 ===
+
+配置管理 
+---
+
+local_settings.py
 
 Fabric
 ---
