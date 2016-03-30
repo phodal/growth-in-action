@@ -123,9 +123,53 @@ Collecting django
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
 
-等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。
+等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。
 
-django-admin命令介绍：
+通过这个命令，我们不仅仅可以用它来创建项目、创建app、运行服务、数据库迁移，还可以执行各种SQL工具等等。django-admin用法如下：
+
+```
+$ django-admin <command> [options]
+```
+
+下面是django-admin自带的一些命令：
+
+```
+[django]
+    check
+    compilemessages
+    createcachetable
+    dbshell
+    diffsettings
+    dumpdata
+    flush
+    inspectdb
+    loaddata
+    makemessages
+    makemigrations
+    migrate
+    runfcgi
+    runserver
+    shell
+    sql
+    sqlall
+    sqlclear
+    sqlcustom
+    sqldropindexes
+    sqlflush
+    sqlindexes
+    sqlinitialdata
+    sqlmigrate
+    sqlsequencereset
+    squashmigrations
+    startapp
+    startproject
+    syncdb
+    test
+    testserver
+    validate
+```
+
+现在，让我们来看看这个强大的工具。
 
 ###创建项目
 
