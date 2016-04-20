@@ -60,6 +60,14 @@ class BlogpostAdmin(admin.ModelAdmin):
 admin.site.register(Blogpost, BlogpostAdmin)
 ```
 
+![Django后台界面](images/django-admin-ui.png)
+
+点击Blogpost的Add
+
+![Django添加博客](images/admin-blog.png)
+
+
+
 Template
 ---
 
