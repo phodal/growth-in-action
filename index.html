@@ -80,8 +80,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#django创建博客应用">Django创建博客应用</a><ul>
 <li><a href="#实战">实战</a></li>
 <li><a href="#model">Model</a></li>
-<li><a href="#template">Template</a></li>
+<li><a href="#配置url">配置URL</a></li>
 <li><a href="#view">View</a></li>
+<li><a href="#list-template">List Template</a></li>
+<li><a href="#detail-template">Detail Template</a></li>
 <li><a href="#测试">测试</a></li>
 </ul></li>
 <li><a href="#功能测试">功能测试</a><ul>
@@ -368,8 +370,16 @@ Superuser created successfully.</code></pre>
 ├── models.py
 ├── tests.py
 └── views.py</code></pre>
-<p>现在，我们需要</p>
 <h2 id="model">Model</h2>
+<p>现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：</p>
+<ul>
+<li>标题</li>
+<li>作者</li>
+<li>链接（中文更需要一个好的链接）</li>
+<li>内容</li>
+<li>发布日期</li>
+</ul>
+<p>我们就可以按照上面的内容来创建我们的Blogpost model：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.db <span class="im">import</span> models
 <span class="im">from</span> django.db.models <span class="im">import</span> permalink
 
@@ -387,6 +397,7 @@ Superuser created successfully.</code></pre>
     <span class="at">@permalink</span>
     <span class="kw">def</span> get_absolute_url(<span class="va">self</span>):
         <span class="cf">return</span> (<span class="st">&#39;view_blog_post&#39;</span>, <span class="va">None</span>, { <span class="st">&#39;slug&#39;</span>: <span class="va">self</span>.slug })</code></pre></div>
+<p>上面的<code>get_absolute_url</code>方法就是用于返回博客的链接。之所以使用手动而不是自动生成，是因为自动生成不靠谱，而且不利</p>
 <p>然后在Admin注册这个Model</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.contrib <span class="im">import</span> admin
 <span class="im">from</span> blogpost.models <span class="im">import</span> Blogpost
@@ -405,24 +416,25 @@ admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
 <img src="images/admin-blog.png" alt="Django添加博客" /><figcaption>Django添加博客</figcaption>
 </figure>
 <p>实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。</p>
-<h2 id="template">Template</h2>
-<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
-{% block head_title %}{{ post.title }}{% endblock %}
-{% block title %}{{ post.title }}{% endblock %}
+<h2 id="配置url">配置URL</h2>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.conf <span class="im">import</span> settings
+<span class="im">from</span> django.conf.urls <span class="im">import</span> patterns, include, url
+<span class="im">from</span> django.conf.urls.static <span class="im">import</span> static
+<span class="im">from</span> django.contrib <span class="im">import</span> admin
 
-{% block content %}
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;mdl-card mdl-shadow--2dp&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;mdl-card__title&quot;</span><span class="kw">&gt;</span>
-         <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;mdl-card__title-text&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;{{ post.get_absolute_url }}&quot;</span><span class="kw">&gt;</span>{{ post.title }}<span class="kw">&lt;/a&gt;&lt;/h2&gt;</span>
-      <span class="kw">&lt;/div&gt;</span>
-      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;mdl-card__supporting-text&quot;</span><span class="kw">&gt;</span>
-          {{post.body}}
-      <span class="kw">&lt;/div&gt;</span>
-      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;mdl-card__actions&quot;</span><span class="kw">&gt;</span>
-         {{post.posted}} - By {{post.author}}
-      <span class="kw">&lt;/div&gt;</span>
-    <span class="kw">&lt;/div&gt;</span>
-{% endblock %}</code></pre></div>
+
+<span class="co"># Routers provide an easy way of automatically determining the URL conf.</span>
+<span class="im">from</span> rest_framework <span class="im">import</span> routers
+<span class="im">from</span> blogpost.api <span class="im">import</span> BlogpostSet
+
+apiRouter <span class="op">=</span> routers.DefaultRouter()
+apiRouter.register(<span class="vs">r&#39;blogpost&#39;</span>, BlogpostSet)
+
+urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span>,
+    (<span class="vs">r&#39;^$&#39;</span>, <span class="st">&#39;blogpost.views.index&#39;</span>),
+    url(<span class="vs">r&#39;^blog/(?P&lt;slug&gt;[^\.]+).html&#39;</span>, <span class="st">&#39;blogpost.views.view_post&#39;</span>, name<span class="op">=</span><span class="st">&#39;view_blog_post&#39;</span>),
+    url(<span class="vs">r&#39;^admin/&#39;</span>, include(admin.site.urls))
+) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
 <h2 id="view">View</h2>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Create your views here.</span>
 <span class="im">from</span> blogpost.models <span class="im">import</span> Blogpost
@@ -436,6 +448,32 @@ admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
     <span class="cf">return</span> render_to_response(<span class="st">&#39;blogpost_detail.html&#39;</span>, {
         <span class="st">&#39;post&#39;</span>: get_object_or_404(Blogpost, slug<span class="op">=</span>slug)
     })</code></pre></div>
+<h2 id="list-template">List Template</h2>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
+{% block title %}Welcome to my blog{% endblock %}
+
+{% block content %}
+<span class="kw">&lt;h1&gt;</span>Posts<span class="kw">&lt;/h1&gt;</span>
+{% if posts %}
+{% for post in posts %}
+<span class="kw">&lt;h2&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;{{ post.get_absolute_url }}&quot;</span><span class="kw">&gt;</span>{{ post.title }}<span class="kw">&lt;/a&gt;&lt;/h2&gt;</span>
+<span class="kw">&lt;p&gt;</span>{{post.posted}} - By {{post.author}}<span class="kw">&lt;/p&gt;</span>
+<span class="kw">&lt;p&gt;</span>{{post.body}}<span class="kw">&lt;/p&gt;</span>
+{% endfor %}
+{% else %}
+<span class="kw">&lt;p&gt;</span>There are no posts.<span class="kw">&lt;/p&gt;</span>
+{% endif %}
+{% endblock %}</code></pre></div>
+<h2 id="detail-template">Detail Template</h2>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
+{% block head_title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<span class="kw">&lt;h2&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;{{ post.get_absolute_url }}&quot;</span><span class="kw">&gt;</span>{{ post.title }}<span class="kw">&lt;/a&gt;&lt;/h2&gt;</span>
+<span class="kw">&lt;p&gt;</span>{{post.posted}} - By {{post.author}}<span class="kw">&lt;/p&gt;</span>
+<span class="kw">&lt;p&gt;</span>{{post.body}}<span class="kw">&lt;/p&gt;</span>
+{% endblock %}</code></pre></div>
 <h2 id="测试">测试</h2>
 <p>TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。</p>
 <p>在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。</p>

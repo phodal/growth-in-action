@@ -81,21 +81,30 @@ admin.site.register(Blogpost, BlogpostAdmin)
 
 实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 
-Template
+配置URL
 ---
 
+```python
+from django.conf import settings
+from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
+from django.contrib import admin
 
-```html
-{% extends 'base.html' %}
-{% block head_title %}{{ post.title }}{% endblock %}
-{% block title %}{{ post.title }}{% endblock %}
 
-{% block content %}
-<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-<p>{{post.posted}} - By {{post.author}}</p>
-<p>{{post.body}}</p>
-{% endblock %}
+# Routers provide an easy way of automatically determining the URL conf.
+from rest_framework import routers
+from blogpost.api import BlogpostSet
+
+apiRouter = routers.DefaultRouter()
+apiRouter.register(r'blogpost', BlogpostSet)
+
+urlpatterns = patterns('',
+    (r'^$', 'blogpost.views.index'),
+    url(r'^blog/(?P<slug>[^\.]+).html', 'blogpost.views.view_post', name='view_blog_post'),
+    url(r'^admin/', include(admin.site.urls))
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 ```
+
 
 View
 ---
@@ -113,6 +122,42 @@ def view_post(request, slug):
     return render_to_response('blogpost_detail.html', {
         'post': get_object_or_404(Blogpost, slug=slug)
     })
+```
+
+List Template
+---
+
+```html
+{% extends 'base.html' %}
+{% block title %}Welcome to my blog{% endblock %}
+
+{% block content %}
+<h1>Posts</h1>
+{% if posts %}
+{% for post in posts %}
+<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+<p>{{post.posted}} - By {{post.author}}</p>
+<p>{{post.body}}</p>
+{% endfor %}
+{% else %}
+<p>There are no posts.</p>
+{% endif %}
+{% endblock %}
+```
+
+Detail Template
+---
+
+```html
+{% extends 'base.html' %}
+{% block head_title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+<p>{{post.posted}} - By {{post.author}}</p>
+<p>{{post.body}}</p>
+{% endblock %}
 ```
 
 测试

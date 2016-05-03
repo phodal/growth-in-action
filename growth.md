@@ -353,10 +353,19 @@ $ django-admin startapp blogpost
 └── views.py
 ```
 
-现在，我们需要
-
 Model
 ---
+
+
+现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：
+
+ - 标题
+ - 作者
+ - 链接（中文更需要一个好的链接）
+ - 内容
+ - 发布日期
+
+我们就可以按照上面的内容来创建我们的Blogpost model：
 
 ```python
 from django.db import models
@@ -377,6 +386,8 @@ class Blogpost(models.Model):
     def get_absolute_url(self):
         return ('view_blog_post', None, { 'slug': self.slug })
 ```
+
+上面的``get_absolute_url``方法就是用于返回博客的链接。之所以使用手动而不是自动生成，是因为自动生成不靠谱，而且不利
 
 然后在Admin注册这个Model
 
@@ -401,28 +412,30 @@ admin.site.register(Blogpost, BlogpostAdmin)
 
 实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 
-Template
+配置URL
 ---
 
-```html
-{% extends 'base.html' %}
-{% block head_title %}{{ post.title }}{% endblock %}
-{% block title %}{{ post.title }}{% endblock %}
+```python
+from django.conf import settings
+from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
+from django.contrib import admin
 
-{% block content %}
-    <div class="mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title">
-         <h2 class="mdl-card__title-text"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-          {{post.body}}
-      </div>
-      <div class="mdl-card__actions">
-         {{post.posted}} - By {{post.author}}
-      </div>
-    </div>
-{% endblock %}
+
+# Routers provide an easy way of automatically determining the URL conf.
+from rest_framework import routers
+from blogpost.api import BlogpostSet
+
+apiRouter = routers.DefaultRouter()
+apiRouter.register(r'blogpost', BlogpostSet)
+
+urlpatterns = patterns('',
+    (r'^$', 'blogpost.views.index'),
+    url(r'^blog/(?P<slug>[^\.]+).html', 'blogpost.views.view_post', name='view_blog_post'),
+    url(r'^admin/', include(admin.site.urls))
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 ```
+
 
 View
 ---
@@ -440,6 +453,42 @@ def view_post(request, slug):
     return render_to_response('blogpost_detail.html', {
         'post': get_object_or_404(Blogpost, slug=slug)
     })
+```
+
+List Template
+---
+
+```html
+{% extends 'base.html' %}
+{% block title %}Welcome to my blog{% endblock %}
+
+{% block content %}
+<h1>Posts</h1>
+{% if posts %}
+{% for post in posts %}
+<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+<p>{{post.posted}} - By {{post.author}}</p>
+<p>{{post.body}}</p>
+{% endfor %}
+{% else %}
+<p>There are no posts.</p>
+{% endif %}
+{% endblock %}
+```
+
+Detail Template
+---
+
+```html
+{% extends 'base.html' %}
+{% block head_title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+<p>{{post.posted}} - By {{post.author}}</p>
+<p>{{post.body}}</p>
+{% endblock %}
 ```
 
 测试
