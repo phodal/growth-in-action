@@ -22,10 +22,19 @@ $ django-admin startapp blogpost
 └── views.py
 ```
 
-现在，我们需要
-
 Model
 ---
+
+
+现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：
+
+ - 标题
+ - 作者
+ - 链接（中文更需要一个好的链接）
+ - 内容
+ - 发布日期
+
+我们就可以按照上面的内容来创建我们的Blogpost model：
 
 ```python
 from django.db import models
@@ -46,6 +55,8 @@ class Blogpost(models.Model):
     def get_absolute_url(self):
         return ('view_blog_post', None, { 'slug': self.slug })
 ```
+
+上面的``get_absolute_url``方法就是用于返回博客的链接。之所以使用手动而不是自动生成，是因为自动生成不靠谱，而且不利于SEO。
 
 然后在Admin注册这个Model
 
