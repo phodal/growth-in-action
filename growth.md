@@ -326,13 +326,20 @@ Django的每一个模块在内部都称之为APP，在每个APP里都有自己�
 
 ![Django 应用架构](images/django_app_arch.jpg)
 
+这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。
+
 
 Django创建博客应用
 ===
 
 ###实战
 
+现在我们可以开始创建我们的APP，使用下面的代码来创建：
+
 $ django-admin startapp blogpost
+
+会在blogpost目录下，生成下面的文件：
+
 
 ```
 .
@@ -345,6 +352,8 @@ $ django-admin startapp blogpost
 ├── tests.py
 └── views.py
 ```
+
+现在，我们需要
 
 Model
 ---
@@ -368,6 +377,27 @@ class Blogpost(models.Model):
     def get_absolute_url(self):
         return ('view_blog_post', None, { 'slug': self.slug })
 ```
+
+然后在Admin注册这个Model
+
+```python
+from django.contrib import admin
+from blogpost.models import Blogpost
+
+class BlogpostAdmin(admin.ModelAdmin):
+    exclude = ['posted']
+    prepopulated_fields = {'slug': ('title',)}
+
+admin.site.register(Blogpost, BlogpostAdmin)
+```
+
+![Django后台界面](images/django-admin-ui.png)
+
+点击Blogpost的Add
+
+![Django添加博客](images/admin-blog.png)
+
+
 
 Template
 ---

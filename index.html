@@ -353,9 +353,12 @@ Superuser created successfully.</code></pre>
 <figure>
 <img src="images/django_app_arch.jpg" alt="Django 应用架构" /><figcaption>Django 应用架构</figcaption>
 </figure>
+<p>这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。</p>
 <h1 id="django创建博客应用">Django创建博客应用</h1>
 <h3 id="实战">实战</h3>
+<p>现在我们可以开始创建我们的APP，使用下面的代码来创建：</p>
 <p>$ django-admin startapp blogpost</p>
+<p>会在blogpost目录下，生成下面的文件：</p>
 <pre><code>.
 ├── __init__.py
 ├── admin.py
@@ -365,6 +368,7 @@ Superuser created successfully.</code></pre>
 ├── models.py
 ├── tests.py
 └── views.py</code></pre>
+<p>现在，我们需要</p>
 <h2 id="model">Model</h2>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.db <span class="im">import</span> models
 <span class="im">from</span> django.db.models <span class="im">import</span> permalink
@@ -383,6 +387,22 @@ Superuser created successfully.</code></pre>
     <span class="at">@permalink</span>
     <span class="kw">def</span> get_absolute_url(<span class="va">self</span>):
         <span class="cf">return</span> (<span class="st">&#39;view_blog_post&#39;</span>, <span class="va">None</span>, { <span class="st">&#39;slug&#39;</span>: <span class="va">self</span>.slug })</code></pre></div>
+<p>然后在Admin注册这个Model</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.contrib <span class="im">import</span> admin
+<span class="im">from</span> blogpost.models <span class="im">import</span> Blogpost
+
+<span class="kw">class</span> BlogpostAdmin(admin.ModelAdmin):
+    exclude <span class="op">=</span> [<span class="st">&#39;posted&#39;</span>]
+    prepopulated_fields <span class="op">=</span> {<span class="st">&#39;slug&#39;</span>: (<span class="st">&#39;title&#39;</span>,)}
+
+admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
+<figure>
+<img src="images/django-admin-ui.png" alt="Django后台界面" /><figcaption>Django后台界面</figcaption>
+</figure>
+<p>点击Blogpost的Add</p>
+<figure>
+<img src="images/admin-blog.png" alt="Django添加博客" /><figcaption>Django添加博客</figcaption>
+</figure>
 <h2 id="template">Template</h2>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
 {% block head_title %}{{ post.title }}{% endblock %}
