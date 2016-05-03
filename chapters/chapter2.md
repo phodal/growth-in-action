@@ -56,7 +56,7 @@ class Blogpost(models.Model):
         return ('view_blog_post', None, { 'slug': self.slug })
 ```
 
-上面的``get_absolute_url``方法就是用于返回博客的链接。之所以使用手动而不是自动生成，是因为自动生成不靠谱，而且不利于SEO。
+上面的``get_absolute_url``方法就是用于返回博客的链接。之所以使用手动而不是自动生成，是因为自动生成不靠谱，而且不利
 
 然后在Admin注册这个Model
 
@@ -84,23 +84,16 @@ admin.site.register(Blogpost, BlogpostAdmin)
 Template
 ---
 
+
 ```html
 {% extends 'base.html' %}
 {% block head_title %}{{ post.title }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-    <div class="mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title">
-         <h2 class="mdl-card__title-text"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-          {{post.body}}
-      </div>
-      <div class="mdl-card__actions">
-         {{post.posted}} - By {{post.author}}
-      </div>
-    </div>
+<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+<p>{{post.posted}} - By {{post.author}}</p>
+<p>{{post.body}}</p>
 {% endblock %}
 ```
 
