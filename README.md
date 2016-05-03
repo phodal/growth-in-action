@@ -1,7 +1,7 @@
 Growth In Action Django
 ===
 
-[Growh Ebook](https://github.com/phodal/growth-ebook)
+[全栈增长工程师指南 ](https://github.com/phodal/growth-ebook)的Python(Django)实战版。
 
 目录
 ---
