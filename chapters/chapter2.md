@@ -1,8 +1,6 @@
 Django创建博客应用
 ===
 
-###实战
-
 现在我们可以开始创建我们的APP，使用下面的代码来创建：
 
 $ django-admin startapp blogpost
@@ -22,9 +20,8 @@ $ django-admin startapp blogpost
 └── views.py
 ```
 
-Model
+创建Blogpost App
 ---
-
 
 现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：
 
@@ -84,16 +81,13 @@ admin.site.register(Blogpost, BlogpostAdmin)
 配置URL
 ---
 
+现在，我们就可以在我们的``urls.py``里添加相应的route来访问页面，代码如下所示：
+
 ```python
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-
-
-# Routers provide an easy way of automatically determining the URL conf.
-from rest_framework import routers
-from blogpost.api import BlogpostSet
 
 apiRouter = routers.DefaultRouter()
 apiRouter.register(r'blogpost', BlogpostSet)
@@ -105,12 +99,22 @@ urlpatterns = patterns('',
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 ```
 
+在上面的代码里，我们创建了两个route：
 
-View
+ - 指向首页，其view是index
+ - 指向博客详情页，其view是view_post
+
+指向博客详情页的URL正规``r'^blog/(?P<slug>[^\.]+).html``，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。
+
+接着，我们就可以创建两个view。 
+
+创建博客列表页
 ---
 
+对于我们的首页来说，我们可以简单的只显示五篇博客，所以我们所需要做的就是从我们的Blogpost对象中，取出前五个结果即可。代码如下所示：
+
 ```python
-# Create your views here.
+from django.shortcuts import render, render_to_response, get_object_or_404
 from blogpost.models import Blogpost
 
 def index(request):
@@ -118,14 +122,9 @@ def index(request):
         'posts': Blogpost.objects.all()[:5]
     })
 
-def view_post(request, slug):
-    return render_to_response('blogpost_detail.html', {
-        'post': get_object_or_404(Blogpost, slug=slug)
-    })
-```
+Django的render_to_response方法可以根据一个给定的上下文字典渲染一个给定的目标，并返回渲染后的HttpResponse。即将相应的值，如这里的Blogpost.objects.all()[:5]，填入相应的index.html中，再返回最后的结果。
 
-List Template
----
+因此，在我们的index.html中，我们就可以拿到前五篇博客。我们只需要遍历出posts，拿出每个post相应的值，就可以完成列表页。
 
 ```html
 {% extends 'base.html' %}
@@ -133,20 +132,29 @@ List Template
 
 {% block content %}
 <h1>Posts</h1>
-{% if posts %}
 {% for post in posts %}
 <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
 <p>{{post.posted}} - By {{post.author}}</p>
 <p>{{post.body}}</p>
 {% endfor %}
-{% else %}
-<p>There are no posts.</p>
-{% endif %}
 {% endblock %}
 ```
 
-Detail Template
+在上面的模板里，我们还取出了博客的链接用于跳转到详情页。
+
+创建博客详情页
 ---
+
+依据上面拿到的slug，我们就可以创建对应的详情页的view，代码如下所示：
+
+```python
+def view_post(request, slug):
+    return render_to_response('blogpost_detail.html', {
+        'post': get_object_or_404(Blogpost, slug=slug)
+    })
+```
+
+这里的``get_object_or_404``将会根据slug来获取相应的博客，如果取不出相应的博客就会返回404。因此，我们的详情页和上面的列表页也是类似的。
 
 ```html
 {% extends 'base.html' %}
@@ -154,7 +162,7 @@ Detail Template
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+<h2>{{ post.title }}</a></h2>
 <p>{{post.posted}} - By {{post.author}}</p>
 <p>{{post.body}}</p>
 {% endblock %}
@@ -166,10 +174,4 @@ Detail Template
 TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。
 
 在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。
-
-
-
-
-
-
 

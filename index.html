@@ -78,12 +78,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#django应用架构">Django应用架构</a></li>
 </ul></li>
 <li><a href="#django创建博客应用">Django创建博客应用</a><ul>
-<li><a href="#实战">实战</a></li>
-<li><a href="#model">Model</a></li>
+<li><a href="#创建blogpost-app">创建Blogpost App</a></li>
 <li><a href="#配置url">配置URL</a></li>
-<li><a href="#view">View</a></li>
-<li><a href="#list-template">List Template</a></li>
-<li><a href="#detail-template">Detail Template</a></li>
+<li><a href="#创建博客列表页">创建博客列表页</a></li>
+<li><a href="#创建博客详情页">创建博客详情页</a></li>
 <li><a href="#测试">测试</a></li>
 </ul></li>
 <li><a href="#功能测试">功能测试</a><ul>
@@ -357,7 +355,6 @@ Superuser created successfully.</code></pre>
 </figure>
 <p>这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。</p>
 <h1 id="django创建博客应用">Django创建博客应用</h1>
-<h3 id="实战">实战</h3>
 <p>现在我们可以开始创建我们的APP，使用下面的代码来创建：</p>
 <p>$ django-admin startapp blogpost</p>
 <p>会在blogpost目录下，生成下面的文件：</p>
@@ -370,7 +367,7 @@ Superuser created successfully.</code></pre>
 ├── models.py
 ├── tests.py
 └── views.py</code></pre>
-<h2 id="model">Model</h2>
+<h2 id="创建blogpost-app">创建Blogpost App</h2>
 <p>现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：</p>
 <ul>
 <li>标题</li>
@@ -417,15 +414,11 @@ admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
 </figure>
 <p>实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。</p>
 <h2 id="配置url">配置URL</h2>
+<p>现在，我们就可以在我们的<code>urls.py</code>里添加相应的route来访问页面，代码如下所示：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.conf <span class="im">import</span> settings
 <span class="im">from</span> django.conf.urls <span class="im">import</span> patterns, include, url
 <span class="im">from</span> django.conf.urls.static <span class="im">import</span> static
 <span class="im">from</span> django.contrib <span class="im">import</span> admin
-
-
-<span class="co"># Routers provide an easy way of automatically determining the URL conf.</span>
-<span class="im">from</span> rest_framework <span class="im">import</span> routers
-<span class="im">from</span> blogpost.api <span class="im">import</span> BlogpostSet
 
 apiRouter <span class="op">=</span> routers.DefaultRouter()
 apiRouter.register(<span class="vs">r&#39;blogpost&#39;</span>, BlogpostSet)
@@ -435,42 +428,44 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
     url(<span class="vs">r&#39;^blog/(?P&lt;slug&gt;[^\.]+).html&#39;</span>, <span class="st">&#39;blogpost.views.view_post&#39;</span>, name<span class="op">=</span><span class="st">&#39;view_blog_post&#39;</span>),
     url(<span class="vs">r&#39;^admin/&#39;</span>, include(admin.site.urls))
 ) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
-<h2 id="view">View</h2>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Create your views here.</span>
-<span class="im">from</span> blogpost.models <span class="im">import</span> Blogpost
-
-<span class="kw">def</span> index(request):
-    <span class="cf">return</span> render_to_response(<span class="st">&#39;index.html&#39;</span>, {
-        <span class="st">&#39;posts&#39;</span>: Blogpost.objects.<span class="bu">all</span>()[:<span class="dv">5</span>]
-    })
-
-<span class="kw">def</span> view_post(request, slug):
-    <span class="cf">return</span> render_to_response(<span class="st">&#39;blogpost_detail.html&#39;</span>, {
-        <span class="st">&#39;post&#39;</span>: get_object_or_404(Blogpost, slug<span class="op">=</span>slug)
-    })</code></pre></div>
-<h2 id="list-template">List Template</h2>
+<p>在上面的代码里，我们创建了两个route：</p>
+<ul>
+<li>指向首页，其view是index</li>
+<li>指向博客详情页，其view是view_post</li>
+</ul>
+<p>指向博客详情页的URL正规<code>r'^blog/(?P&lt;slug&gt;[^\.]+).html</code>，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。</p>
+<p>接着，我们就可以创建两个view。</p>
+<h2 id="创建博客列表页">创建博客列表页</h2>
+<p>对于我们的首页来说，我们可以简单的只显示五篇博客，所以我们所需要做的就是从我们的Blogpost对象中，取出前五个结果即可。代码如下所示：</p>
+<p>```python from django.shortcuts import render, render_to_response, get_object_or_404 from blogpost.models import Blogpost</p>
+<p>def index(request): return render_to_response(‘index.html’, { ‘posts’: Blogpost.objects.all()[:5] })</p>
+<p>Django的render_to_response方法可以根据一个给定的上下文字典渲染一个给定的目标，并返回渲染后的HttpResponse。即将相应的值，如这里的Blogpost.objects.all()[:5]，填入相应的index.html中，再返回最后的结果。</p>
+<p>因此，在我们的index.html中，我们就可以拿到前五篇博客。我们只需要遍历出posts，拿出每个post相应的值，就可以完成列表页。</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
 {% block title %}Welcome to my blog{% endblock %}
 
 {% block content %}
 <span class="kw">&lt;h1&gt;</span>Posts<span class="kw">&lt;/h1&gt;</span>
-{% if posts %}
 {% for post in posts %}
 <span class="kw">&lt;h2&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;{{ post.get_absolute_url }}&quot;</span><span class="kw">&gt;</span>{{ post.title }}<span class="kw">&lt;/a&gt;&lt;/h2&gt;</span>
 <span class="kw">&lt;p&gt;</span>{{post.posted}} - By {{post.author}}<span class="kw">&lt;/p&gt;</span>
 <span class="kw">&lt;p&gt;</span>{{post.body}}<span class="kw">&lt;/p&gt;</span>
 {% endfor %}
-{% else %}
-<span class="kw">&lt;p&gt;</span>There are no posts.<span class="kw">&lt;/p&gt;</span>
-{% endif %}
 {% endblock %}</code></pre></div>
-<h2 id="detail-template">Detail Template</h2>
+<p>在上面的模板里，我们还取出了博客的链接用于跳转到详情页。</p>
+<h2 id="创建博客详情页">创建博客详情页</h2>
+<p>依据上面拿到的slug，我们就可以创建对应的详情页的view，代码如下所示：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> view_post(request, slug):
+    <span class="cf">return</span> render_to_response(<span class="st">&#39;blogpost_detail.html&#39;</span>, {
+        <span class="st">&#39;post&#39;</span>: get_object_or_404(Blogpost, slug<span class="op">=</span>slug)
+    })</code></pre></div>
+<p>这里的<code>get_object_or_404</code>将会根据slug来获取相应的博客，如果取不出相应的博客就会返回404。因此，我们的详情页和上面的列表页也是类似的。</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
 {% block head_title %}{{ post.title }}{% endblock %}
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<span class="kw">&lt;h2&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;{{ post.get_absolute_url }}&quot;</span><span class="kw">&gt;</span>{{ post.title }}<span class="kw">&lt;/a&gt;&lt;/h2&gt;</span>
+<span class="kw">&lt;h2&gt;</span>{{ post.title }}<span class="kw">&lt;/a&gt;&lt;/h2&gt;</span>
 <span class="kw">&lt;p&gt;</span>{{post.posted}} - By {{post.author}}<span class="kw">&lt;/p&gt;</span>
 <span class="kw">&lt;p&gt;</span>{{post.body}}<span class="kw">&lt;/p&gt;</span>
 {% endblock %}</code></pre></div>
