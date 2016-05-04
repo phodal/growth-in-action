@@ -95,6 +95,8 @@ admin.site.register(Blogpost, BlogpostAdmin)
 
 实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 
+
+
 ### 配置URL
 
 现在，我们就可以在我们的``urls.py``里添加相应的route来访问页面，代码如下所示：
