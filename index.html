@@ -78,7 +78,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#django应用架构">Django应用架构</a></li>
 </ul></li>
 <li><a href="#django创建博客应用">Django创建博客应用</a><ul>
-<li><a href="#创建blogpost-app">创建Blogpost App</a><ul>
+<li><a href="#tasking">Tasking</a></li>
+<li><a href="#创建blogpostapp">创建BlogpostAPP</a><ul>
+<li><a href="#生成app">生成APP</a></li>
 <li><a href="#创建model">创建Model</a></li>
 <li><a href="#配置url">配置URL</a></li>
 </ul></li>
@@ -91,8 +93,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#测试详情页">测试详情页</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#功能测试">功能测试</a><ul>
+<li><a href="#功能测试与搭建持续集成">功能测试与搭建持续集成</a><ul>
+<li><a href="#编写自动化测试">编写自动化测试</a><ul>
 <li><a href="#selenium">Selenium</a></li>
+</ul></li>
+<li><a href="#搭建持续集成">搭建持续集成</a></li>
 </ul></li>
 <li><a href="#更多功能">更多功能</a><ul>
 <li><a href="#comments">Comments</a></li>
@@ -362,6 +367,18 @@ Superuser created successfully.</code></pre>
 </figure>
 <p>这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。</p>
 <h1 id="django创建博客应用">Django创建博客应用</h1>
+<h2 id="tasking">Tasking</h2>
+<p>在我们不了解Django的时候，要对这样一个任务进行Tasking，有点困难。不过，我们还是可以简单地看看是应该如何去做：</p>
+<ul>
+<li>生成APP。对于大部分主流的Web框架来说，它们都可以手动地生成一些脚手架，如Ruby语言中的Ruby On Rails、Node.js中的Express等等。</li>
+<li>创建对应的Model，即其在数据库中存储的模型与我们在代码中要使用的模型。</li>
+<li>创建程序对应的View，用于处理数据。</li>
+<li>创建程序的Template，用于显示数据。</li>
+<li>编写测试来保证功能。</li>
+</ul>
+<p>对于其他应用来说也是差不多的。</p>
+<h2 id="创建blogpostapp">创建BlogpostAPP</h2>
+<h3 id="生成app">生成APP</h3>
 <p>现在我们可以开始创建我们的APP，使用下面的代码来创建：</p>
 <p>$ django-admin startapp blogpost</p>
 <p>会在blogpost目录下，生成下面的文件：</p>
@@ -374,7 +391,6 @@ Superuser created successfully.</code></pre>
 ├── models.py
 ├── tests.py
 └── views.py</code></pre>
-<h2 id="创建blogpost-app">创建Blogpost App</h2>
 <h3 id="创建model">创建Model</h3>
 <p>现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：</p>
 <ul>
@@ -538,8 +554,9 @@ Destroying test database for alias &#39;default&#39;...
                             posted<span class="op">=</span>datetime.now)
     response <span class="op">=</span> <span class="va">self</span>.client.get(<span class="st">&#39;/&#39;</span>)
     <span class="va">self</span>.assertIn(b<span class="st">&#39;This is a blog&#39;</span>, response.content)</code></pre></div>
-<h1 id="功能测试">功能测试</h1>
-<h2 id="selenium">Selenium</h2>
+<h1 id="功能测试与搭建持续集成">功能测试与搭建持续集成</h1>
+<h2 id="编写自动化测试">编写自动化测试</h2>
+<h3 id="selenium">Selenium</h3>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.test <span class="im">import</span> LiveServerTestCase
 <span class="im">from</span> selenium <span class="im">import</span> webdriver
 
@@ -608,6 +625,7 @@ Destroying test database for alias &#39;default&#39;...
         )
 
         <span class="va">self</span>.assertIn(<span class="st">&quot;hello&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
+<h2 id="搭建持续集成">搭建持续集成</h2>
 <h1 id="更多功能">更多功能</h1>
 <p>在Django框架中，内置了很多应用在它的“contrib”包中，这些包括：</p>
 <ul>

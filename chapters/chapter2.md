@@ -1,6 +1,24 @@
 Django创建博客应用
 ===
 
+Tasking
+---
+
+在我们不了解Django的时候，要对这样一个任务进行Tasking，有点困难。不过，我们还是可以简单地看看是应该如何去做：
+
+ - 生成APP。对于大部分主流的Web框架来说，它们都可以手动地生成一些脚手架，如Ruby语言中的Ruby On Rails、Node.js中的Express等等。
+ - 创建对应的Model，即其在数据库中存储的模型与我们在代码中要使用的模型。
+ - 创建程序对应的View，用于处理数据。
+ - 创建程序的Template，用于显示数据。
+ - 编写测试来保证功能。
+
+对于其他应用来说也是差不多的。 
+
+创建BlogpostAPP
+---
+
+### 生成APP
+
 现在我们可以开始创建我们的APP，使用下面的代码来创建：
 
 $ django-admin startapp blogpost
@@ -19,9 +37,6 @@ $ django-admin startapp blogpost
 ├── tests.py
 └── views.py
 ```
-
-创建Blogpost App
----
 
 ### 创建Model
 
