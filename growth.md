@@ -569,14 +569,33 @@ class BlogpostTest(TestCase):
         self.assertEqual(found.func, view_post)
 ```
 
+与上面测试首页不一样的是，在我们的Blogpost测试中，我们需要创建数据，以确保这个流程是没有问题的。因此我们需要用``Blogpost.objects.create``方法来创建一个数据，然后访问相应的页面来看是否正确。
+
 ```python  
-def test_blogpost_url_resolves_to_home_page_view(self):
+def test_blogpost_create_with_view(self):
     Blogpost.objects.create(title='hello', author='admin', slug='this_is_a_test', body='This is a blog',
                             posted=datetime.now)
     response = self.client.get('/blog/this_is_a_test.html')
     self.assertIn(b'This is a blog', response.content)
 ```
 
+或许你会疑惑这个数据会不会被注入到数据库中，请看运行测试时返回的结果的第一句：
+
+```
+Creating test database for alias 'default'...
+```
+
+Django将会创建一个数据库用于测试。
+
+同理，我们也可以为首页添加一个相似的测试：
+
+```python
+def test_blogpost_create_with_show_in_homepage(self):
+    Blogpost.objects.create(title='hello', author='admin', slug='this_is_a_test', body='This is a blog',
+                            posted=datetime.now)
+    response = self.client.get('/')
+    self.assertIn(b'This is a blog', response.content)
+```
 
 功能测试
 ===

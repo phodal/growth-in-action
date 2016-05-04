@@ -523,10 +523,20 @@ Destroying test database for alias &#39;default&#39;...
     <span class="kw">def</span> test_blogpost_url_resolves_to_blog_post_view(<span class="va">self</span>):
         found <span class="op">=</span> resolve(<span class="st">&#39;/blog/this_is_a_test.html&#39;</span>)
         <span class="va">self</span>.assertEqual(found.func, view_post)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> test_blogpost_url_resolves_to_home_page_view(<span class="va">self</span>):
+<p>与上面测试首页不一样的是，在我们的Blogpost测试中，我们需要创建数据，以确保这个流程是没有问题的。因此我们需要用<code>Blogpost.objects.create</code>方法来创建一个数据，然后访问相应的页面来看是否正确。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> test_blogpost_create_with_view(<span class="va">self</span>):
     Blogpost.objects.create(title<span class="op">=</span><span class="st">&#39;hello&#39;</span>, author<span class="op">=</span><span class="st">&#39;admin&#39;</span>, slug<span class="op">=</span><span class="st">&#39;this_is_a_test&#39;</span>, body<span class="op">=</span><span class="st">&#39;This is a blog&#39;</span>,
                             posted<span class="op">=</span>datetime.now)
     response <span class="op">=</span> <span class="va">self</span>.client.get(<span class="st">&#39;/blog/this_is_a_test.html&#39;</span>)
+    <span class="va">self</span>.assertIn(b<span class="st">&#39;This is a blog&#39;</span>, response.content)</code></pre></div>
+<p>或许你会疑惑这个数据会不会被注入到数据库中，请看运行测试时返回的结果的第一句：</p>
+<pre><code>Creating test database for alias &#39;default&#39;...</code></pre>
+<p>Django将会创建一个数据库用于测试。</p>
+<p>同理，我们也可以为首页添加一个相似的测试：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> test_blogpost_create_with_show_in_homepage(<span class="va">self</span>):
+    Blogpost.objects.create(title<span class="op">=</span><span class="st">&#39;hello&#39;</span>, author<span class="op">=</span><span class="st">&#39;admin&#39;</span>, slug<span class="op">=</span><span class="st">&#39;this_is_a_test&#39;</span>, body<span class="op">=</span><span class="st">&#39;This is a blog&#39;</span>,
+                            posted<span class="op">=</span>datetime.now)
+    response <span class="op">=</span> <span class="va">self</span>.client.get(<span class="st">&#39;/&#39;</span>)
     <span class="va">self</span>.assertIn(b<span class="st">&#39;This is a blog&#39;</span>, response.content)</code></pre></div>
 <h1 id="功能测试">功能测试</h1>
 <h2 id="selenium">Selenium</h2>
