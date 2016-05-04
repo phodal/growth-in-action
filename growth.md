@@ -52,6 +52,14 @@ Controller | Django itself
  - 一个序列化系统，能够生成或读取采用XML或JSON表示的Django模型实例。
  - 一个用于扩展模板引擎的能力的系统。
 
+### Django应用架构
+
+Django的每一个模块在内部都称之为APP，在每个APP里都有自己的三层结构。如下图所示：
+
+![Django 应用架构](images/django_app_arch.jpg)
+
+这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。
+
 说了这么多，还不如从一个hello,world开始。
 
 Django hello,world
@@ -319,15 +327,69 @@ Superuser created successfully.
 
 ![Django后台](images/django-backend.jpg)
 
-Django应用架构
----
+### 第一次提交
 
-Django的每一个模块在内部都称之为APP，在每个APP里都有自己的三层结构。如下图所示：
+在创建完应用后，我们就可以进行第一次提交，通常这样的提交的提交信息(commit message)是``init project``。如果在那之前，你没有执行``git init``来初始化git的话，那么我们就需要去执行这个命令。
 
-![Django 应用架构](images/django_app_arch.jpg)
+```bash
+git init
+```
 
-这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。
+它将返回类似于下面的结果
 
+```bash
+Initialized empty Git repository in /Users/fdhuang/test/helloworld/.git/
+```
+
+即初始化了一个空的Git项目，然后我们就可以执行``add``来添加上面的内容：
+
+```bash
+git add .
+```
+
+需要注意的是上在的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：
+
+```bash
+git reset db.sqlite3
+```
+
+这时我们会将其变成下面的状态：
+
+![第一次提交前的reset](images/first-commit.png)
+
+上面的绿色文件代码这几个文件都被添加了进行，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
+
+```
+*.pyc
+*.db
+*.sqlite3
+```
+
+当我们添加完这个文件完，git就会识别到这个文件，并忽略原来的那些文件，如下图所示：
+
+![添加完gitignore文件后的效果](images/git-ignore.png)  
+
+我们只需要添加这个文件即可：
+
+```bash
+git add .gitignore
+```
+
+如果你之前已经不小心添加了一些不应该添加的文件，那么可以执行下面的命令来重置其状态：
+
+```bash
+git reset .
+```
+
+然后再执行添加命令。
+
+最后，我们就可以在本地提交我们的代码了:
+
+```
+git commit -m "init project"
+```
+
+如果你是将代码托管在GitHub上的话，那么你就可以执行``git push``来将代码提交到服务器上。
 
 Django创建博客应用
 ===
@@ -425,6 +487,15 @@ admin.site.register(Blogpost, BlogpostAdmin)
 ![Django添加博客](images/admin-blog.png)
 
 实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
+
+现在，我们可以执行一次新的代码提交——因为现在的代码可以正常工作。这样出现问题时，我们就可以即时的返回上一版本的代码。
+
+```
+git add .
+git commit -m "create blogpost model"
+```
+
+然后再进行下一步地操作。
 
 ### 配置URL
 

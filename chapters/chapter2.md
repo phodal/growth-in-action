@@ -95,7 +95,14 @@ admin.site.register(Blogpost, BlogpostAdmin)
 
 实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 
+现在，我们可以执行一次新的代码提交——因为现在的代码可以正常工作。这样出现问题时，我们就可以即时的返回上一版本的代码。
 
+```
+git add .
+git commit -m "create blogpost model"
+```
+
+然后再进行下一步地操作。
 
 ### 配置URL
 
