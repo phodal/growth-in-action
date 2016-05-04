@@ -88,6 +88,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#测试">测试</a><ul>
 <li><a href="#测试首页">测试首页</a></li>
+<li><a href="#测试详情页">测试详情页</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#功能测试">功能测试</a><ul>
@@ -493,12 +494,25 @@ class HomePageTest(TestCase):
     def test_root_url_resolves_to_home_page_view(self):
         found = resolve(&#39;/&#39;)
         self.assertEqual(found.func, index)</code></pre>
-<p>但是这样的测试看上去没有多大意义，不过它可以保证我们的route可以和我们的URL对应上。接着，我们可以测试页面的标题是不是我们想要的结果：</p>
+<p>但是这样的测试看上去没有多大意义，不过它可以保证我们的route可以和我们的URL对应上。在编写完测试后，我们就可以命令提示行中运行:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">python</span> manage.py test</code></pre></div>
+<p>来查看测试的结果：</p>
+<pre><code>Creating test database for alias &#39;default&#39;...
+
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.031s
+
+OK
+Destroying test database for alias &#39;default&#39;...
+(growth-django)</code></pre>
+<p>运行通过，现在我们可以进行下一个测试了——我们可以测试页面的标题是不是我们想要的结果：</p>
 <pre><code>    def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = index(request)
         self.assertIn(b&#39;&lt;title&gt;Welcome to my blog&lt;/title&gt;&#39;, response.content)</code></pre>
 <p>这里我们需要去请求相应的页面来获取页面的标题，并用assertIn方法来断言返回的首页的html中含有<code>&lt;title&gt;Welcome to my blog&lt;/title&gt;</code>。</p>
+<h3 id="测试详情页">测试详情页</h3>
 <p>同样的我们也可以用测试是否调用某个函数的方法，来看博客的详情页的route是否正确？</p>
 <pre><code>class BlogpostTest(TestCase):
     def test_blogpost_url_resolves_to_home_page_view(self):

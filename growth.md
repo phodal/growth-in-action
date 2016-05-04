@@ -526,7 +526,27 @@ class HomePageTest(TestCase):
         self.assertEqual(found.func, index)
 ```
 
-但是这样的测试看上去没有多大意义，不过它可以保证我们的route可以和我们的URL对应上。接着，我们可以测试页面的标题是不是我们想要的结果：
+但是这样的测试看上去没有多大意义，不过它可以保证我们的route可以和我们的URL对应上。在编写完测试后，我们就可以命令提示行中运行:
+
+```bash
+python manage.py test
+```
+
+来查看测试的结果：
+
+```
+Creating test database for alias 'default'...
+
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.031s
+
+OK
+Destroying test database for alias 'default'...
+(growth-django)
+```
+
+运行通过，现在我们可以进行下一个测试了——我们可以测试页面的标题是不是我们想要的结果：
 
 ```
     def test_home_page_returns_correct_html(self):
@@ -536,6 +556,8 @@ class HomePageTest(TestCase):
 ```
 
 这里我们需要去请求相应的页面来获取页面的标题，并用assertIn方法来断言返回的首页的html中含有``<title>Welcome to my blog</title>``。
+
+### 测试详情页
 
 同样的我们也可以用测试是否调用某个函数的方法，来看博客的详情页的route是否正确？
 
