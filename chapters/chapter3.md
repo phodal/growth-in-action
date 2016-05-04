@@ -1,8 +1,10 @@
-功能测试
+功能测试与搭建持续集成
 ===
 
-Selenium
+编写自动化测试
 ---
+
+### Selenium
 
 ```python
 from django.test import LiveServerTestCase
@@ -82,4 +84,7 @@ class BlogpostDetailCase(LiveServerTestCase):
 
         self.assertIn("hello", self.selenium.title)
 ```
+
+搭建持续集成
+---
 
