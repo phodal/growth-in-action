@@ -533,6 +533,16 @@ class HomePageTest(TestCase):
 
 这里我们需要去请求相应的页面来获取页面的标题，并用assertIn方法来断言返回的首页的html中含有``<title>Welcome to my blog</title>``。
 
+同样的我们也可以用测试是否调用某个函数的方法，来看博客的详情页的route是否正确？
+
+```
+class BlogpostTest(TestCase):
+    def test_blogpost_url_resolves_to_home_page_view(self):
+        found = resolve('/blog/this_is_a_test.html')
+        self.assertEqual(found.func, view_post)
+```
+
+
 功能测试
 ===
 

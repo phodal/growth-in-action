@@ -490,6 +490,11 @@ class HomePageTest(TestCase):
         response = index(request)
         self.assertIn(b&#39;&lt;title&gt;Welcome to my blog&lt;/title&gt;&#39;, response.content)</code></pre>
 <p>这里我们需要去请求相应的页面来获取页面的标题，并用assertIn方法来断言返回的首页的html中含有<code>&lt;title&gt;Welcome to my blog&lt;/title&gt;</code>。</p>
+<p>同样的我们也可以用测试是否调用某个函数的方法，来看博客的详情页的route是否正确？</p>
+<pre><code>class BlogpostTest(TestCase):
+    def test_blogpost_url_resolves_to_home_page_view(self):
+        found = resolve(&#39;/blog/this_is_a_test.html&#39;)
+        self.assertEqual(found.func, view_post)</code></pre>
 <h1 id="功能测试">功能测试</h1>
 <h2 id="selenium">Selenium</h2>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.test <span class="im">import</span> LiveServerTestCase
