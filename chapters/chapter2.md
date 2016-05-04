@@ -175,3 +175,29 @@ TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写�
 
 在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。
 
+先来做一个简单的测试，即测试我们访问首页的时候，调用的函数是上面的index函数
+
+```
+from django.core.urlresolvers import resolve
+from django.http import HttpRequest
+from django.test import TestCase
+
+from blogpost.views import index, view_post
+
+
+class HomePageTest(TestCase):
+    def test_root_url_resolves_to_home_page_view(self):
+        found = resolve('/')
+        self.assertEqual(found.func, index)
+```
+
+但是这样的测试看上去没有多大意义，不过它可以保证我们的route可以和我们的URL对应上。接着，我们可以测试页面的标题是不是我们想要的结果：
+
+```
+    def test_home_page_returns_correct_html(self):
+        request = HttpRequest()
+        response = index(request)
+        self.assertIn(b'<title>Welcome to my blog</title>', response.content)
+```
+
+这里我们需要去请求相应的页面来获取页面的标题，并用assertIn方法来断言返回的首页的html中含有``<title>Welcome to my blog</title>``。
