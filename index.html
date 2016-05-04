@@ -78,11 +78,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#django应用架构">Django应用架构</a></li>
 </ul></li>
 <li><a href="#django创建博客应用">Django创建博客应用</a><ul>
-<li><a href="#创建blogpost-app">创建Blogpost App</a></li>
+<li><a href="#创建blogpost-app">创建Blogpost App</a><ul>
+<li><a href="#创建model">创建Model</a></li>
 <li><a href="#配置url">配置URL</a></li>
+</ul></li>
+<li><a href="#创建view">创建View</a><ul>
 <li><a href="#创建博客列表页">创建博客列表页</a></li>
 <li><a href="#创建博客详情页">创建博客详情页</a></li>
-<li><a href="#测试">测试</a></li>
+</ul></li>
+<li><a href="#测试">测试</a><ul>
+<li><a href="#测试首页">测试首页</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#功能测试">功能测试</a><ul>
 <li><a href="#selenium">Selenium</a></li>
@@ -368,6 +374,7 @@ Superuser created successfully.</code></pre>
 ├── tests.py
 └── views.py</code></pre>
 <h2 id="创建blogpost-app">创建Blogpost App</h2>
+<h3 id="创建model">创建Model</h3>
 <p>现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：</p>
 <ul>
 <li>标题</li>
@@ -413,7 +420,7 @@ admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
 <img src="images/admin-blog.png" alt="Django添加博客" /><figcaption>Django添加博客</figcaption>
 </figure>
 <p>实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。</p>
-<h2 id="配置url">配置URL</h2>
+<h3 id="配置url">配置URL</h3>
 <p>现在，我们就可以在我们的<code>urls.py</code>里添加相应的route来访问页面，代码如下所示：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.conf <span class="im">import</span> settings
 <span class="im">from</span> django.conf.urls <span class="im">import</span> patterns, include, url
@@ -435,7 +442,8 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 </ul>
 <p>指向博客详情页的URL正规<code>r'^blog/(?P&lt;slug&gt;[^\.]+).html</code>，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。</p>
 <p>接着，我们就可以创建两个view。</p>
-<h2 id="创建博客列表页">创建博客列表页</h2>
+<h2 id="创建view">创建View</h2>
+<h3 id="创建博客列表页">创建博客列表页</h3>
 <p>对于我们的首页来说，我们可以简单的只显示五篇博客，所以我们所需要做的就是从我们的Blogpost对象中，取出前五个结果即可。代码如下所示：</p>
 <p>```python from django.shortcuts import render, render_to_response, get_object_or_404 from blogpost.models import Blogpost</p>
 <p>def index(request): return render_to_response(‘index.html’, { ‘posts’: Blogpost.objects.all()[:5] })</p>
@@ -453,7 +461,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 {% endfor %}
 {% endblock %}</code></pre></div>
 <p>在上面的模板里，我们还取出了博客的链接用于跳转到详情页。</p>
-<h2 id="创建博客详情页">创建博客详情页</h2>
+<h3 id="创建博客详情页">创建博客详情页</h3>
 <p>依据上面拿到的slug，我们就可以创建对应的详情页的view，代码如下所示：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> view_post(request, slug):
     <span class="cf">return</span> render_to_response(<span class="st">&#39;blogpost_detail.html&#39;</span>, {
@@ -472,6 +480,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <h2 id="测试">测试</h2>
 <p>TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。</p>
 <p>在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。</p>
+<h3 id="测试首页">测试首页</h3>
 <p>先来做一个简单的测试，即测试我们访问首页的时候，调用的函数是上面的index函数</p>
 <pre><code>from django.core.urlresolvers import resolve
 from django.http import HttpRequest
