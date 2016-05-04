@@ -3,6 +3,8 @@ Growth In Action Django
 
 [全栈增长工程师指南 ](https://github.com/phodal/growth-ebook)的Python(Django)实战版。
 
+代码: [https://github.com/phodal/growth-in-action-django-code](https://github.com/phodal/growth-in-action-django-code)
+
 目录
 ---
 *   [Growth In Action Django](#growth-in-action-django)
