@@ -124,6 +124,7 @@ def index(request):
     return render_to_response('index.html', {
         'posts': Blogpost.objects.all()[:5]
     })
+```
 
 Django的render_to_response方法可以根据一个给定的上下文字典渲染一个给定的目标，并返回渲染后的HttpResponse。即将相应的值，如这里的Blogpost.objects.all()[:5]，填入相应的index.html中，再返回最后的结果。
 
@@ -181,7 +182,7 @@ TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写�
 
 先来做一个简单的测试，即测试我们访问首页的时候，调用的函数是上面的index函数
 
-```
+```python
 from django.core.urlresolvers import resolve
 from django.http import HttpRequest
 from django.test import TestCase
@@ -217,7 +218,7 @@ Destroying test database for alias 'default'...
 
 运行通过，现在我们可以进行下一个测试了——我们可以测试页面的标题是不是我们想要的结果：
 
-```
+```python
     def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = index(request)
@@ -230,10 +231,18 @@ Destroying test database for alias 'default'...
 
 同样的我们也可以用测试是否调用某个函数的方法，来看博客的详情页的route是否正确？
 
-```
+```python
 class BlogpostTest(TestCase):
-    def test_blogpost_url_resolves_to_home_page_view(self):
+    def test_blogpost_url_resolves_to_blog_post_view(self):
         found = resolve('/blog/this_is_a_test.html')
         self.assertEqual(found.func, view_post)
+```
+
+```python  
+def test_blogpost_url_resolves_to_home_page_view(self):
+    Blogpost.objects.create(title='hello', author='admin', slug='this_is_a_test', body='This is a blog',
+                            posted=datetime.now)
+    response = self.client.get('/blog/this_is_a_test.html')
+    self.assertIn(b'This is a blog', response.content)
 ```
 
