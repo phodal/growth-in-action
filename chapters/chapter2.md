@@ -195,6 +195,8 @@ def view_post(request, slug):
 {% endblock %}
 ```
 
+随后，我们就可以再提交一次代码了。
+
 测试
 ---
 
@@ -289,3 +291,5 @@ def test_blogpost_create_with_show_in_homepage(self):
     response = self.client.get('/')
     self.assertIn(b'This is a blog', response.content)
 ```
+
+我们用同样的方法创建了一篇博客，然后在首页测试返回的内容中是否含有``This is a blog``。

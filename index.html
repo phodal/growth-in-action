@@ -534,6 +534,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <span class="kw">&lt;p&gt;</span>{{post.posted}} - By {{post.author}}<span class="kw">&lt;/p&gt;</span>
 <span class="kw">&lt;p&gt;</span>{{post.body}}<span class="kw">&lt;/p&gt;</span>
 {% endblock %}</code></pre></div>
+<p>随后，我们就可以再提交一次代码了。</p>
 <h2 id="测试">测试</h2>
 <p>TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。</p>
 <p>在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。</p>
@@ -589,6 +590,7 @@ Destroying test database for alias &#39;default&#39;...
                             posted<span class="op">=</span>datetime.now)
     response <span class="op">=</span> <span class="va">self</span>.client.get(<span class="st">&#39;/&#39;</span>)
     <span class="va">self</span>.assertIn(b<span class="st">&#39;This is a blog&#39;</span>, response.content)</code></pre></div>
+<p>我们用同样的方法创建了一篇博客，然后在首页测试返回的内容中是否含有<code>This is a blog</code>。</p>
 <h1 id="功能测试与搭建持续集成">功能测试与搭建持续集成</h1>
 <h2 id="编写自动化测试">编写自动化测试</h2>
 <h3 id="selenium">Selenium</h3>
