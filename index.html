@@ -610,16 +610,18 @@ Destroying test database for alias &#39;default&#39;...
         <span class="va">self</span>.selenium.quit()
         <span class="bu">super</span>(HomepageTestCase, <span class="va">self</span>).tearDown()
 
-    <span class="kw">def</span> test_create_user(<span class="va">self</span>):
+    <span class="kw">def</span> test_visit_homepage(<span class="va">self</span>):
         <span class="va">self</span>.selenium.get(
             <span class="st">&#39;</span><span class="sc">%s%s</span><span class="st">&#39;</span> <span class="op">%</span> (<span class="va">self</span>.live_server_url,  <span class="st">&quot;/&quot;</span>)
         )
 
         <span class="va">self</span>.assertIn(<span class="st">&quot;Welcome to my blog&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
+<p>在setUp——即开始的时候，我们会用selenium起一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在<code>test_visit_homepage</code>这个方法里，我们在里面访问首页，并判断标题是不是<code>Welcome to my blog</code>。</p>
 <p>运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：</p>
 <figure>
 <img src="images/selenium-demo.jpg" alt="Selenium Demo" /><figcaption>Selenium Demo</figcaption>
 </figure>
+<p>这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostFromHomepageCase(LiveServerTestCase):
     <span class="kw">def</span> setUp(<span class="va">self</span>):
         Blogpost.objects.create(

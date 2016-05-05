@@ -715,7 +715,7 @@ class HomepageTestCase(LiveServerTestCase):
         self.selenium.quit()
         super(HomepageTestCase, self).tearDown()
 
-    def test_create_user(self):
+    def test_visit_homepage(self):
         self.selenium.get(
             '%s%s' % (self.live_server_url,  "/")
         )
@@ -723,10 +723,13 @@ class HomepageTestCase(LiveServerTestCase):
         self.assertIn("Welcome to my blog", self.selenium.title)
 ```
 
+在setUp——即开始的时候，我们会用selenium起一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在``test_visit_homepage``这个方法里，我们在里面访问首页，并判断标题是不是``Welcome to my blog``。
+
 运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：
 
 ![Selenium Demo](images/selenium-demo.jpg)
 
+这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？
 
 ```python
 class BlogpostFromHomepageCase(LiveServerTestCase):
