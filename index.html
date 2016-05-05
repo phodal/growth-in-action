@@ -97,7 +97,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#功能测试与搭建持续集成">功能测试与搭建持续集成</a><ul>
 <li><a href="#编写自动化测试">编写自动化测试</a><ul>
-<li><a href="#selenium">Selenium</a></li>
+<li><a href="#selenium与第一个ui测试">Selenium与第一个UI测试</a></li>
 </ul></li>
 <li><a href="#搭建持续集成">搭建持续集成</a></li>
 </ul></li>
@@ -592,8 +592,11 @@ Destroying test database for alias &#39;default&#39;...
     <span class="va">self</span>.assertIn(b<span class="st">&#39;This is a blog&#39;</span>, response.content)</code></pre></div>
 <p>我们用同样的方法创建了一篇博客，然后在首页测试返回的内容中是否含有<code>This is a blog</code>。</p>
 <h1 id="功能测试与搭建持续集成">功能测试与搭建持续集成</h1>
+<p>在上一章最后，我们写的测试可以算得上是单元测试，接着我们可以写一些自动化测试。</p>
 <h2 id="编写自动化测试">编写自动化测试</h2>
-<h3 id="selenium">Selenium</h3>
+<p>接着我们就可以用Selenium来做自动化测试。这是ThoughtWorks出品的一个强大的基于浏览器的开源自动化测试工具，它通常用来编写Web 应用的自动化测试。</p>
+<h3 id="selenium与第一个ui测试">Selenium与第一个UI测试</h3>
+<p>先让我们来看一个自动化测试的例子：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.test <span class="im">import</span> LiveServerTestCase
 <span class="im">from</span> selenium <span class="im">import</span> webdriver
 
@@ -613,6 +616,10 @@ Destroying test database for alias &#39;default&#39;...
         )
 
         <span class="va">self</span>.assertIn(<span class="st">&quot;Welcome to my blog&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
+<p>运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：</p>
+<figure>
+<img src="images/selenium-demo.jpg" alt="Selenium Demo" /><figcaption>Selenium Demo</figcaption>
+</figure>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostFromHomepageCase(LiveServerTestCase):
     <span class="kw">def</span> setUp(<span class="va">self</span>):
         Blogpost.objects.create(

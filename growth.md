@@ -690,10 +690,16 @@ def test_blogpost_create_with_show_in_homepage(self):
 功能测试与搭建持续集成
 ===
 
+在上一章最后，我们写的测试可以算得上是单元测试，接着我们可以写一些自动化测试。
+
 编写自动化测试
 ---
 
-### Selenium
+接着我们就可以用Selenium来做自动化测试。这是ThoughtWorks出品的一个强大的基于浏览器的开源自动化测试工具，它通常用来编写Web 应用的自动化测试。
+
+### Selenium与第一个UI测试
+
+先让我们来看一个自动化测试的例子：
 
 ```python
 from django.test import LiveServerTestCase
@@ -717,6 +723,9 @@ class HomepageTestCase(LiveServerTestCase):
         self.assertIn("Welcome to my blog", self.selenium.title)
 ```
 
+运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：
+
+![Selenium Demo](images/selenium-demo.jpg)
 
 
 ```python
@@ -776,6 +785,8 @@ class BlogpostDetailCase(LiveServerTestCase):
 
 搭建持续集成
 ---
+
+
 
 
 更多功能
