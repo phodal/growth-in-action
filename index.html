@@ -627,6 +627,33 @@ Destroying test database for alias &#39;default&#39;...
 </figure>
 <p>请求从浏览器传到服务器要有一系列的过程，如重定向、缓存、DNS等等，最后直至返回对应的Response。我们用Django的测试框架只能实现到这一步，随后页面请请求对应的静态资料，再对页面进行渲染，在这个过程中页面的内容会发生一些变化。</p>
 <p>为了避免页面的内容被替换掉，那么我们就需要对这部分内容进行测试。</p>
+<p>如下的代码也是可以用于测试页面内容的代码：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostDetailCase(LiveServerTestCase):
+    <span class="kw">def</span> setUp(<span class="va">self</span>):
+        Blogpost.objects.create(
+            title<span class="op">=</span><span class="st">&#39;hello&#39;</span>,
+            author<span class="op">=</span><span class="st">&#39;admin&#39;</span>,
+            slug<span class="op">=</span><span class="st">&#39;this_is_a_test&#39;</span>,
+            body<span class="op">=</span><span class="st">&#39;This is a blog&#39;</span>,
+            posted<span class="op">=</span>datetime.now
+        )
+
+        <span class="va">self</span>.selenium <span class="op">=</span> webdriver.Firefox()
+        <span class="va">self</span>.selenium.maximize_window()
+        <span class="bu">super</span>(BlogpostDetailCase, <span class="va">self</span>).setUp()
+
+    <span class="kw">def</span> tearDown(<span class="va">self</span>):
+        <span class="va">self</span>.selenium.quit()
+        <span class="bu">super</span>(BlogpostDetailCase, <span class="va">self</span>).tearDown()
+
+    <span class="kw">def</span> test_visit_blog_post(<span class="va">self</span>):
+        <span class="va">self</span>.selenium.get(
+            <span class="st">&#39;</span><span class="sc">%s%s</span><span class="st">&#39;</span> <span class="op">%</span> (<span class="va">self</span>.live_server_url,  <span class="st">&quot;/blog/this_is_a_test.html&quot;</span>)
+        )
+
+        <span class="va">self</span>.assertIn(<span class="st">&quot;hello&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
+<p>虽然在这里我们要测试的只是页面的标题，而实际上我们要测试的是页面的元素是否存在。</p>
+<p>同样的，我们也可以对博客的内容进行测试。这些稍有不同的是，我们更多地是要测试用户的行为，如我们在首页点击某个链接，那么我应该中转到对应的博客详情页，如下代码所示：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostFromHomepageCase(LiveServerTestCase):
     <span class="kw">def</span> setUp(<span class="va">self</span>):
         Blogpost.objects.create(
@@ -652,30 +679,8 @@ Destroying test database for alias &#39;default&#39;...
 
         <span class="va">self</span>.selenium.find_element_by_link_text(<span class="st">&quot;hello&quot;</span>).click()
         <span class="va">self</span>.assertIn(<span class="st">&quot;hello&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostDetailCase(LiveServerTestCase):
-    <span class="kw">def</span> setUp(<span class="va">self</span>):
-        Blogpost.objects.create(
-            title<span class="op">=</span><span class="st">&#39;hello&#39;</span>,
-            author<span class="op">=</span><span class="st">&#39;admin&#39;</span>,
-            slug<span class="op">=</span><span class="st">&#39;this_is_a_test&#39;</span>,
-            body<span class="op">=</span><span class="st">&#39;This is a blog&#39;</span>,
-            posted<span class="op">=</span>datetime.now
-        )
-
-        <span class="va">self</span>.selenium <span class="op">=</span> webdriver.Firefox()
-        <span class="va">self</span>.selenium.maximize_window()
-        <span class="bu">super</span>(BlogpostDetailCase, <span class="va">self</span>).setUp()
-
-    <span class="kw">def</span> tearDown(<span class="va">self</span>):
-        <span class="va">self</span>.selenium.quit()
-        <span class="bu">super</span>(BlogpostDetailCase, <span class="va">self</span>).tearDown()
-
-    <span class="kw">def</span> test_visit_blog_post(<span class="va">self</span>):
-        <span class="va">self</span>.selenium.get(
-            <span class="st">&#39;</span><span class="sc">%s%s</span><span class="st">&#39;</span> <span class="op">%</span> (<span class="va">self</span>.live_server_url,  <span class="st">&quot;/blog/this_is_a_test.html&quot;</span>)
-        )
-
-        <span class="va">self</span>.assertIn(<span class="st">&quot;hello&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
+<p>需要注意的是，如果我们的单元测试如果可以测试到页面的内容——即没有使用JavaScript对页面的内容进行修改，那么我们应该使用单元测试即可。如测试金字塔所说，越底层的测试越快。</p>
+<p>在我们编写完这些测试后，我们就可以搭建好相应的持续集成来运行这些测试了。</p>
 <h2 id="搭建持续集成">搭建持续集成</h2>
 <h1 id="更多功能">更多功能</h1>
 <p>在Django框架中，内置了很多应用在它的“contrib”包中，这些包括：</p>

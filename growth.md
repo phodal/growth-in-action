@@ -737,6 +737,39 @@ class HomepageTestCase(LiveServerTestCase):
 
 为了避免页面的内容被替换掉，那么我们就需要对这部分内容进行测试。
 
+如下的代码也是可以用于测试页面内容的代码：
+
+```python
+class BlogpostDetailCase(LiveServerTestCase):
+    def setUp(self):
+        Blogpost.objects.create(
+            title='hello',
+            author='admin',
+            slug='this_is_a_test',
+            body='This is a blog',
+            posted=datetime.now
+        )
+
+        self.selenium = webdriver.Firefox()
+        self.selenium.maximize_window()
+        super(BlogpostDetailCase, self).setUp()
+
+    def tearDown(self):
+        self.selenium.quit()
+        super(BlogpostDetailCase, self).tearDown()
+
+    def test_visit_blog_post(self):
+        self.selenium.get(
+            '%s%s' % (self.live_server_url,  "/blog/this_is_a_test.html")
+        )
+
+        self.assertIn("hello", self.selenium.title)
+```
+
+虽然在这里我们要测试的只是页面的标题，而实际上我们要测试的是页面的元素是否存在。
+
+同样的，我们也可以对博客的内容进行测试。这些稍有不同的是，我们更多地是要测试用户的行为，如我们在首页点击某个链接，那么我应该中转到对应的博客详情页，如下代码所示：
+
 ```python
 class BlogpostFromHomepageCase(LiveServerTestCase):
     def setUp(self):
@@ -765,32 +798,9 @@ class BlogpostFromHomepageCase(LiveServerTestCase):
         self.assertIn("hello", self.selenium.title)
 ```
 
-```python
-class BlogpostDetailCase(LiveServerTestCase):
-    def setUp(self):
-        Blogpost.objects.create(
-            title='hello',
-            author='admin',
-            slug='this_is_a_test',
-            body='This is a blog',
-            posted=datetime.now
-        )
+需要注意的是，如果我们的单元测试如果可以测试到页面的内容——即没有使用JavaScript对页面的内容进行修改，那么我们应该使用单元测试即可。如测试金字塔所说，越底层的测试越快。
 
-        self.selenium = webdriver.Firefox()
-        self.selenium.maximize_window()
-        super(BlogpostDetailCase, self).setUp()
-
-    def tearDown(self):
-        self.selenium.quit()
-        super(BlogpostDetailCase, self).tearDown()
-
-    def test_visit_blog_post(self):
-        self.selenium.get(
-            '%s%s' % (self.live_server_url,  "/blog/this_is_a_test.html")
-        )
-
-        self.assertIn("hello", self.selenium.title)
-```
+在我们编写完这些测试后，我们就可以搭建好相应的持续集成来运行这些测试了。
 
 搭建持续集成
 ---
