@@ -40,9 +40,13 @@ class HomepageTestCase(LiveServerTestCase):
 
 ![Selenium Demo](images/selenium-demo.jpg)
 
-这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？两者从测试看是差不多的，但是从流程上看来说并不是如些。
+这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？两者从测试看是差不多的，但是从流程上看来说并不是如些。下图是页面渲染的时间线：
 
 ![Page Timing Overview](images/page-timing-overview.png)
+
+请求从浏览器传到服务器要有一系列的过程，如重定向、缓存、DNS等等，最后直至返回对应的Response。我们用Django的测试框架只能实现到这一步，随后页面请请求对应的静态资料，再对页面进行渲染，在这个过程中页面的内容会发生一些变化。
+
+为了避免页面的内容被替换掉，那么我们就需要对这部分内容进行测试。
 
 ```python
 class BlogpostFromHomepageCase(LiveServerTestCase):
