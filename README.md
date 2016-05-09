@@ -1,7 +1,11 @@
 Growth In Action Django
 ===
 
-这本书是[全栈增长工程师指南](https://github.com/phodal/growth-ebook)的Python(Django)实战版。你将会学到：
+> 这本书是[全栈增长工程师指南](https://github.com/phodal/growth-ebook)的Python(Django)实战版。
+
+在Growth中我们介绍的只是一系列的实践，而Growth In Action则会带领读者去履行这些实践。
+
+你将会看到：
 
  - 如何去开发一个Web应用（博客）
  - 如何编写单元测试
