@@ -621,7 +621,10 @@ Destroying test database for alias &#39;default&#39;...
 <figure>
 <img src="images/selenium-demo.jpg" alt="Selenium Demo" /><figcaption>Selenium Demo</figcaption>
 </figure>
-<p>这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？</p>
+<p>这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？两者从测试看是差不多的，但是从流程上看来说并不是如些。</p>
+<figure>
+<img src="images/page-timing-overview.png" alt="Page Timing Overview" /><figcaption>Page Timing Overview</figcaption>
+</figure>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostFromHomepageCase(LiveServerTestCase):
     <span class="kw">def</span> setUp(<span class="va">self</span>):
         Blogpost.objects.create(

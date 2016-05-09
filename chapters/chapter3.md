@@ -40,7 +40,9 @@ class HomepageTestCase(LiveServerTestCase):
 
 ![Selenium Demo](images/selenium-demo.jpg)
 
-这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？
+这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？两者从测试看是差不多的，但是从流程上看来说并不是如些。
+
+![Page Timing Overview](images/page-timing-overview.png)
 
 ```python
 class BlogpostFromHomepageCase(LiveServerTestCase):
