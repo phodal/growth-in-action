@@ -125,6 +125,14 @@ Installing npm packages...
  - ``package.json``则存放相应的node.js的包的依赖
  - ``www``目录用于存放出最后构建出来的内容，以及一些静态资源
 
+由于Angular 2.0使用的是Typescript，所以在这里我们将用typescript进行展示，因此我们的执行命令变成~~：
+
+```
+ionic start growth-blog-app --v2 --ts
+```
+
+``--ts``表示使用的是``typescript``来创建项目，安装的过程是一样的，不一样的是后面写的代码。
+
 执行相应的起serve命令，我们就可以开始我们的项目了：
 
 ```bash
