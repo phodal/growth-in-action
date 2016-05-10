@@ -262,6 +262,19 @@ CORS_ALLOW_CREDENTIALS = True
 ```
 
 
+### 详情页
+
+```bash
+ionic g page blog-detail
+```
+
+```bash
+app/pages/blog-detail/
+├── blog-detail.html
+├── blog-detail.js
+└── blog-detail.scss
+```
+
 Login
 ---
 
