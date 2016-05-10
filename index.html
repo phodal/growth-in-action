@@ -121,8 +121,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li><a href="#移动应用">移动应用</a><ul>
-<li><a href="#ionic-2">Ionic 2</a><ul>
+<li><a href="#helloworld">hello,world</a><ul>
 <li><a href="#构建应用">构建应用</a></li>
+</ul></li>
+<li><a href="#博客列表页">博客列表页</a><ul>
+<li><a href="#添加跨域支持">添加跨域支持</a></li>
 </ul></li>
 <li><a href="#login">Login</a><ul>
 <li><a href="#json-web-tokens">Json Web Tokens</a></li>
@@ -740,7 +743,8 @@ pip install django-filter  # Filtering support</code></pre>
     ...
 )</code></pre>
 <h1 id="移动应用">移动应用</h1>
-<h2 id="ionic-2">Ionic 2</h2>
+<p>依靠习惯我们还将用Ionic 2继续创建hello,world。</p>
+<h2 id="helloworld">hello,world</h2>
 <p>开始之前我们需要先安装Ionic的命令行工具，后来我们需要用这个工具来创建工程。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install -g ionic@beta</code></pre></div>
 <p>如果没有意外，我们将安装成功，然后可以使用<code>ionic</code>命令:</p>
@@ -791,7 +795,54 @@ Downloading: https://github.com/driftyco/ionic2-app-base/archive/master.zip
 Downloading: https://github.com/driftyco/ionic2-starter-tabs/archive/master.zip
 [=============================]  100%  0.0s
 Installing npm packages...</code></pre>
-<p>然后到<code>growth-blog-app</code>目录，执行相应的起serve命令，我们就可以开始我们的项目了：</p>
+<p>然后到<code>growth-blog-app</code>目录，我们会看到类似于下面的内容：</p>
+<pre><code>.
+├── README.md
+├── app
+│   ├── app.js
+│   ├── pages
+│   │   ├── page1
+│   │   │   ├── page1.html
+│   │   │   ├── page1.js
+│   │   │   └── page1.scss
+│   │   ├── page2
+│   │   │   ├── page2.html
+│   │   │   ├── page2.js
+│   │   │   └── page2.scss
+│   │   ├── page3
+│   │   │   ├── page3.html
+│   │   │   ├── page3.js
+│   │   │   └── page3.scss
+│   │   └── tabs
+│   │       ├── tabs.html
+│   │       └── tabs.js
+│   └── theme
+│       ├── app.core.scss
+│       ├── app.ios.scss
+│       ├── app.md.scss
+│       ├── app.variables.scss
+│       └── app.wp.scss
+├── config.xml
+├── gulpfile.js
+├── hooks
+│   ├── README.md
+│   └── after_prepare
+│       └── 010_add_platform_class.js
+├── ionic.config.json
+├── package.json
+└── www
+    └── index.html</code></pre>
+<p>在这2.0版本的Ionic，页面开始以目录来划分，一个页面路径下有自己的<code>html</code>、<code>js</code>、<code>scss</code>。</p>
+<ul>
+<li><code>tabs</code>负责这些页面间跳转</li>
+<li><code>theme</code>则负责系统相应样式的修改</li>
+<li><code>config.xml</code>带有相应的Cordova配置</li>
+<li><code>hooks</code>则对系统添加和编译时进行一些预处理</li>
+<li><code>ionic.config.json</code>则是ionic的一些相关配置选项</li>
+<li><code>package.json</code>则存放相应的node.js的包的依赖</li>
+<li><code>www</code>目录用于存放出最后构建出来的内容，以及一些静态资源</li>
+</ul>
+<p>执行相应的起serve命令，我们就可以开始我们的项目了：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> serve</code></pre></div>
 <p>这时候Ionic将做一些额外的事，才能启动我们的服务，如：</p>
 <ul>
@@ -848,6 +899,33 @@ Creating Cordova project for the Android platform:
     Android target: android-23
 Android project created with cordova-android@5.1.1
 Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app</code></pre>
+<h2 id="博客列表页">博客列表页</h2>
+<h3 id="添加跨域支持">添加跨域支持</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install django-cors-headers</code></pre></div>
+<pre><code>Collecting django-cors-headers
+  Downloading django-cors-headers-1.1.0.tar.gz
+Building wheels for collected packages: django-cors-headers
+  Running setup.py bdist_wheel for django-cors-headers ... done
+  Stored in directory: /Users/fdhuang/Library/Caches/pip/wheels/b0/75/89/7b17f134fc01b74e10523f3128e45b917da0c5f8638213e073
+Successfully built django-cors-headers
+Installing collected packages: django-cors-headers
+Successfully installed django-cors-headers-1.1.0</code></pre>
+<p>添加到<code>django-cors-headers=1.1.0</code>到<code>requirements.txt</code>文件中。</p>
+<p>添加到<code>settings.py</code>中：</p>
+<pre><code>INSTALLED_APPS = (
+    ...
+    &#39;corsheaders&#39;,
+    ...
+)</code></pre>
+<p>以及对应的中间件：</p>
+<pre><code>MIDDLEWARE_CLASSES = (
+    ...
+    &#39;corsheaders.middleware.CorsMiddleware&#39;,
+    &#39;django.middleware.common.CommonMiddleware&#39;,
+    ...
+)</code></pre>
+<p>对应的配置：</p>
+<pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
 <h2 id="login">Login</h2>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
 <pre><code>pip install djangorestframework-jwt</code></pre>
