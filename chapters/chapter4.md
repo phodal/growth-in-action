@@ -12,7 +12,6 @@
  - 一套支持轻量级标记语言（Textile和Markdown）的模板库
  - 一套协助创建地理信息系统（GIS）的基础框架
 
-
 Comments
 ---
 
@@ -22,6 +21,6 @@ Category
 Practise
 ---
 
-###Monthly
-
 ###SEO
+
+###Monthly
