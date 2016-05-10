@@ -74,7 +74,58 @@ Downloading: https://github.com/driftyco/ionic2-starter-tabs/archive/master.zip
 Installing npm packages...
 ```
 
-然后到``growth-blog-app``目录，执行相应的起serve命令，我们就可以开始我们的项目了：
+然后到``growth-blog-app``目录，我们会看到类似于下面的内容：
+
+```
+.
+├── README.md
+├── app
+│   ├── app.js
+│   ├── pages
+│   │   ├── page1
+│   │   │   ├── page1.html
+│   │   │   ├── page1.js
+│   │   │   └── page1.scss
+│   │   ├── page2
+│   │   │   ├── page2.html
+│   │   │   ├── page2.js
+│   │   │   └── page2.scss
+│   │   ├── page3
+│   │   │   ├── page3.html
+│   │   │   ├── page3.js
+│   │   │   └── page3.scss
+│   │   └── tabs
+│   │       ├── tabs.html
+│   │       └── tabs.js
+│   └── theme
+│       ├── app.core.scss
+│       ├── app.ios.scss
+│       ├── app.md.scss
+│       ├── app.variables.scss
+│       └── app.wp.scss
+├── config.xml
+├── gulpfile.js
+├── hooks
+│   ├── README.md
+│   └── after_prepare
+│       └── 010_add_platform_class.js
+├── ionic.config.json
+├── package.json
+└── www
+    └── index.html
+```
+
+在这2.0版本的Ionic，页面开始以目录来划分，一个页面路径下有自己的``html``、``js``、``scss``。
+
+ - ``tabs``负责这些页面间跳转
+ - ``theme``则负责系统相应样式的修改
+ - ``config.xml``带有相应的Cordova配置
+ - ``hooks``则对系统添加和编译时进行一些预处理
+ - ``ionic.config.json``则是ionic的一些相关配置选项
+ - ``package.json``则存放相应的node.js的包的依赖
+ - ``www``目录用于存放出最后构建出来的内容，以及一些静态资源
+
+执行相应的起serve命令，我们就可以开始我们的项目了：
 
 ```bash
 ionic serve
