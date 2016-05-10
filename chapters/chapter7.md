@@ -1,7 +1,9 @@
 移动应用
 ===
 
-Ionic 2
+依靠习惯我们还将用Ionic 2继续创建hello,world。
+
+hello,world
 ---
 
 开始之前我们需要先安装Ionic的命令行工具，后来我们需要用这个工具来创建工程。
@@ -70,6 +72,84 @@ Downloading: https://github.com/driftyco/ionic2-app-base/archive/master.zip
 Downloading: https://github.com/driftyco/ionic2-starter-tabs/archive/master.zip
 [=============================]  100%  0.0s
 Installing npm packages...
+```
+
+然后到``growth-blog-app``目录，执行相应的起serve命令，我们就可以开始我们的项目了：
+
+```bash
+ionic serve
+```
+
+这时候Ionic将做一些额外的事，才能启动我们的服务，如：
+
+ - 删除``www/build``目录下的文件
+ - 编译SASS到CSS
+ - 编译文件到HTML
+ - 编译字体
+ - 等等
+
+最后，它将启动一个Web服务，URL为[http://localhost:8100](http://localhost:8100)
+
+```bash
+Running 'serve:before' gulp task before serve
+[20:59:16] Starting 'clean'...
+[20:59:16] Finished 'clean' after 6.07 ms
+[20:59:16] Starting 'watch'...
+[20:59:16] Starting 'sass'...
+[20:59:16] Starting 'html'...
+[20:59:16] Starting 'fonts'...
+[20:59:16] Starting 'scripts'...
+[20:59:16] Finished 'scripts' after 43 ms
+[20:59:16] Finished 'html' after 51 ms
+[20:59:16] Finished 'fonts' after 54 ms
+[20:59:16] Finished 'sass' after 738 ms
+7.6 MB bytes written (5.62 seconds)
+[20:59:22] Finished 'watch' after 6.62 s
+[20:59:22] Starting 'serve:before'...
+[20:59:22] Finished 'serve:before' after 3.87 μs
+
+Running live reload server: http://localhost:35729
+Watching: www/**/*, !www/lib/**/*
+√ Running dev server:  http://localhost:8100
+Ionic server commands, enter:
+  restart or r to restart the client app from the root
+  goto or g and a url to have the app navigate to the given url
+  consolelogs or c to enable/disable console log output
+  serverlogs or s to enable/disable server log output
+  quit or q to shutdown the server and exit
+ionic $
+```
+
+接着，就可以打开相应的Web页面，如下图所示：
+
+![Ionic Web预览界面](./images/ionic-web-view.jpg)
+
+### 构建应用
+
+由于Ionic是基于Cordova的，我们需要安装Cordova业完成后续的工作。
+
+```bash
+sudo npm install -g cordova
+```
+
+为了构建不同的平台的应用，我们就需要添加不同的平台，如:
+
+```bash
+ionic platform add android
+```
+
+上面的命令可以为项目添加Android平台的支持，过程如下面的日志所示：
+
+```
+Adding android project...
+Creating Cordova project for the Android platform:
+	Path: platforms/android
+	Package: io.ionic.starter
+	Name: V2_Test
+	Activity: MainActivity
+	Android target: android-23
+Android project created with cordova-android@5.1.1
+Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app
 ```
 
 Login

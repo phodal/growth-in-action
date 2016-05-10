@@ -121,7 +121,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li><a href="#移动应用">移动应用</a><ul>
-<li><a href="#ionic-2">Ionic 2</a></li>
+<li><a href="#ionic-2">Ionic 2</a><ul>
+<li><a href="#构建应用">构建应用</a></li>
+</ul></li>
 <li><a href="#login">Login</a><ul>
 <li><a href="#json-web-tokens">Json Web Tokens</a></li>
 </ul></li>
@@ -789,6 +791,63 @@ Downloading: https://github.com/driftyco/ionic2-app-base/archive/master.zip
 Downloading: https://github.com/driftyco/ionic2-starter-tabs/archive/master.zip
 [=============================]  100%  0.0s
 Installing npm packages...</code></pre>
+<p>然后到<code>growth-blog-app</code>目录，执行相应的起serve命令，我们就可以开始我们的项目了：</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> serve</code></pre></div>
+<p>这时候Ionic将做一些额外的事，才能启动我们的服务，如：</p>
+<ul>
+<li>删除<code>www/build</code>目录下的文件</li>
+<li>编译SASS到CSS</li>
+<li>编译文件到HTML</li>
+<li>编译字体</li>
+<li>等等</li>
+</ul>
+<p>最后，它将启动一个Web服务，URL为<a href="http://localhost:8100" class="uri">http://localhost:8100</a></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Running</span> <span class="st">&#39;serve:before&#39;</span> gulp task before serve
+[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;clean&#39;</span>...
+[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;clean&#39;</span> after 6.07 ms
+[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;watch&#39;</span>...
+[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;sass&#39;</span>...
+[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;html&#39;</span>...
+[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;fonts&#39;</span>...
+[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;scripts&#39;</span>...
+[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;scripts&#39;</span> after 43 ms
+[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;html&#39;</span> after 51 ms
+[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;fonts&#39;</span> after 54 ms
+[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;sass&#39;</span> after 738 ms
+<span class="kw">7.6</span> MB bytes written (5.62 seconds)
+[<span class="kw">20</span>:59:22] Finished <span class="st">&#39;watch&#39;</span> after 6.62 s
+[<span class="kw">20</span>:59:22] Starting <span class="st">&#39;serve:before&#39;</span>...
+[<span class="kw">20</span>:59:22] Finished <span class="st">&#39;serve:before&#39;</span> after 3.87 μs
+
+<span class="kw">Running</span> live reload server: http://localhost:35729
+<span class="kw">Watching</span>: www/**/*, !www/lib/**/*
+√ <span class="kw">Running</span> dev server:  http://localhost:8100
+<span class="kw">Ionic</span> server commands, enter:
+  <span class="kw">restart</span> or r to restart the client app from the root
+  <span class="kw">goto</span> or g and a url to have the app navigate to the given url
+  <span class="kw">consolelogs</span> or c to enable/disable console log output
+  <span class="kw">serverlogs</span> or s to enable/disable server log output
+  <span class="kw">quit</span> or q to shutdown the server and exit
+<span class="kw">ionic</span> $</code></pre></div>
+<p>接着，就可以打开相应的Web页面，如下图所示：</p>
+<figure>
+<img src="./images/ionic-web-view.jpg" alt="Ionic Web预览界面" /><figcaption>Ionic Web预览界面</figcaption>
+</figure>
+<h3 id="构建应用">构建应用</h3>
+<p>由于Ionic是基于Cordova的，我们需要安装Cordova业完成后续的工作。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> npm install -g cordova</code></pre></div>
+<p>为了构建不同的平台的应用，我们就需要添加不同的平台，如:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> platform add android</code></pre></div>
+<p>上面的命令可以为项目添加Android平台的支持，过程如下面的日志所示：</p>
+<pre><code>Adding android project...
+Creating Cordova project for the Android platform:
+    Path: platforms/android
+    Package: io.ionic.starter
+    Name: V2_Test
+    Activity: MainActivity
+    Android target: android-23
+Android project created with cordova-android@5.1.1
+Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app</code></pre>
 <h2 id="login">Login</h2>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
 <pre><code>pip install djangorestframework-jwt</code></pre>
