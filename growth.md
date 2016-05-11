@@ -1031,6 +1031,14 @@ Installing npm packages...
  - ``package.json``则存放相应的node.js的包的依赖
  - ``www``目录用于存放出最后构建出来的内容，以及一些静态资源
 
+由于Angular 2.0使用的是Typescript，所以在这里我们将用typescript进行展示，因此我们的执行命令变成~~：
+
+```
+ionic start growth-blog-app --v2 --ts
+```
+
+``--ts``表示使用的是``typescript``来创建项目，安装的过程是一样的，不一样的是后面写的代码。
+
 执行相应的起serve命令，我们就可以开始我们的项目了：
 
 ```bash
@@ -1160,6 +1168,97 @@ CORS_ALLOW_CREDENTIALS = True
 ```
 
 
+### 详情页
+
+```bash
+ionic g page blog-detail --ts
+```
+
+```bash
+app/pages/blog-detail/
+├── blog-detail.html
+├── blog-detail.ts
+└── blog-detail.scss
+```
+
+修改``app.ts``添加Route:
+
+```
+const ROUTES = [
+  {path: '/app/blog/:id', component: BlogDetailPage}
+];
+
+@App({
+  template: '<ion-nav [root]="rootPage"></ion-nav>',
+  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+})
+@RouteConfig(ROUTES)
+export class MyApp {
+  rootPage:any = TabsPage;
+
+  constructor(platform:Platform) {
+    this.rootPage = TabsPage;
+    this.initializeApp(platform)
+  }
+
+
+  private initializeApp(platform:Platform) {
+    platform.ready().then(() => {
+      StatusBar.styleDefault();
+    });
+  }
+}
+```
+
+添加服务
+
+```javascript
+
+  getBlogpostDetail(id) {
+    var url = 'http://localhost:8000/api/blogpost/' + id + '?format=json';
+    return this.http.get(url).map(res => res);
+  }
+```  
+
+添加Controller
+
+```javascript
+import {Page, NavController, NavParams} from 'ionic-angular';
+import {BlogpostServices} from "../../services/BlogpostServices";
+
+@Page({
+  templateUrl: 'build/pages/blog-detail/blog-detail.html',
+  providers: [BlogpostServices]
+})
+export class BlogDetailPage {
+  private navParams;
+  private blogServices;
+  private blogpost;
+
+  constructor(public nav:NavController, navParams:NavParams, blogServices:BlogpostServices) {
+    this.nav = nav;
+    this.navParams = navParams;
+    this.blogServices = blogServices;
+
+    this.initService();
+  }
+
+  private initService() {
+    let id = this.navParams.get('id');
+    this.blogServices.getBlogpostDetail(id).subscribe(
+      data => {
+        this.blogpost = JSON.parse(data._body);
+        console.log(this.blogpost);
+      },
+      err => console.log('Error: ' + JSON.stringify(err)),
+      () => console.log('Get Blogpost')
+    );
+  }
+}
+```
+
+
+
 Login
 ---
 
@@ -1177,6 +1276,14 @@ urlpatterns = patterns(
     url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
 )
 ```
+
+
+Install Angular JWT
+
+```bash
+npm install angular2-jwt
+```
+
 
 TODO
 ---

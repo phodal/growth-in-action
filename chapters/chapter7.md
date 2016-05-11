@@ -371,6 +371,14 @@ urlpatterns = patterns(
 )
 ```
 
+
+Install Angular JWT
+
+```bash
+npm install angular2-jwt
+```
+
+
 TODO
 ---
 

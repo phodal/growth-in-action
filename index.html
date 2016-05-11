@@ -126,6 +126,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#博客列表页">博客列表页</a><ul>
 <li><a href="#添加跨域支持">添加跨域支持</a></li>
+<li><a href="#详情页">详情页</a></li>
 </ul></li>
 <li><a href="#login">Login</a><ul>
 <li><a href="#json-web-tokens">Json Web Tokens</a></li>
@@ -842,6 +843,9 @@ Installing npm packages...</code></pre>
 <li><code>package.json</code>则存放相应的node.js的包的依赖</li>
 <li><code>www</code>目录用于存放出最后构建出来的内容，以及一些静态资源</li>
 </ul>
+<p>由于Angular 2.0使用的是Typescript，所以在这里我们将用typescript进行展示，因此我们的执行命令变成~~：</p>
+<pre><code>ionic start growth-blog-app --v2 --ts</code></pre>
+<p><code>--ts</code>表示使用的是<code>typescript</code>来创建项目，安装的过程是一样的，不一样的是后面写的代码。</p>
 <p>执行相应的起serve命令，我们就可以开始我们的项目了：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> serve</code></pre></div>
 <p>这时候Ionic将做一些额外的事，才能启动我们的服务，如：</p>
@@ -926,6 +930,76 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
 )</code></pre>
 <p>对应的配置：</p>
 <pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
+<h3 id="详情页">详情页</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> g page blog-detail --ts</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">app/pages/blog-detail/</span>
+├── <span class="kw">blog-detail.html</span>
+├── <span class="kw">blog-detail.ts</span>
+└── <span class="kw">blog-detail.scss</span></code></pre></div>
+<p>修改<code>app.ts</code>添加Route:</p>
+<pre><code>const ROUTES = [
+  {path: &#39;/app/blog/:id&#39;, component: BlogDetailPage}
+];
+
+@App({
+  template: &#39;&lt;ion-nav [root]=&quot;rootPage&quot;&gt;&lt;/ion-nav&gt;&#39;,
+  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+})
+@RouteConfig(ROUTES)
+export class MyApp {
+  rootPage:any = TabsPage;
+
+  constructor(platform:Platform) {
+    this.rootPage = TabsPage;
+    this.initializeApp(platform)
+  }
+
+
+  private initializeApp(platform:Platform) {
+    platform.ready().then(() =&gt; {
+      StatusBar.styleDefault();
+    });
+  }
+}</code></pre>
+<p>添加服务</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">
+  <span class="at">getBlogpostDetail</span>(id) <span class="op">{</span>
+    <span class="kw">var</span> url <span class="op">=</span> <span class="st">&#39;http://localhost:8000/api/blogpost/&#39;</span> <span class="op">+</span> id <span class="op">+</span> <span class="st">&#39;?format=json&#39;</span><span class="op">;</span>
+    <span class="cf">return</span> <span class="kw">this</span>.<span class="va">http</span>.<span class="at">get</span>(url).<span class="at">map</span>(res <span class="op">=&gt;</span> res)<span class="op">;</span>
+  <span class="op">}</span></code></pre></div>
+<p>添加Controller</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="im">import</span> <span class="op">{</span>Page<span class="op">,</span> NavController<span class="op">,</span> NavParams<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ionic-angular&#39;</span><span class="op">;</span>
+<span class="im">import</span> <span class="op">{</span>BlogpostServices<span class="op">}</span> <span class="im">from</span> <span class="st">&quot;../../services/BlogpostServices&quot;</span><span class="op">;</span>
+
+@<span class="at">Page</span>(<span class="op">{</span>
+  <span class="dt">templateUrl</span><span class="op">:</span> <span class="st">&#39;build/pages/blog-detail/blog-detail.html&#39;</span><span class="op">,</span>
+  <span class="dt">providers</span><span class="op">:</span> [BlogpostServices]
+<span class="op">}</span>)
+<span class="im">export</span> <span class="kw">class</span> BlogDetailPage <span class="op">{</span>
+  <span class="kw">private</span> navParams<span class="op">;</span>
+  <span class="kw">private</span> blogServices<span class="op">;</span>
+  <span class="kw">private</span> blogpost<span class="op">;</span>
+
+  <span class="at">constructor</span>(<span class="kw">public</span> <span class="dt">nav</span><span class="op">:</span>NavController<span class="op">,</span> <span class="dt">navParams</span><span class="op">:</span>NavParams<span class="op">,</span> <span class="dt">blogServices</span><span class="op">:</span>BlogpostServices) <span class="op">{</span>
+    <span class="kw">this</span>.<span class="at">nav</span> <span class="op">=</span> nav<span class="op">;</span>
+    <span class="kw">this</span>.<span class="at">navParams</span> <span class="op">=</span> navParams<span class="op">;</span>
+    <span class="kw">this</span>.<span class="at">blogServices</span> <span class="op">=</span> blogServices<span class="op">;</span>
+
+    <span class="kw">this</span>.<span class="at">initService</span>()<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">private</span> <span class="at">initService</span>() <span class="op">{</span>
+    <span class="kw">let</span> id <span class="op">=</span> <span class="kw">this</span>.<span class="va">navParams</span>.<span class="at">get</span>(<span class="st">&#39;id&#39;</span>)<span class="op">;</span>
+    <span class="kw">this</span>.<span class="va">blogServices</span>.<span class="at">getBlogpostDetail</span>(id).<span class="at">subscribe</span>(
+      data <span class="op">=&gt;</span> <span class="op">{</span>
+        <span class="kw">this</span>.<span class="at">blogpost</span> <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">data</span>.<span class="at">_body</span>)<span class="op">;</span>
+        <span class="va">console</span>.<span class="at">log</span>(<span class="kw">this</span>.<span class="at">blogpost</span>)<span class="op">;</span>
+      <span class="op">},</span>
+      err <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Error: &#39;</span> <span class="op">+</span> <span class="va">JSON</span>.<span class="at">stringify</span>(err))<span class="op">,</span>
+      () <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Get Blogpost&#39;</span>)
+    )<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
 <h2 id="login">Login</h2>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
 <pre><code>pip install djangorestframework-jwt</code></pre>
@@ -935,6 +1009,8 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
 
     url(r&#39;^api-token-auth/&#39;, &#39;rest_framework_jwt.views.obtain_jwt_token&#39;),
 )</code></pre>
+<p>Install Angular JWT</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install angular2-jwt</code></pre></div>
 <h2 id="todo">TODO</h2>
 <h1 id="前端重构">前端重构</h1>
 <h2 id="mvvm">MVVM</h2>
