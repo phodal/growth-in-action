@@ -1277,6 +1277,39 @@ urlpatterns = patterns(
 )
 ```
 
+```
+constructor(http: Http, nav:NavController) {
+  this.nav = nav;
+  this.http = http;
+  this.local.get('id_token').then(
+    (data) => {
+      this.user = this.jwtHelper.decodeToken(data).username;
+    }
+  );
+}
+  
+login(credentials) {
+  this.contentHeader = new Headers({"Content-Type": "application/json"});
+  this.http.post(this.LOGIN_URL, JSON.stringify(credentials), {headers: this.contentHeader})
+    .map(res => res.json())
+    .subscribe(
+      data => this.authSuccess(data.token),
+      err => console.log(err)
+    );
+}
+
+authSuccess(token) {
+  this.local.set('id_token', token);
+  this.user = this.jwtHelper.decodeToken(token).username;
+}
+```
+
+```
+logout() {
+  this.local.remove('id_token');
+  this.user = null;
+}
+```
 
 Install Angular JWT
 

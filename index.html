@@ -1009,6 +1009,34 @@ export class MyApp {
 
     url(r&#39;^api-token-auth/&#39;, &#39;rest_framework_jwt.views.obtain_jwt_token&#39;),
 )</code></pre>
+<pre><code>constructor(http: Http, nav:NavController) {
+  this.nav = nav;
+  this.http = http;
+  this.local.get(&#39;id_token&#39;).then(
+    (data) =&gt; {
+      this.user = this.jwtHelper.decodeToken(data).username;
+    }
+  );
+}
+  
+login(credentials) {
+  this.contentHeader = new Headers({&quot;Content-Type&quot;: &quot;application/json&quot;});
+  this.http.post(this.LOGIN_URL, JSON.stringify(credentials), {headers: this.contentHeader})
+    .map(res =&gt; res.json())
+    .subscribe(
+      data =&gt; this.authSuccess(data.token),
+      err =&gt; console.log(err)
+    );
+}
+
+authSuccess(token) {
+  this.local.set(&#39;id_token&#39;, token);
+  this.user = this.jwtHelper.decodeToken(token).username;
+}</code></pre>
+<pre><code>logout() {
+  this.local.remove(&#39;id_token&#39;);
+  this.user = null;
+}</code></pre>
 <p>Install Angular JWT</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install angular2-jwt</code></pre></div>
 <h2 id="todo">TODO</h2>
