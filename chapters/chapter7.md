@@ -381,7 +381,7 @@ constructor(http: Http, nav:NavController) {
     }
   );
 }
-  
+
 login(credentials) {
   this.contentHeader = new Headers({"Content-Type": "application/json"});
   this.http.post(this.LOGIN_URL, JSON.stringify(credentials), {headers: this.contentHeader})
@@ -411,6 +411,18 @@ Install Angular JWT
 npm install angular2-jwt
 ```
 
+Profile
+---
+
+```
+def list(self, request):
+    search_param = self.request.query_params.get('username', None)
+    if search_param is not None:
+        queryset = User.objects.filter(username__contains=search_param)
+
+    serializer = UserSerializer(queryset, many=True)
+    return Response(serializer.data)
+```
 
 TODO
 ---
