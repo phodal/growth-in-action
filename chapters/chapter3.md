@@ -156,5 +156,21 @@ INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 
 ![jenkins-getting-started.jpg](images/jenkins-getting-started.jpg)
 
+Jenkins创建任务
+---
 
+欢迎使用Jenkins!
 
+-> 开始创建一个新任务.
+
+源码管理中填入: [https://github.com/phodal/growth-in-action-python](https://github.com/phodal/growth-in-action-python)
+
+-> 创建shell
+
+```bash
+virtualenv --distribute -p /usr/local/bin/python3.5 growth-django
+source growth-django/bin/activate
+pip install -r requirements.txt
+```
+
+![build-console-ouput.jpg](images/build-console-ouput.jpg)
