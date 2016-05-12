@@ -690,6 +690,30 @@ Destroying test database for alias &#39;default&#39;...
 <p>需要注意的是，如果我们的单元测试如果可以测试到页面的内容——即没有使用JavaScript对页面的内容进行修改，那么我们应该使用单元测试即可。如测试金字塔所说，越底层的测试越快。</p>
 <p>在我们编写完这些测试后，我们就可以搭建好相应的持续集成来运行这些测试了。</p>
 <h2 id="搭建持续集成">搭建持续集成</h2>
+<p>这里我们将使用Jenkins来完成这部分的工具，它是一个用Java编写的开源的持续集成工具。</p>
+<blockquote>
+<p>它提供了软件开发的持续集成服务。它运行在Servlet容器中（例如Apache Tomcat）。它支持软件配置管理（SCM）工具（包括AccuRev SCM、CVS、Subversion、Git、Perforce、Clearcase和和RTC），可以执行基于Apache Ant和Apache Maven的项目，以及任意的Shell脚本和Windows批处理命令。</p>
+</blockquote>
+<p>要使用Jenkins，只需要从Jenkins的主页上(<a href="https://jenkins.io/" class="uri">https://jenkins.io/</a>)下载最新的 jenkins.war文件。然后运行</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">java</span> -jar jenkins.war</code></pre></div>
+<p>便可以启动:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Running</span> from: /Users/fdhuang/repractise/growth-ci/jenkins.war
+<span class="kw">webroot</span>: <span class="ot">$user</span>.home/.jenkins
+<span class="kw">May</span> 12, 2016 10:55:18 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="kw">INFO</span>: Logging initialized @489ms
+<span class="kw">May</span> 12, 2016 10:55:18 PM winstone.Logger logInternal
+<span class="kw">INFO</span>: Beginning extraction from war file
+<span class="kw">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog warn
+<span class="kw">WARNING</span>: Empty contextPath
+<span class="kw">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="kw">INFO</span>: jetty-9.2.z-SNAPSHOT
+<span class="kw">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="kw">INFO</span>: NO JSP Support for /, did not find org.eclipse.jetty.jsp.JettyJspServlet
+<span class="kw">Jenkins</span> home directory: /Users/fdhuang/.jenkins found at: <span class="ot">$user</span>.home/.jenkins
+<span class="kw">May</span> 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="kw">INFO</span>: Started w.@68c34b0<span class="dt">{/,file:/Users/fdhuang/.jenkins/war/,AVAILABLE}{/Users/fdhuang/.jenkins/war}</span>
+<span class="kw">May</span> 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="kw">INFO</span>: Started ServerConnector@733a9ac6<span class="dt">{HTTP/1.1}{0.0.0.0:8080}</span></code></pre></div>
 <h1 id="更多功能">更多功能</h1>
 <p>在Django框架中，内置了很多应用在它的“contrib”包中，这些包括：</p>
 <ul>

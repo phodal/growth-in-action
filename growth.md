@@ -805,6 +805,40 @@ class BlogpostFromHomepageCase(LiveServerTestCase):
 搭建持续集成
 ---
 
+这里我们将使用Jenkins来完成这部分的工具，它是一个用Java编写的开源的持续集成工具。
+
+> 它提供了软件开发的持续集成服务。它运行在Servlet容器中（例如Apache Tomcat）。它支持软件配置管理（SCM）工具（包括AccuRev SCM、CVS、Subversion、Git、Perforce、Clearcase和和RTC），可以执行基于Apache Ant和Apache Maven的项目，以及任意的Shell脚本和Windows批处理命令。
+
+要使用Jenkins，只需要从Jenkins的主页上([https://jenkins.io/](https://jenkins.io/))下载最新的 jenkins.war文件。然后运行
+
+```bash
+java -jar jenkins.war
+```
+
+便可以启动:
+
+```bash
+Running from: /Users/fdhuang/repractise/growth-ci/jenkins.war
+webroot: $user.home/.jenkins
+May 12, 2016 10:55:18 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: Logging initialized @489ms
+May 12, 2016 10:55:18 PM winstone.Logger logInternal
+INFO: Beginning extraction from war file
+May 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog warn
+WARNING: Empty contextPath
+May 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: jetty-9.2.z-SNAPSHOT
+May 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: NO JSP Support for /, did not find org.eclipse.jetty.jsp.JettyJspServlet
+Jenkins home directory: /Users/fdhuang/.jenkins found at: $user.home/.jenkins
+May 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: Started w.@68c34b0{/,file:/Users/fdhuang/.jenkins/war/,AVAILABLE}{/Users/fdhuang/.jenkins/war}
+May 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
+```
+
+
+
 
 
 
