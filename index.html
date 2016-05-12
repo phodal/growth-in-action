@@ -100,6 +100,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#selenium与第一个ui测试">Selenium与第一个UI测试</a></li>
 </ul></li>
 <li><a href="#搭建持续集成">搭建持续集成</a></li>
+<li><a href="#jenkins创建任务">Jenkins创建任务</a></li>
 </ul></li>
 <li><a href="#更多功能">更多功能</a><ul>
 <li><a href="#comments">Comments</a></li>
@@ -717,6 +718,24 @@ Destroying test database for alias &#39;default&#39;...
 <p>接着，打开<a href="http://0.0.0.0:8080/" class="uri">http://0.0.0.0:8080/</a>就可以进行后续的安装，如下图所示：</p>
 <figure>
 <img src="images/jenkins-install.jpg" alt="jenkins-install.jpg" /><figcaption>jenkins-install.jpg</figcaption>
+</figure>
+<p>慢慢等其安装完成：</p>
+<figure>
+<img src="images/jenkins-getting-started.jpg" alt="jenkins-getting-started.jpg" /><figcaption>jenkins-getting-started.jpg</figcaption>
+</figure>
+<h2 id="jenkins创建任务">Jenkins创建任务</h2>
+<p>欢迎使用Jenkins!</p>
+<p>-&gt; 开始创建一个新任务.</p>
+<p>源码管理中填入: <a href="https://github.com/phodal/growth-in-action-python" class="uri">https://github.com/phodal/growth-in-action-python</a></p>
+<p>-&gt; 创建shell</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">virtualenv</span> --distribute -p /usr/local/bin/python3.5 growth-django
+<span class="kw">source</span> growth-django/bin/activate
+<span class="kw">pip</span> install -r requirements.txt</code></pre></div>
+<figure>
+<img src="images/build-console-ouput.jpg" alt="build-console-ouput.jpg" /><figcaption>build-console-ouput.jpg</figcaption>
+</figure>
+<figure>
+<img src="images/jenkins-failure-setup.jpg" alt="jenkins-failure-setup.jpg" /><figcaption>jenkins-failure-setup.jpg</figcaption>
 </figure>
 <h1 id="更多功能">更多功能</h1>
 <p>在Django框架中，内置了很多应用在它的“contrib”包中，这些包括：</p>
