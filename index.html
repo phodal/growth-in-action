@@ -99,8 +99,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#编写自动化测试">编写自动化测试</a><ul>
 <li><a href="#selenium与第一个ui测试">Selenium与第一个UI测试</a></li>
 </ul></li>
-<li><a href="#搭建持续集成">搭建持续集成</a></li>
+<li><a href="#搭建持续集成">搭建持续集成</a><ul>
 <li><a href="#jenkins创建任务">Jenkins创建任务</a></li>
+<li><a href="#创建shell">创建shell</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#更多功能">更多功能</a><ul>
 <li><a href="#comments">Comments</a></li>
@@ -723,20 +725,52 @@ Destroying test database for alias &#39;default&#39;...
 <figure>
 <img src="images/jenkins-getting-started.jpg" alt="jenkins-getting-started.jpg" /><figcaption>jenkins-getting-started.jpg</figcaption>
 </figure>
-<h2 id="jenkins创建任务">Jenkins创建任务</h2>
-<p>欢迎使用Jenkins!</p>
-<p>-&gt; 开始创建一个新任务.</p>
-<p>源码管理中填入: <a href="https://github.com/phodal/growth-in-action-python" class="uri">https://github.com/phodal/growth-in-action-python</a></p>
-<p>-&gt; 创建shell</p>
+<p>等安装完成后，我们就可以开始使用Jenkins来创建我们的任务了。</p>
+<h3 id="jenkins创建任务">Jenkins创建任务</h3>
+<p>在首页，我们会看到“开始创建一个新任务”的提示，点击它。</p>
+<p>源码管理中选择Git，并填入我们代码的地址：</p>
+<pre><code>[https://github.com/phodal/growth-in-action-python-code](https://github.com/phodal/growth-in-action-python-code)</code></pre>
+<p>如下图所示:</p>
+<figure>
+<img src="images/jenkins-repo-setup.jpg" alt="jenkins-repo-setup.jpg" /><figcaption>jenkins-repo-setup.jpg</figcaption>
+</figure>
+<p>然后就是构建触发器，一共有五种类型的触发器，意思也很容易理解：</p>
+<ul>
+<li>触发远程构建 (例如,使用脚本)</li>
+<li>Build after other projects are built</li>
+<li>Build periodically</li>
+<li>Build when a change is pushed to GitHub</li>
+<li>Poll SCM</li>
+</ul>
+<p>在这里，我们要使用的是GitHub这个，它的原理是:</p>
+<blockquote>
+<p>This job will be triggered if jenkins will receive PUSH GitHub hook from repo defined in scm section</p>
+</blockquote>
+<p>即Jenkins在监听GitHub上对应的PUSH hook，当发生代码提交时，就会运行我们的测试。</p>
+<p>由于，我们暂时不需要一些特殊的<code>构建环境</code>配置，我们就可以将这个放空。接着，我们就可以配置<code>构建</code>了。</p>
+<h3 id="创建shell">创建shell</h3>
+<p>在这里我们需要添加的构建步骤是：<code>execute shell</code>，先让我们写一个简单的安装依赖的shell</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">virtualenv</span> --distribute -p /usr/local/bin/python3.5 growth-django
 <span class="kw">source</span> growth-django/bin/activate
 <span class="kw">pip</span> install -r requirements.txt</code></pre></div>
+<p>然后在保存后，我们可以尝试立即构建这个项目：</p>
 <figure>
 <img src="images/build-console-ouput.jpg" alt="build-console-ouput.jpg" /><figcaption>build-console-ouput.jpg</figcaption>
 </figure>
+<p>在编写shell的过程中，我们要经过一些尝试，在这其中会经历一些失败的情形——即使是大部分有相关经验的程序员。如下图就是一次编写构建脚本引起的构建失败的例子：</p>
 <figure>
 <img src="images/jenkins-failure-setup.jpg" alt="jenkins-failure-setup.jpg" /><figcaption>jenkins-failure-setup.jpg</figcaption>
 </figure>
+<p>最后，我们就得到下面的一个shell脚本，我们就可以将其变成相应的运行CI的脚本。以便于它可以在其他环境中使用：</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/usr/bin/env bash</span>
+<span class="kw">virtualenv</span> --distribute -p /usr/local/bin/python3.5 growth-django
+<span class="kw">source</span> growth-django/bin/activate
+<span class="kw">pip</span> install -r requirements.txt
+<span class="kw">python</span> manage.py test
+<span class="kw">python</span> manage.py test test</code></pre></div>
+<p>记得给你的shell文件，加上执行的标志：</p>
+<pre><code>chmod u+x ./scripts/ci.sh</code></pre>
+<p>最后，我们就可以修改CI上相应的构建环境的配置。</p>
 <h1 id="更多功能">更多功能</h1>
 <p>在Django框架中，内置了很多应用在它的“contrib”包中，这些包括：</p>
 <ul>

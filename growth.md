@@ -845,16 +845,41 @@ INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 
 ![jenkins-getting-started.jpg](images/jenkins-getting-started.jpg)
 
-Jenkins创建任务
----
+等安装完成后，我们就可以开始使用Jenkins来创建我们的任务了。
 
-欢迎使用Jenkins!
+### Jenkins创建任务
 
--> 开始创建一个新任务.
+在首页，我们会看到“开始创建一个新任务”的提示，点击它。
 
-源码管理中填入: [https://github.com/phodal/growth-in-action-python](https://github.com/phodal/growth-in-action-python)
+源码管理中选择Git，并填入我们代码的地址：
 
--> 创建shell
+```
+[https://github.com/phodal/growth-in-action-python-code](https://github.com/phodal/growth-in-action-python-code)
+```
+
+如下图所示:
+
+![jenkins-repo-setup.jpg](images/jenkins-repo-setup.jpg)
+
+然后就是构建触发器，一共有五种类型的触发器，意思也很容易理解：
+
+ - 触发远程构建 (例如,使用脚本)
+ - Build after other projects are built 
+ - Build periodically
+ - Build when a change is pushed to GitHub
+ - Poll SCM
+
+在这里，我们要使用的是GitHub这个，它的原理是:
+
+> This job will be triggered if jenkins will receive PUSH GitHub hook from repo defined in scm section
+
+即Jenkins在监听GitHub上对应的PUSH hook，当发生代码提交时，就会运行我们的测试。
+
+由于，我们暂时不需要一些特殊的``构建环境``配置，我们就可以将这个放空。接着，我们就可以配置``构建``了。
+
+### 创建shell
+
+在这里我们需要添加的构建步骤是：``execute shell``，先让我们写一个简单的安装依赖的shell
 
 ```bash
 virtualenv --distribute -p /usr/local/bin/python3.5 growth-django
@@ -862,11 +887,32 @@ source growth-django/bin/activate
 pip install -r requirements.txt
 ```
 
+然后在保存后，我们可以尝试立即构建这个项目：
+
 ![build-console-ouput.jpg](images/build-console-ouput.jpg)
+
+在编写shell的过程中，我们要经过一些尝试，在这其中会经历一些失败的情形——即使是大部分有相关经验的程序员。如下图就是一次编写构建脚本引起的构建失败的例子：
 
 ![jenkins-failure-setup.jpg](images/jenkins-failure-setup.jpg)
 
+最后，我们就得到下面的一个shell脚本，我们就可以将其变成相应的运行CI的脚本。以便于它可以在其他环境中使用：
 
+```bash
+#!/usr/bin/env bash
+virtualenv --distribute -p /usr/local/bin/python3.5 growth-django
+source growth-django/bin/activate
+pip install -r requirements.txt
+python manage.py test
+python manage.py test test
+```
+
+记得给你的shell文件，加上执行的标志：
+
+```
+chmod u+x ./scripts/ci.sh
+```
+
+最后，我们就可以修改CI上相应的构建环境的配置。
 
 更多功能
 ===
