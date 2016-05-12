@@ -131,6 +131,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#login">Login</a><ul>
 <li><a href="#json-web-tokens">Json Web Tokens</a></li>
 </ul></li>
+<li><a href="#profile">Profile</a></li>
+<li><a href="#创建博客">创建博客</a></li>
 <li><a href="#todo">TODO</a></li>
 </ul></li>
 <li><a href="#前端重构">前端重构</a><ul>
@@ -1018,7 +1020,7 @@ export class MyApp {
     }
   );
 }
-  
+
 login(credentials) {
   this.contentHeader = new Headers({&quot;Content-Type&quot;: &quot;application/json&quot;});
   this.http.post(this.LOGIN_URL, JSON.stringify(credentials), {headers: this.contentHeader})
@@ -1039,6 +1041,41 @@ authSuccess(token) {
 }</code></pre>
 <p>Install Angular JWT</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install angular2-jwt</code></pre></div>
+<h2 id="profile">Profile</h2>
+<pre><code>def list(self, request):
+    search_param = self.request.query_params.get(&#39;username&#39;, None)
+    if search_param is not None:
+        queryset = User.objects.filter(username__contains=search_param)
+
+    serializer = UserSerializer(queryset, many=True)
+    return Response(serializer.data)</code></pre>
+<h2 id="创建博客">创建博客</h2>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">
+SAFE_METHODS <span class="op">=</span> [<span class="st">&#39;GET&#39;</span>, <span class="st">&#39;HEAD&#39;</span>, <span class="st">&#39;OPTIONS&#39;</span>]
+
+<span class="kw">class</span> IsAuthenticatedOrReadOnly(BasePermission):
+    <span class="co">&quot;&quot;&quot;</span>
+<span class="co">    The request is authenticated as a user, or is a read-only request.</span>
+<span class="co">    &quot;&quot;&quot;</span>
+
+    <span class="kw">def</span> has_permission(<span class="va">self</span>, request, view):
+        <span class="cf">if</span> (request.method <span class="op">in</span> SAFE_METHODS <span class="op">or</span>
+            request.user <span class="op">and</span>
+            request.user.is_authenticated()):
+            <span class="cf">return</span> <span class="va">True</span>
+        <span class="cf">return</span> <span class="va">False</span>
+<span class="kw">class</span> BlogpsotSerializer(serializers.HyperlinkedModelSerializer):
+    <span class="kw">class</span> Meta:
+        model <span class="op">=</span> Blogpost
+        fields <span class="op">=</span> (<span class="st">&#39;title&#39;</span>, <span class="st">&#39;author&#39;</span>, <span class="st">&#39;body&#39;</span>, <span class="st">&#39;slug&#39;</span>, <span class="st">&#39;id&#39;</span>)
+
+
+<span class="co"># ViewSets define the view behavior.</span>
+<span class="kw">class</span> BlogpostSet(viewsets.ModelViewSet):
+    permission_classes <span class="op">=</span> (permissions.IsAuthenticatedOrReadOnly,)
+    queryset <span class="op">=</span> Blogpost.objects.<span class="bu">all</span>()
+    serializer_class <span class="op">=</span> BlogpsotSerializer
+    </code></pre></div>
 <h2 id="todo">TODO</h2>
 <h1 id="前端重构">前端重构</h1>
 <h2 id="mvvm">MVVM</h2>

@@ -424,6 +424,39 @@ def list(self, request):
     return Response(serializer.data)
 ```
 
+创建博客
+---
+
+```python
+
+SAFE_METHODS = ['GET', 'HEAD', 'OPTIONS']
+
+class IsAuthenticatedOrReadOnly(BasePermission):
+    """
+    The request is authenticated as a user, or is a read-only request.
+    """
+
+    def has_permission(self, request, view):
+        if (request.method in SAFE_METHODS or
+            request.user and
+            request.user.is_authenticated()):
+            return True
+        return False
+class BlogpsotSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Blogpost
+        fields = ('title', 'author', 'body', 'slug', 'id')
+
+
+# ViewSets define the view behavior.
+class BlogpostSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Blogpost.objects.all()
+    serializer_class = BlogpsotSerializer
+    
+```        
+
+
 TODO
 ---
 
