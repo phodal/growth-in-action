@@ -152,4 +152,9 @@ INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 
 ![jenkins-install.jpg](images/jenkins-install.jpg)
 
+慢慢等其安装完成：
+
+![jenkins-getting-started.jpg](images/jenkins-getting-started.jpg)
+
+
 
