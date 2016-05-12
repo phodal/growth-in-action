@@ -174,3 +174,7 @@ pip install -r requirements.txt
 ```
 
 ![build-console-ouput.jpg](images/build-console-ouput.jpg)
+
+![jenkins-failure-setup.jpg](images/jenkins-failure-setup.jpg)
+
+
