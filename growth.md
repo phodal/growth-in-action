@@ -837,8 +837,9 @@ May 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
 INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 ```
 
+接着，打开[http://0.0.0.0:8080/](http://0.0.0.0:8080/)就可以进行后续的安装，如下图所示：
 
-
+![jenkins-install.jpg](images/jenkins-install.jpg)
 
 
 
