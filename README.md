@@ -3,20 +3,19 @@ Growth In Action Django
 
 > 这本书是[全栈增长工程师指南](https://github.com/phodal/growth-ebook)的Python(Django)实战版。
 
-在Growth中我们介绍的只是一系列的实践，而Growth In Action则会带领读者去履行这些实践。
+在Growth中我们介绍的只是一系列的实践，而Growth实战则会带领读者去履行这些实践。
 
 你将会看到：
 
  - 如何去开发一个Web应用（博客）
  - 如何编写单元测试
- - 如何编写功能测试，自动化UI测试
- - 搭建持续集成
+ - 如何编写功能测试、自动化UI测试
+ - 搭建并使用持续集成
  - 添加SEO支持
- - 支持APP使用
- - 开发相应的APP
+ - 支持APP使用的API
+ - 开发相应的APP——登录、注册、发现文章、查看文章
  - 添加单页面应用的前端
  - 自动化部署
- - 如何进行小步提交
 
 Web应用代码: [https://github.com/phodal/growth-in-action-django-code](https://github.com/phodal/growth-in-action-django-code)
 APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.com/phodal/growth-in-action-hybird)
