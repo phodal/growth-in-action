@@ -787,6 +787,72 @@ Destroying test database for alias &#39;default&#39;...
 <p>这意味着，我们可以直接用Django一些内置的组件来完成很多功能，先让我们来看看怎么完成一个简单的评论功能。</p>
 <h2 id="评论功能">评论功能</h2>
 <p>在早期的Django版本(1.6以前)中，Comments是自带的组件，但是后来它被从标准组件中移除了。</p>
+<pre><code>pip install django-contrib-comments</code></pre>
+<p>添加到<code>requirements.txt</code>:</p>
+<pre><code>django==1.9.4
+selenium==2.53.1
+fabric==1.10.2
+djangorestframework==3.3.3
+djangorestframework-jwt==1.7.2
+django-cors-headers==1.1.0
+django-contrib-comments==1.7.1</code></pre>
+<p>添加到<code>INSTALLED_APPS</code>，如下:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">INSTALLED_APPS <span class="op">=</span> (
+    <span class="st">&#39;django.contrib.admin&#39;</span>,
+    <span class="co">&#39;django.contrib.auth&#39;</span>,
+    <span class="co">&#39;django.contrib.contenttypes&#39;</span>,
+    <span class="co">&#39;django.contrib.sessions&#39;</span>,
+    <span class="co">&#39;django.contrib.messages&#39;</span>,
+    <span class="co">&#39;django.contrib.staticfiles&#39;</span>,
+    <span class="co">&#39;django.contrib.sites&#39;</span>,
+    <span class="co">&#39;django_comments&#39;</span>,
+    <span class="co">&#39;rest_framework&#39;</span>,
+    <span class="co">&#39;blogpost&#39;</span>
+)</code></pre></div>
+<pre><code>Operations to perform:
+  Apply all migrations: contenttypes, admin, blogpost, auth, sites, sessions, django_comments
+Running migrations:
+  Rendering model states... DONE
+  Applying sites.0001_initial... OK
+  Applying django_comments.0001_initial... OK
+  Applying django_comments.0002_update_user_email_field_length... OK
+  Applying django_comments.0003_add_submit_date_index... OK
+  Applying sites.0002_alter_domain_unique... OK
+(growth-django)</code></pre>
+<p>添加urls.py:</p>
+<pre><code>url(r&#39;^comments/&#39;, include(&#39;django_comments.urls&#39;)),</code></pre>
+<pre><code>{% extends &#39;base.html&#39; %}
+{% load comments %}
+
+{% block head_title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+&lt;div class=&quot;mdl-card mdl-shadow--2dp&quot;&gt;
+    &lt;div class=&quot;mdl-card__title&quot;&gt;
+        &lt;h2 class=&quot;mdl-card__title-text&quot;&gt;&lt;a href=&quot;{{ post.get_absolute_url }}&quot;&gt;{{ post.title }}&lt;/a&gt;&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;mdl-card__supporting-text&quot;&gt;
+        {{post.body}}
+    &lt;/div&gt;
+    &lt;div class=&quot;mdl-card__actions&quot;&gt;
+        {{post.posted}} - By {{post.author}}
+    &lt;/div&gt;
+&lt;/div&gt;
+
+{% render_comment_list for post %}
+
+{% endblock %}</code></pre>
+<p>报错：</p>
+<figure>
+<img src="images/site_id_issue.jpg" alt="site_id_issue.jpg" /><figcaption>site_id_issue.jpg</figcaption>
+</figure>
+<p>定义<code>SITE_ID</code></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">SITE_ID <span class="op">=</span> <span class="dv">1</span></code></pre></div>
+<p>从后台创建:</p>
+<figure>
+<img src="images/create-comment-backend.jpg" alt="create-comment-backend.jpg" /><figcaption>create-comment-backend.jpg</figcaption>
+</figure>
 <h2 id="sitemap与seo">Sitemap与SEO</h2>
 <h3 id="seo">SEO</h3>
 <h3 id="monthly">Monthly</h3>

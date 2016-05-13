@@ -71,6 +71,45 @@ Running migrations:
 url(r'^comments/', include('django_comments.urls')),
 ```
 
+```
+{% extends 'base.html' %}
+{% load comments %}
+
+{% block head_title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+        {{post.body}}
+    </div>
+    <div class="mdl-card__actions">
+        {{post.posted}} - By {{post.author}}
+    </div>
+</div>
+
+{% render_comment_list for post %}
+
+{% endblock %}
+```
+
+报错：
+
+![site_id_issue.jpg](images/site_id_issue.jpg)
+
+定义``SITE_ID``
+
+```python
+SITE_ID = 1
+```
+
+从后台创建:
+
+![create-comment-backend.jpg](images/create-comment-backend.jpg)
+
 Sitemap与SEO
 ---
 
