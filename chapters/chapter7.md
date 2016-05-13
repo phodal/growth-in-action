@@ -150,33 +150,33 @@ ionic serve
 最后，它将启动一个Web服务，URL为[http://localhost:8100](http://localhost:8100)
 
 ```bash
-Running 'serve:before' gulp task before serve
-[20:59:16] Starting 'clean'...
-[20:59:16] Finished 'clean' after 6.07 ms
-[20:59:16] Starting 'watch'...
-[20:59:16] Starting 'sass'...
-[20:59:16] Starting 'html'...
-[20:59:16] Starting 'fonts'...
-[20:59:16] Starting 'scripts'...
-[20:59:16] Finished 'scripts' after 43 ms
-[20:59:16] Finished 'html' after 51 ms
-[20:59:16] Finished 'fonts' after 54 ms
-[20:59:16] Finished 'sass' after 738 ms
-7.6 MB bytes written (5.62 seconds)
-[20:59:22] Finished 'watch' after 6.62 s
-[20:59:22] Starting 'serve:before'...
-[20:59:22] Finished 'serve:before' after 3.87 μs
+  Running 'serve:before' gulp task before serve
+  [20:59:16] Starting 'clean'...
+  [20:59:16] Finished 'clean' after 6.07 ms
+  [20:59:16] Starting 'watch'...
+  [20:59:16] Starting 'sass'...
+  [20:59:16] Starting 'html'...
+  [20:59:16] Starting 'fonts'...
+  [20:59:16] Starting 'scripts'...
+  [20:59:16] Finished 'scripts' after 43 ms
+  [20:59:16] Finished 'html' after 51 ms
+  [20:59:16] Finished 'fonts' after 54 ms
+  [20:59:16] Finished 'sass' after 738 ms
+  7.6 MB bytes written (5.62 seconds)
+  [20:59:22] Finished 'watch' after 6.62 s
+  [20:59:22] Starting 'serve:before'...
+  [20:59:22] Finished 'serve:before' after 3.87 μs
 
-Running live reload server: http://localhost:35729
-Watching: www/**/*, !www/lib/**/*
-√ Running dev server:  http://localhost:8100
-Ionic server commands, enter:
-  restart or r to restart the client app from the root
-  goto or g and a url to have the app navigate to the given url
-  consolelogs or c to enable/disable console log output
-  serverlogs or s to enable/disable server log output
-  quit or q to shutdown the server and exit
-ionic $
+  Running live reload server: http://localhost:35729
+  Watching: www/**/*, !www/lib/**/*
+  √ Running dev server:  http://localhost:8100
+  Ionic server commands, enter:
+    restart or r to restart the client app from the root
+    goto or g and a url to have the app navigate to the given url
+    consolelogs or c to enable/disable console log output
+    serverlogs or s to enable/disable server log output
+    quit or q to shutdown the server and exit
+  ionic $
 ```
 
 接着，就可以打开相应的Web页面，如下图所示：
@@ -453,7 +453,7 @@ class BlogpostSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Blogpost.objects.all()
     serializer_class = BlogpsotSerializer
-    
+
 ```        
 
 
