@@ -116,11 +116,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#技能选型">技能选型</a></li>
 </ul></li>
 <li><a href="#api">API</a><ul>
+<li><a href="#自动完成">自动完成</a></li>
 <li><a href="#restful">RESTful</a><ul>
 <li><a href="#django-rest-framework">Django REST Framework</a></li>
 </ul></li>
-<li><a href="#cors">CORS</a><ul>
-<li><a href="#django-cors-header">Django CORS Header</a></li>
+<li><a href="#跨域">跨域</a><ul>
+<li><a href="#cors">CORS</a></li>
+<li><a href="#添加跨域支持">添加跨域支持</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#移动应用">移动应用</a><ul>
@@ -128,13 +130,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#构建应用">构建应用</a></li>
 </ul></li>
 <li><a href="#博客列表页">博客列表页</a><ul>
-<li><a href="#添加跨域支持">添加跨域支持</a></li>
+<li><a href="#列表页">列表页</a></li>
 <li><a href="#详情页">详情页</a></li>
 </ul></li>
-<li><a href="#login">Login</a><ul>
+<li><a href="#profile">Profile</a><ul>
 <li><a href="#json-web-tokens">Json Web Tokens</a></li>
+<li><a href="#profile-1">Profile</a></li>
 </ul></li>
-<li><a href="#profile">Profile</a></li>
 <li><a href="#创建博客">创建博客</a></li>
 <li><a href="#todo">TODO</a></li>
 </ul></li>
@@ -791,6 +793,8 @@ Destroying test database for alias &#39;default&#39;...
 <h1 id="前端框架">前端框架</h1>
 <h2 id="技能选型">技能选型</h2>
 <h1 id="api">API</h1>
+<h2 id="自动完成">自动完成</h2>
+<p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。</p>
 <h2 id="restful">RESTful</h2>
 <h3 id="django-rest-framework">Django REST Framework</h3>
 <blockquote>
@@ -818,14 +822,34 @@ pip install django-filter  # Filtering support</code></pre>
     ...
     url(r&#39;^api-auth/&#39;, include(&#39;rest_framework.urls&#39;, namespace=&#39;rest_framework&#39;))
 ]</code></pre>
-<h2 id="cors">CORS</h2>
-<h3 id="django-cors-header">Django CORS Header</h3>
-<pre><code>pip install django-cors-headers</code></pre>
+<h2 id="跨域">跨域</h2>
+<h3 id="cors">CORS</h3>
+<h3 id="添加跨域支持">添加跨域支持</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install django-cors-headers</code></pre></div>
+<pre><code>Collecting django-cors-headers
+  Downloading django-cors-headers-1.1.0.tar.gz
+Building wheels for collected packages: django-cors-headers
+  Running setup.py bdist_wheel for django-cors-headers ... done
+  Stored in directory: /Users/fdhuang/Library/Caches/pip/wheels/b0/75/89/7b17f134fc01b74e10523f3128e45b917da0c5f8638213e073
+Successfully built django-cors-headers
+Installing collected packages: django-cors-headers
+Successfully installed django-cors-headers-1.1.0</code></pre>
+<p>添加到<code>django-cors-headers=1.1.0</code>到<code>requirements.txt</code>文件中。</p>
+<p>添加到<code>settings.py</code>中：</p>
 <pre><code>INSTALLED_APPS = (
     ...
     &#39;corsheaders&#39;,
     ...
 )</code></pre>
+<p>以及对应的中间件：</p>
+<pre><code>MIDDLEWARE_CLASSES = (
+    ...
+    &#39;corsheaders.middleware.CorsMiddleware&#39;,
+    &#39;django.middleware.common.CommonMiddleware&#39;,
+    ...
+)</code></pre>
+<p>对应的配置：</p>
+<pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
 <h1 id="移动应用">移动应用</h1>
 <p>依靠习惯我们还将用Ionic 2继续创建hello,world。</p>
 <h2 id="helloworld">hello,world</h2>
@@ -940,33 +964,33 @@ Installing npm packages...</code></pre>
 <li>等等</li>
 </ul>
 <p>最后，它将启动一个Web服务，URL为<a href="http://localhost:8100" class="uri">http://localhost:8100</a></p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Running</span> <span class="st">&#39;serve:before&#39;</span> gulp task before serve
-[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;clean&#39;</span>...
-[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;clean&#39;</span> after 6.07 ms
-[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;watch&#39;</span>...
-[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;sass&#39;</span>...
-[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;html&#39;</span>...
-[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;fonts&#39;</span>...
-[<span class="kw">20</span>:59:16] Starting <span class="st">&#39;scripts&#39;</span>...
-[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;scripts&#39;</span> after 43 ms
-[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;html&#39;</span> after 51 ms
-[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;fonts&#39;</span> after 54 ms
-[<span class="kw">20</span>:59:16] Finished <span class="st">&#39;sass&#39;</span> after 738 ms
-<span class="kw">7.6</span> MB bytes written (5.62 seconds)
-[<span class="kw">20</span>:59:22] Finished <span class="st">&#39;watch&#39;</span> after 6.62 s
-[<span class="kw">20</span>:59:22] Starting <span class="st">&#39;serve:before&#39;</span>...
-[<span class="kw">20</span>:59:22] Finished <span class="st">&#39;serve:before&#39;</span> after 3.87 μs
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">Running</span> <span class="st">&#39;serve:before&#39;</span> gulp task before serve
+  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;clean&#39;</span>...
+  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;clean&#39;</span> after 6.07 ms
+  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;watch&#39;</span>...
+  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;sass&#39;</span>...
+  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;html&#39;</span>...
+  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;fonts&#39;</span>...
+  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;scripts&#39;</span>...
+  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;scripts&#39;</span> after 43 ms
+  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;html&#39;</span> after 51 ms
+  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;fonts&#39;</span> after 54 ms
+  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;sass&#39;</span> after 738 ms
+  <span class="kw">7.6</span> MB bytes written (5.62 seconds)
+  [<span class="kw">20</span>:59:22] Finished <span class="st">&#39;watch&#39;</span> after 6.62 s
+  [<span class="kw">20</span>:59:22] Starting <span class="st">&#39;serve:before&#39;</span>...
+  [<span class="kw">20</span>:59:22] Finished <span class="st">&#39;serve:before&#39;</span> after 3.87 μs
 
-<span class="kw">Running</span> live reload server: http://localhost:35729
-<span class="kw">Watching</span>: www/**/*, !www/lib/**/*
-√ <span class="kw">Running</span> dev server:  http://localhost:8100
-<span class="kw">Ionic</span> server commands, enter:
-  <span class="kw">restart</span> or r to restart the client app from the root
-  <span class="kw">goto</span> or g and a url to have the app navigate to the given url
-  <span class="kw">consolelogs</span> or c to enable/disable console log output
-  <span class="kw">serverlogs</span> or s to enable/disable server log output
-  <span class="kw">quit</span> or q to shutdown the server and exit
-<span class="kw">ionic</span> $</code></pre></div>
+  <span class="kw">Running</span> live reload server: http://localhost:35729
+  <span class="kw">Watching</span>: www/**/*, !www/lib/**/*
+  √ <span class="kw">Running</span> dev server:  http://localhost:8100
+  <span class="kw">Ionic</span> server commands, enter:
+    <span class="kw">restart</span> or r to restart the client app from the root
+    <span class="kw">goto</span> or g and a url to have the app navigate to the given url
+    <span class="kw">consolelogs</span> or c to enable/disable console log output
+    <span class="kw">serverlogs</span> or s to enable/disable server log output
+    <span class="kw">quit</span> or q to shutdown the server and exit
+  <span class="kw">ionic</span> $</code></pre></div>
 <p>接着，就可以打开相应的Web页面，如下图所示：</p>
 <figure>
 <img src="./images/ionic-web-view.jpg" alt="Ionic Web预览界面" /><figcaption>Ionic Web预览界面</figcaption>
@@ -987,32 +1011,7 @@ Creating Cordova project for the Android platform:
 Android project created with cordova-android@5.1.1
 Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app</code></pre>
 <h2 id="博客列表页">博客列表页</h2>
-<h3 id="添加跨域支持">添加跨域支持</h3>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install django-cors-headers</code></pre></div>
-<pre><code>Collecting django-cors-headers
-  Downloading django-cors-headers-1.1.0.tar.gz
-Building wheels for collected packages: django-cors-headers
-  Running setup.py bdist_wheel for django-cors-headers ... done
-  Stored in directory: /Users/fdhuang/Library/Caches/pip/wheels/b0/75/89/7b17f134fc01b74e10523f3128e45b917da0c5f8638213e073
-Successfully built django-cors-headers
-Installing collected packages: django-cors-headers
-Successfully installed django-cors-headers-1.1.0</code></pre>
-<p>添加到<code>django-cors-headers=1.1.0</code>到<code>requirements.txt</code>文件中。</p>
-<p>添加到<code>settings.py</code>中：</p>
-<pre><code>INSTALLED_APPS = (
-    ...
-    &#39;corsheaders&#39;,
-    ...
-)</code></pre>
-<p>以及对应的中间件：</p>
-<pre><code>MIDDLEWARE_CLASSES = (
-    ...
-    &#39;corsheaders.middleware.CorsMiddleware&#39;,
-    &#39;django.middleware.common.CommonMiddleware&#39;,
-    ...
-)</code></pre>
-<p>对应的配置：</p>
-<pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
+<h3 id="列表页">列表页</h3>
 <h3 id="详情页">详情页</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> g page blog-detail --ts</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">app/pages/blog-detail/</span>
@@ -1083,7 +1082,7 @@ export class MyApp {
     )<span class="op">;</span>
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
-<h2 id="login">Login</h2>
+<h2 id="profile">Profile</h2>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
 <pre><code>pip install djangorestframework-jwt</code></pre>
 <pre><code>urlpatterns = patterns(
@@ -1122,7 +1121,7 @@ authSuccess(token) {
 }</code></pre>
 <p>Install Angular JWT</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install angular2-jwt</code></pre></div>
-<h2 id="profile">Profile</h2>
+<h3 id="profile-1">Profile</h3>
 <pre><code>def list(self, request):
     search_param = self.request.query_params.get(&#39;username&#39;, None)
     if search_param is not None:
@@ -1131,8 +1130,8 @@ authSuccess(token) {
     serializer = UserSerializer(queryset, many=True)
     return Response(serializer.data)</code></pre>
 <h2 id="创建博客">创建博客</h2>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">
-SAFE_METHODS <span class="op">=</span> [<span class="st">&#39;GET&#39;</span>, <span class="st">&#39;HEAD&#39;</span>, <span class="st">&#39;OPTIONS&#39;</span>]
+<p>权限管理</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">SAFE_METHODS <span class="op">=</span> [<span class="st">&#39;GET&#39;</span>, <span class="st">&#39;HEAD&#39;</span>, <span class="st">&#39;OPTIONS&#39;</span>]
 
 <span class="kw">class</span> IsAuthenticatedOrReadOnly(BasePermission):
     <span class="co">&quot;&quot;&quot;</span>
@@ -1155,8 +1154,7 @@ SAFE_METHODS <span class="op">=</span> [<span class="st">&#39;GET&#39;</span>, <
 <span class="kw">class</span> BlogpostSet(viewsets.ModelViewSet):
     permission_classes <span class="op">=</span> (permissions.IsAuthenticatedOrReadOnly,)
     queryset <span class="op">=</span> Blogpost.objects.<span class="bu">all</span>()
-    serializer_class <span class="op">=</span> BlogpsotSerializer
-    </code></pre></div>
+    serializer_class <span class="op">=</span> BlogpsotSerializer</code></pre></div>
 <h2 id="todo">TODO</h2>
 <h1 id="前端重构">前端重构</h1>
 <h2 id="mvvm">MVVM</h2>
