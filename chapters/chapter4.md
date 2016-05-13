@@ -19,6 +19,57 @@
 
 在早期的Django版本(1.6以前)中，Comments是自带的组件，但是后来它被从标准组件中移除了。
 
+```
+pip install django-contrib-comments
+```
+
+添加到``requirements.txt``:
+
+```
+django==1.9.4
+selenium==2.53.1
+fabric==1.10.2
+djangorestframework==3.3.3
+djangorestframework-jwt==1.7.2
+django-cors-headers==1.1.0
+django-contrib-comments==1.7.1
+```
+
+添加到``INSTALLED_APPS``，如下:
+
+```python
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django_comments',
+    'rest_framework',
+    'blogpost'
+)
+```
+
+```
+Operations to perform:
+  Apply all migrations: contenttypes, admin, blogpost, auth, sites, sessions, django_comments
+Running migrations:
+  Rendering model states... DONE
+  Applying sites.0001_initial... OK
+  Applying django_comments.0001_initial... OK
+  Applying django_comments.0002_update_user_email_field_length... OK
+  Applying django_comments.0003_add_submit_date_index... OK
+  Applying sites.0002_alter_domain_unique... OK
+(growth-django)
+```
+
+添加urls.py:
+
+```
+url(r'^comments/', include('django_comments.urls')),
+```
 
 Sitemap与SEO
 ---
