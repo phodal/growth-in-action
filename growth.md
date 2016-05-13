@@ -928,13 +928,15 @@ chmod u+x ./scripts/ci.sh
  - 一套支持轻量级标记语言（Textile和Markdown）的模板库
  - 一套协助创建地理信息系统（GIS）的基础框架
 
-Comments
+这意味着，我们可以直接用Django一些内置的组件来完成很多功能，先让我们来看看怎么完成一个简单的评论功能。
+
+评论功能
 ---
 
-Category
----   
+在早期的Django版本(1.6以前)中，Comments是自带的组件，但是后来它被从标准组件中移除了。
 
-Practise
+
+Sitemap与SEO
 ---
 
 ###SEO
