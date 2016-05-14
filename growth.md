@@ -1368,6 +1368,12 @@ Android project created with cordova-android@5.1.1
 Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app
 ```
 
+最近，再执行``run``就可以在对应的平台上运行，如:
+
+```
+ionic run android
+```
+
 博客列表页
 ---
 
@@ -1396,7 +1402,7 @@ const ROUTES = [
 
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  config: {} 
 })
 @RouteConfig(ROUTES)
 export class MyApp {

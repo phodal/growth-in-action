@@ -1080,6 +1080,8 @@ Creating Cordova project for the Android platform:
     Android target: android-23
 Android project created with cordova-android@5.1.1
 Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app</code></pre>
+<p>最近，再执行<code>run</code>就可以在对应的平台上运行，如:</p>
+<pre><code>ionic run android</code></pre>
 <h2 id="博客列表页">博客列表页</h2>
 <h3 id="列表页">列表页</h3>
 <h3 id="详情页">详情页</h3>
@@ -1095,7 +1097,7 @@ Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/0
 
 @App({
   template: &#39;&lt;ion-nav [root]=&quot;rootPage&quot;&gt;&lt;/ion-nav&gt;&#39;,
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  config: {} 
 })
 @RouteConfig(ROUTES)
 export class MyApp {
