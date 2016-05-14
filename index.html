@@ -1083,7 +1083,93 @@ Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/0
 <p>最近，再执行<code>run</code>就可以在对应的平台上运行，如:</p>
 <pre><code>ionic run android</code></pre>
 <h2 id="博客列表页">博客列表页</h2>
+<p>现在，让我们来结合我们的博客APP，做一个相应的展示博客的APP。</p>
 <h3 id="列表页">列表页</h3>
+<p>在上一个章节里我们已经有了一个博客详细的API，我们只需要获取这个API并显示即可。不过，让我们简单地熟悉一下显示数据的这部分内容：</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ion-navbar</span> <span class="er">*navbar</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;ion-title&gt;</span>博客<span class="kw">&lt;/ion-title&gt;</span>
+<span class="kw">&lt;/ion-navbar&gt;</span>
+
+<span class="kw">&lt;ion-content</span><span class="ot"> class=</span><span class="st">&quot;blog-list&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;ion-item</span> <span class="er">*ngFor</span><span class="ot">=</span><span class="st">&quot;#blogpost of blogposts&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h1</span> <span class="er">*ngIf</span><span class="ot">=</span><span class="st">&quot;blogpost&quot;</span><span class="kw">&gt;</span>
+      {{blogpost.title}}
+    <span class="kw">&lt;/h1&gt;</span>
+
+    <span class="kw">&lt;p</span> <span class="er">*ngIf</span><span class="ot">=</span><span class="st">&quot;blogpost&quot;</span><span class="kw">&gt;</span>
+      {{blogpost.body}}
+    <span class="kw">&lt;/p&gt;</span>
+  <span class="kw">&lt;/ion-item&gt;</span>
+<span class="kw">&lt;/ion-content&gt;</span></code></pre></div>
+<p>上面是一个基本的详情页的模板，其中定义了一系列的Ionic自定义标签，如：</p>
+<ul>
+<li><ion-navbar> 显示在导航栏中的内容</li>
+<li><ion-content> 显示APP的内容</li>
+<li><ion-item> 即将博客成每一项</li>
+</ul>
+<p>而从上面的内容中，我们可以看到：我们在ngFor中遍历了blogposts，然后显示每篇文章的标题和内容。对应的代码也就比较简单了:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="im">import</span> <span class="op">{</span>Page<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ionic-angular&#39;</span><span class="op">;</span>
+
+@<span class="at">Page</span>(<span class="op">{</span>
+  <span class="dt">templateUrl</span><span class="op">:</span> <span class="st">&#39;build/pages/blog/list/index.html&#39;</span><span class="op">,</span>
+  <span class="dt">providers</span><span class="op">:</span> [BlogpostServices]
+<span class="op">}</span>)
+<span class="im">export</span> <span class="kw">class</span> BlogList <span class="op">{</span>
+  <span class="kw">public</span> blogposts<span class="op">;</span>
+
+  <span class="at">constructor</span>() <span class="op">{</span>
+
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>但是我们要去哪里获取博客的值呢，先我们我们看完改造后听BlogList的Controller：</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="im">import</span> <span class="op">{</span>Page<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ionic-angular&#39;</span><span class="op">;</span>
+<span class="im">import</span> <span class="op">{</span>BlogpostServices<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;../../../services/BlogpostServices&#39;</span><span class="op">;</span>
+
+@<span class="at">Page</span>(<span class="op">{</span>
+  <span class="dt">templateUrl</span><span class="op">:</span> <span class="st">&#39;build/pages/blog/list/index.html&#39;</span><span class="op">,</span>
+  <span class="dt">providers</span><span class="op">:</span> [BlogpostServices]
+<span class="op">}</span>)
+<span class="im">export</span> <span class="kw">class</span> BlogList <span class="op">{</span>
+  <span class="kw">private</span> blogListService<span class="op">;</span>
+  <span class="kw">public</span> blogposts<span class="op">;</span>
+
+  <span class="at">constructor</span>(<span class="dt">blogpostServices</span><span class="op">:</span>BlogpostServices) <span class="op">{</span>
+    <span class="kw">this</span>.<span class="at">blogListService</span> <span class="op">=</span> blogpostServices<span class="op">;</span>
+    <span class="kw">this</span>.<span class="at">initService</span>()<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">private</span> <span class="at">initService</span>() <span class="op">{</span>
+    <span class="kw">this</span>.<span class="va">blogListService</span>.<span class="at">getBlogpostLists</span>().<span class="at">subscribe</span>(
+      data <span class="op">=&gt;</span> <span class="op">{</span><span class="kw">this</span>.<span class="at">blogposts</span> <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">data</span>.<span class="at">_body</span>)<span class="op">;},</span>
+      err <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Error: &#39;</span> <span class="op">+</span> <span class="va">JSON</span>.<span class="at">stringify</span>(err))<span class="op">,</span>
+      () <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Get Blogpost&#39;</span>)
+    )<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>我们初始化了一个blogListService，然后我们调用这个服务去获取博客列表。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">    <span class="kw">this</span>.<span class="va">blogListService</span>.<span class="at">getBlogpostLists</span>().<span class="at">subscribe</span>(
+      data <span class="op">=&gt;</span> <span class="op">{</span><span class="kw">this</span>.<span class="at">blogposts</span> <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">data</span>.<span class="at">_body</span>)<span class="op">;},</span>
+      err <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Error: &#39;</span> <span class="op">+</span> <span class="va">JSON</span>.<span class="at">stringify</span>(err))<span class="op">,</span>
+      () <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Get Blogpost&#39;</span>)
+    )<span class="op">;</span></code></pre></div>
+<p>当我们获取到数据的时候，我们就解析这个数据，并将这个值赋予blogposts。如果这其中遇到什么错误，就会显示相应的错误信息。</p>
+<p>现在，让我们创建一个获取博客的服务：</p>
+<pre><code>import {Inject} from &#39;angular2/core&#39;;
+import {Http} from &#39;angular2/http&#39;;
+import &#39;rxjs/add/operator/map&#39;;
+
+export class BlogpostServices {
+  private http;
+
+  constructor(@Inject(Http) http:Http) {
+    this.http = http
+  }
+
+  getBlogpostLists() {
+    var url = &#39;http://127.0.0.1:8000/api/blogpost/?format=json&#39;;
+    return this.http.get(url).map(res =&gt; res);
+  }
+}</code></pre>
 <h3 id="详情页">详情页</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> g page blog-detail --ts</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">app/pages/blog-detail/</span>

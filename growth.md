@@ -1377,8 +1377,117 @@ ionic run android
 博客列表页
 ---
 
+现在，让我们来结合我们的博客APP，做一个相应的展示博客的APP。
+
 ### 列表页
 
+在上一个章节里我们已经有了一个博客详细的API，我们只需要获取这个API并显示即可。不过，让我们简单地熟悉一下显示数据的这部分内容：
+
+```html
+<ion-navbar *navbar>
+  <ion-title>博客</ion-title>
+</ion-navbar>
+
+<ion-content class="blog-list">
+  <ion-item *ngFor="#blogpost of blogposts">
+    <h1 *ngIf="blogpost">
+      {{blogpost.title}}
+    </h1>
+
+    <p *ngIf="blogpost">
+      {{blogpost.body}}
+    </p>
+  </ion-item>
+</ion-content>
+```
+
+上面是一个基本的详情页的模板，其中定义了一系列的Ionic自定义标签，如：
+
+ - <ion-navbar> 显示在导航栏中的内容
+ - <ion-content> 显示APP的内容
+ - <ion-item> 即将博客成每一项
+
+而从上面的内容中，我们可以看到：我们在ngFor中遍历了blogposts，然后显示每篇文章的标题和内容。对应的代码也就比较简单了:
+
+```javascript
+import {Page} from 'ionic-angular';
+
+@Page({
+  templateUrl: 'build/pages/blog/list/index.html',
+  providers: [BlogpostServices]
+})
+export class BlogList {
+  public blogposts;
+
+  constructor() {
+
+  }
+}
+```
+
+但是我们要去哪里获取博客的值呢，先我们我们看完改造后听BlogList的Controller：
+
+
+```javascript
+import {Page} from 'ionic-angular';
+import {BlogpostServices} from '../../../services/BlogpostServices';
+
+@Page({
+  templateUrl: 'build/pages/blog/list/index.html',
+  providers: [BlogpostServices]
+})
+export class BlogList {
+  private blogListService;
+  public blogposts;
+
+  constructor(blogpostServices:BlogpostServices) {
+    this.blogListService = blogpostServices;
+    this.initService();
+  }
+
+  private initService() {
+    this.blogListService.getBlogpostLists().subscribe(
+      data => {this.blogposts = JSON.parse(data._body);},
+      err => console.log('Error: ' + JSON.stringify(err)),
+      () => console.log('Get Blogpost')
+    );
+  }
+}
+
+```
+
+我们初始化了一个blogListService，然后我们调用这个服务去获取博客列表。
+
+```javascript
+    this.blogListService.getBlogpostLists().subscribe(
+      data => {this.blogposts = JSON.parse(data._body);},
+      err => console.log('Error: ' + JSON.stringify(err)),
+      () => console.log('Get Blogpost')
+    );
+```    
+
+当我们获取到数据的时候，我们就解析这个数据，并将这个值赋予blogposts。如果这其中遇到什么错误，就会显示相应的错误信息。
+
+现在，让我们创建一个获取博客的服务：
+
+```
+import {Inject} from 'angular2/core';
+import {Http} from 'angular2/http';
+import 'rxjs/add/operator/map';
+
+export class BlogpostServices {
+  private http;
+
+  constructor(@Inject(Http) http:Http) {
+    this.http = http
+  }
+
+  getBlogpostLists() {
+    var url = 'http://127.0.0.1:8000/api/blogpost/?format=json';
+    return this.http.get(url).map(res => res);
+  }
+}
+```
 
 ### 详情页
 
