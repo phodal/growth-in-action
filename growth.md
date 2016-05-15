@@ -944,9 +944,18 @@ Django带有一个可选的“flatpages”应用，可以让我们存储简单�
 
 为了使用它来创建静态页面，我们需要在数据库中存储对应的映射关系，并创建对应的静态页面。 
 
-添加到``INSTALLED_APPS``
+### 安装 flatpages
+
+为此我们需要添加两个应用到``settings.py``文件的``INSTALLED_APPS``中：
+
+ - ``django.contrib.sites``——“sites”框架，它用于将对象和功能与特定的站点关联。同时，它还是域名和你的Django 站点名称之间的对应关系所保存的位置，即我们需要在这个地方设置我们的网站的域名。
+ - ``django.contrib.flatpages``，即上文说到的内容。
+
+在添加``django.contrib.sites``的时候，我们需要创建一个``SITE_ID``。通过这个值等于1，除非我们打算用这个框架去管理多个站点。代码如下所示：
 
 ```
+SITE_ID = 1
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -960,18 +969,23 @@ INSTALLED_APPS = (
 )
 ```
 
+接着，还添加对应的中间件``django.contrib.flatpages.middleware.FlatpageFallbackMiddleware``到``settings.py``文件的``MIDDLEWARE_CLASSES``中。
 
-添加URL
+然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么的URL会变成 http://localhost/pages/about/。
 
 ```python
 url(r'^pages/', include('django.contrib.flatpages.urls')),
 ```
 
-添加中间件
+当然我们也可以将其配置为类似于 http://localhost/about/ 这样的URL：
 
-``django.contrib.flatpages.middleware.FlatpageFallbackMiddleware``到``MIDDLEWARE_CLASSES``
+```
+urlpatterns += [
+    url(r'^(?P<url>.*/)$', views.flatpage),
+]
+```
 
-数据库迁移
+最后，我们还需要做一个数据库迁移：
 
 ```
 Operations to perform:
@@ -981,7 +995,7 @@ Running migrations:
   Applying flatpages.0001_initial... OK
 ```
 
-创建模板
+### 创建模板
 
 ```
 {% extends 'base.html' %}

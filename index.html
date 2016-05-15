@@ -105,7 +105,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li><a href="#更多功能">更多功能</a><ul>
-<li><a href="#静态页面">静态页面</a></li>
+<li><a href="#静态页面">静态页面</a><ul>
+<li><a href="#安装-flatpages">安装 flatpages</a></li>
+<li><a href="#创建模板">创建模板</a></li>
+</ul></li>
 <li><a href="#评论功能">评论功能</a></li>
 <li><a href="#sitemap">Sitemap</a><ul>
 <li><a href="#站点地图介绍">站点地图介绍</a></li>
@@ -803,8 +806,16 @@ Destroying test database for alias &#39;default&#39;...
 <li>自定义模板（可选）</li>
 </ul>
 <p>为了使用它来创建静态页面，我们需要在数据库中存储对应的映射关系，并创建对应的静态页面。</p>
-<p>添加到<code>INSTALLED_APPS</code></p>
-<pre><code>INSTALLED_APPS = (
+<h3 id="安装-flatpages">安装 flatpages</h3>
+<p>为此我们需要添加两个应用到<code>settings.py</code>文件的<code>INSTALLED_APPS</code>中：</p>
+<ul>
+<li><code>django.contrib.sites</code>——“sites”框架，它用于将对象和功能与特定的站点关联。同时，它还是域名和你的Django 站点名称之间的对应关系所保存的位置，即我们需要在这个地方设置我们的网站的域名。</li>
+<li><code>django.contrib.flatpages</code>，即上文说到的内容。</li>
+</ul>
+<p>在添加<code>django.contrib.sites</code>的时候，我们需要创建一个<code>SITE_ID</code>。通过这个值等于1，除非我们打算用这个框架去管理多个站点。代码如下所示：</p>
+<pre><code>SITE_ID = 1
+
+INSTALLED_APPS = (
     &#39;django.contrib.admin&#39;,
     &#39;django.contrib.auth&#39;,
     &#39;django.contrib.contenttypes&#39;,
@@ -815,17 +826,20 @@ Destroying test database for alias &#39;default&#39;...
     &#39;django.contrib.flatpages&#39;,
     &#39;blogpost&#39;
 )</code></pre>
-<p>添加URL</p>
+<p>接着，还添加对应的中间件<code>django.contrib.flatpages.middleware.FlatpageFallbackMiddleware</code>到<code>settings.py</code>文件的<code>MIDDLEWARE_CLASSES</code>中。</p>
+<p>然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么的URL会变成 http://localhost/pages/about/。</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">url(<span class="vs">r&#39;^pages/&#39;</span>, include(<span class="st">&#39;django.contrib.flatpages.urls&#39;</span>)),</code></pre></div>
-<p>添加中间件</p>
-<p><code>django.contrib.flatpages.middleware.FlatpageFallbackMiddleware</code>到<code>MIDDLEWARE_CLASSES</code></p>
-<p>数据库迁移</p>
+<p>当然我们也可以将其配置为类似于 http://localhost/about/ 这样的URL：</p>
+<pre><code>urlpatterns += [
+    url(r&#39;^(?P&lt;url&gt;.*/)$&#39;, views.flatpage),
+]</code></pre>
+<p>最后，我们还需要做一个数据库迁移：</p>
 <pre><code>Operations to perform:
   Apply all migrations: contenttypes, auth, admin, sites, blogpost, sessions, flatpages, django_comments
 Running migrations:
   Rendering model states... DONE
   Applying flatpages.0001_initial... OK</code></pre>
-<p>创建模板</p>
+<h3 id="创建模板">创建模板</h3>
 <pre><code>{% extends &#39;base.html&#39; %}
 {% block title %}关于我{% endblock %}
 
