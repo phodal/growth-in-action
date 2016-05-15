@@ -112,6 +112,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#评论功能">评论功能</a></li>
 <li><a href="#sitemap">Sitemap</a><ul>
 <li><a href="#站点地图介绍">站点地图介绍</a></li>
+<li><a href="#创建首页的sitemap">创建首页的Sitemap</a></li>
 <li><a href="#创建静态页面的sitemap">创建静态页面的Sitemap</a></li>
 <li><a href="#创建博客的sitemap">创建博客的Sitemap</a></li>
 <li><a href="#提交到搜索引擎">提交到搜索引擎</a></li>
@@ -865,6 +866,10 @@ Running migrations:
 <figure>
 <img src="images/flatpages-advance-option.png" alt="flatpages-advance-option.png" /><figcaption>flatpages-advance-option.png</figcaption>
 </figure>
+<p>最后，还要所个链接加到首页的导航中：</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;li&gt;</span>
+    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/pages/resume/&quot;</span><span class="kw">&gt;</span>简历<span class="kw">&lt;/a&gt;</span>
+<span class="kw">&lt;/li&gt;</span></code></pre></div>
 <p>下面让我们为我们的博客添加一个简单的评论功能吧！</p>
 <h2 id="评论功能">评论功能</h2>
 <p>在早期的Django版本(1.6以前)中，Comments是自带的组件，但是后来它被从标准组件中移除了。因此，我们需要安装comments这个包：</p>
@@ -964,7 +969,14 @@ Running migrations:
 <blockquote>
 <p>站点地图能够提供与其中列出的网页相关的宝贵元数据：元数据是网页的相关信息，例如网页的最近更新时间、网页的更改频率以及网页相较于网站中其他网址的重要程度。 ——内容来自 Google Sitemap帮助文档。</p>
 </blockquote>
-<p>就先这样简单地介绍了，接着我们就可以实战了。</p>
+<p>现在，我们一共有三种类型的页面：</p>
+<ul>
+<li>首页，通常来说首页的priority应该是最高的，而它的<code>changefreq</code>可以设置为<code>daily</code>、<code>weekly</code>，这取决于你的博客的更新频率。如果你是做一些UGC(用户生成内容)的网站，那么你应该设置为<code>always</code>、<code>hourly</code>。</li>
+<li>动态生成的博客详情页，这些内容一般很少进行改变，所以这的changefreq会比较低，如<code>yearly</code>或者<code>monthly</code>——并且没有高的必要性，它会导致搜索引擎一直抓取你的内容。这会对服务器造成一定的压力，并且无助于你网站的排名。</li>
+<li>静态页面，如About页面，它可以有一个高的<code>priority</code>，但是它的<code>changefreq</code>也不一定很高。</li>
+</ul>
+<p>下面就让我们从首页说起。</p>
+<h3 id="创建首页的sitemap">创建首页的Sitemap</h3>
 <h3 id="创建静态页面的sitemap">创建静态页面的Sitemap</h3>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sitemap.sitemaps <span class="im">import</span> BlogSitemap, PageSitemap, FlatPageSitemap
 

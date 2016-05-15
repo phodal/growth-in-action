@@ -1026,6 +1026,14 @@ Running migrations:
 
 ![flatpages-advance-option.png](images/flatpages-advance-option.png)
 
+最后，还要所个链接加到首页的导航中：
+
+```html
+<li>
+    <a href="/pages/resume/">简历</a>
+</li>
+```                
+
 下面让我们为我们的博客添加一个简单的评论功能吧！
 
 评论功能
@@ -1168,9 +1176,19 @@ Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些�
 
  > 站点地图能够提供与其中列出的网页相关的宝贵元数据：元数据是网页的相关信息，例如网页的最近更新时间、网页的更改频率以及网页相较于网站中其他网址的重要程度。 ——内容来自 Google Sitemap帮助文档。
 
-就先这样简单地介绍了，接着我们就可以实战了。
+
+现在，我们一共有三种类型的页面：
+
+ - 首页，通常来说首页的priority应该是最高的，而它的``changefreq``可以设置为``daily``、``weekly``，这取决于你的博客的更新频率。如果你是做一些UGC(用户生成内容)的网站，那么你应该设置为``always``、``hourly``。
+ - 动态生成的博客详情页，这些内容一般很少进行改变，所以这的changefreq会比较低，如``yearly``或者``monthly``——并且没有高的必要性，它会导致搜索引擎一直抓取你的内容。这会对服务器造成一定的压力，并且无助于你网站的排名。
+ - 静态页面，如About页面，它可以有一个高的``priority``，但是它的``changefreq``也不一定很高。
+
+下面就让我们从首页说起。
+
+### 创建首页的Sitemap
 
 ### 创建静态页面的Sitemap
+ 
 
 ```python
 from sitemap.sitemaps import BlogSitemap, PageSitemap, FlatPageSitemap
