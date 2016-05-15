@@ -1138,7 +1138,84 @@ Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些�
 
 就先这样简单地介绍了，接着我们就可以实战了。
 
-### Sitemap实战
+### 创建静态页面的Sitemap
+
+```python
+from sitemap.sitemaps import BlogSitemap, PageSitemap, FlatPageSitemap
+
+sitemaps =  {
+    "page": PageSitemap,
+    'flatpages': FlatPageSitemap,
+    "blog": BlogSitemap
+}
+
+urlpatterns = patterns('',
+    url(r'^$', blogpostViews.index, name='main'),
+    url(r'^blog/(?P<slug>[^\.]+).html', 'blogpost.views.view_post', name='view_blog_post'),
+    url(r'^comments/', include('django_comments.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^pages/', include('django.contrib.flatpages.urls')),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+```
+
+```python
+from django.contrib.sitemaps import Sitemap
+from django.core.urlresolvers import reverse
+from blogpost.models import Blogpost
+from django.apps import apps as django_apps
+
+class PageSitemap(Sitemap):
+    priority = 1.0
+    changefreq = 'daily'
+
+    def items(self):
+        return ['main']
+
+    def location(self, item):
+        return reverse(item)
+
+class FlatPageSitemap(Sitemap):
+    priority = 0.8
+
+    def items(self):
+        Site = django_apps.get_model('sites.Site')
+        current_site = Site.objects.get_current()
+        return current_site.flatpage_set.filter(registration_required=False)
+```        
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% spaceless %}
+{% for url in urlset %}
+<url>
+    <loc>{{ url.location }}</loc>
+    {% if url.lastmod %}<lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
+    {% if url.changefreq %}<changefreq>{{ url.changefreq }}</changefreq>{% endif %}
+    {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
+</url>
+{% endfor %}
+{% endspaceless %}
+</urlset>
+```
+
+
+### 创建博客的Sitemap
+
+```
+
+
+class BlogSitemap(Sitemap):
+    changefreq = "never"
+    priority = 0.5
+
+    def items(self):
+        return Blogpost.objects.all()
+
+    def lastmod(self, obj):
+        return obj.posted
+```
 
 
 ### 提交到搜索引擎
@@ -1149,6 +1226,81 @@ Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些�
 
 技能选型
 ---
+
+ - Bootstrap
+
+页面美化
+---
+
+### 添加导航
+
+```html
+<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                    data-target=".bs-navbar-collapse">
+                <span class="sr-only">切换视图</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Growth博客</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/pages/about/">关于我</a>
+                </li>
+                <li>
+                    <a href="/pages/resume/">简历</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/admin" id="loginLink">登入</a></li>
+            </ul>
+
+        </nav>
+    </div>
+</header>
+```
+
+### 添加标语
+
+```
+<main class="bs-docs-masthead" id="content" role="main">
+    <div class="container">
+        <div id="carbonads-container">
+            THE ONLY FAIR IS NOT FAIR <br>
+            ENJOY CREATE & SHARE
+        </div>
+    </div>
+</main>
+```
+
+### 优化列表
+
+```
+{% extends 'base.html' %}
+{% block title %}Welcome to my blog{% endblock %}
+
+{% block content %}
+<h2>博客</h2>
+<div class="row">
+    {% if posts %}
+    {% for post in posts %}
+    <div class="col-sm-4">
+        <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+        {{post.body | slice:":80"}}
+        {{post.posted}} - By {{post.author}}
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>There are no posts.</p>
+    {% endif %}
+</div>
+{% endblock %}
+```
 
 API
 ===

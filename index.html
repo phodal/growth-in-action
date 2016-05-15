@@ -109,12 +109,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#评论功能">评论功能</a></li>
 <li><a href="#sitemap">Sitemap</a><ul>
 <li><a href="#站点地图介绍">站点地图介绍</a></li>
-<li><a href="#sitemap实战">Sitemap实战</a></li>
+<li><a href="#创建静态页面的sitemap">创建静态页面的Sitemap</a></li>
+<li><a href="#创建博客的sitemap">创建博客的Sitemap</a></li>
 <li><a href="#提交到搜索引擎">提交到搜索引擎</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#前端框架">前端框架</a><ul>
 <li><a href="#技能选型">技能选型</a></li>
+<li><a href="#页面美化">页面美化</a><ul>
+<li><a href="#添加导航">添加导航</a></li>
+<li><a href="#添加标语">添加标语</a></li>
+<li><a href="#优化列表">优化列表</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#api">API</a><ul>
 <li><a href="#自动完成">自动完成</a></li>
@@ -929,10 +935,135 @@ Running migrations:
 <p>站点地图能够提供与其中列出的网页相关的宝贵元数据：元数据是网页的相关信息，例如网页的最近更新时间、网页的更改频率以及网页相较于网站中其他网址的重要程度。 ——内容来自 Google Sitemap帮助文档。</p>
 </blockquote>
 <p>就先这样简单地介绍了，接着我们就可以实战了。</p>
-<h3 id="sitemap实战">Sitemap实战</h3>
+<h3 id="创建静态页面的sitemap">创建静态页面的Sitemap</h3>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sitemap.sitemaps <span class="im">import</span> BlogSitemap, PageSitemap, FlatPageSitemap
+
+sitemaps <span class="op">=</span>  {
+    <span class="st">&quot;page&quot;</span>: PageSitemap,
+    <span class="co">&#39;flatpages&#39;</span>: FlatPageSitemap,
+    <span class="co">&quot;blog&quot;</span>: BlogSitemap
+}
+
+urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span>,
+    url(<span class="vs">r&#39;^$&#39;</span>, blogpostViews.index, name<span class="op">=</span><span class="st">&#39;main&#39;</span>),
+    url(<span class="vs">r&#39;^blog/(?P&lt;slug&gt;[^\.]+).html&#39;</span>, <span class="st">&#39;blogpost.views.view_post&#39;</span>, name<span class="op">=</span><span class="st">&#39;view_blog_post&#39;</span>),
+    url(<span class="vs">r&#39;^comments/&#39;</span>, include(<span class="st">&#39;django_comments.urls&#39;</span>)),
+    url(<span class="vs">r&#39;^admin/&#39;</span>, include(admin.site.urls)),
+    url(<span class="vs">r&#39;^pages/&#39;</span>, include(<span class="st">&#39;django.contrib.flatpages.urls&#39;</span>)),
+    url(<span class="vs">r&#39;^sitemap\.xml$&#39;</span>, sitemap, {<span class="st">&#39;sitemaps&#39;</span>: sitemaps}, name<span class="op">=</span><span class="st">&#39;django.contrib.sitemaps.views.sitemap&#39;</span>)
+) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.contrib.sitemaps <span class="im">import</span> Sitemap
+<span class="im">from</span> django.core.urlresolvers <span class="im">import</span> reverse
+<span class="im">from</span> blogpost.models <span class="im">import</span> Blogpost
+<span class="im">from</span> django.apps <span class="im">import</span> apps <span class="im">as</span> django_apps
+
+<span class="kw">class</span> PageSitemap(Sitemap):
+    priority <span class="op">=</span> <span class="fl">1.0</span>
+    changefreq <span class="op">=</span> <span class="st">&#39;daily&#39;</span>
+
+    <span class="kw">def</span> items(<span class="va">self</span>):
+        <span class="cf">return</span> [<span class="st">&#39;main&#39;</span>]
+
+    <span class="kw">def</span> location(<span class="va">self</span>, item):
+        <span class="cf">return</span> reverse(item)
+
+<span class="kw">class</span> FlatPageSitemap(Sitemap):
+    priority <span class="op">=</span> <span class="fl">0.8</span>
+
+    <span class="kw">def</span> items(<span class="va">self</span>):
+        Site <span class="op">=</span> django_apps.get_model(<span class="st">&#39;sites.Site&#39;</span>)
+        current_site <span class="op">=</span> Site.objects.get_current()
+        <span class="cf">return</span> current_site.flatpage_set.<span class="bu">filter</span>(registration_required<span class="op">=</span><span class="va">False</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<span class="kw">&lt;urlset</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span><span class="kw">&gt;</span>
+{% spaceless %}
+{% for url in urlset %}
+<span class="kw">&lt;url&gt;</span>
+    <span class="kw">&lt;loc&gt;</span>{{ url.location }}<span class="kw">&lt;/loc&gt;</span>
+    {% if url.lastmod %}<span class="kw">&lt;lastmod&gt;</span>{{ url.lastmod|date:&quot;Y-m-d&quot; }}<span class="kw">&lt;/lastmod&gt;</span>{% endif %}
+    {% if url.changefreq %}<span class="kw">&lt;changefreq&gt;</span>{{ url.changefreq }}<span class="kw">&lt;/changefreq&gt;</span>{% endif %}
+    {% if url.priority %}<span class="kw">&lt;priority&gt;</span>{{ url.priority }}<span class="kw">&lt;/priority&gt;</span>{% endif %}
+<span class="kw">&lt;/url&gt;</span>
+{% endfor %}
+{% endspaceless %}
+<span class="kw">&lt;/urlset&gt;</span></code></pre></div>
+<h3 id="创建博客的sitemap">创建博客的Sitemap</h3>
+<pre><code>
+
+class BlogSitemap(Sitemap):
+    changefreq = &quot;never&quot;
+    priority = 0.5
+
+    def items(self):
+        return Blogpost.objects.all()
+
+    def lastmod(self, obj):
+        return obj.posted</code></pre>
 <h3 id="提交到搜索引擎">提交到搜索引擎</h3>
 <h1 id="前端框架">前端框架</h1>
 <h2 id="技能选型">技能选型</h2>
+<ul>
+<li>Bootstrap</li>
+</ul>
+<h2 id="页面美化">页面美化</h2>
+<h3 id="添加导航">添加导航</h3>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;header</span><span class="ot"> class=</span><span class="st">&quot;navbar navbar-static-top bs-docs-nav&quot;</span><span class="ot"> id=</span><span class="st">&quot;top&quot;</span><span class="ot"> role=</span><span class="st">&quot;banner&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;navbar-header&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;navbar-toggle collapsed&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> data-toggle=</span><span class="st">&quot;collapse&quot;</span>
+<span class="ot">                    data-target=</span><span class="st">&quot;.bs-navbar-collapse&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;sr-only&quot;</span><span class="kw">&gt;</span>切换视图<span class="kw">&lt;/span&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+            <span class="kw">&lt;/button&gt;</span>
+            <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/&quot;</span><span class="ot"> class=</span><span class="st">&quot;navbar-brand&quot;</span><span class="kw">&gt;</span>Growth博客<span class="kw">&lt;/a&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;collapse navbar-collapse bs-navbar-collapse&quot;</span><span class="ot"> role=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;nav navbar-nav&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;li&gt;</span>
+                    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/pages/about/&quot;</span><span class="kw">&gt;</span>关于我<span class="kw">&lt;/a&gt;</span>
+                <span class="kw">&lt;/li&gt;</span>
+                <span class="kw">&lt;li&gt;</span>
+                    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/pages/resume/&quot;</span><span class="kw">&gt;</span>简历<span class="kw">&lt;/a&gt;</span>
+                <span class="kw">&lt;/li&gt;</span>
+            <span class="kw">&lt;/ul&gt;</span>
+            <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;nav navbar-nav navbar-right&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/admin&quot;</span><span class="ot"> id=</span><span class="st">&quot;loginLink&quot;</span><span class="kw">&gt;</span>登入<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;/ul&gt;</span>
+
+        <span class="kw">&lt;/nav&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/header&gt;</span></code></pre></div>
+<h3 id="添加标语">添加标语</h3>
+<pre><code>&lt;main class=&quot;bs-docs-masthead&quot; id=&quot;content&quot; role=&quot;main&quot;&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;div id=&quot;carbonads-container&quot;&gt;
+            THE ONLY FAIR IS NOT FAIR &lt;br&gt;
+            ENJOY CREATE &amp; SHARE
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/main&gt;</code></pre>
+<h3 id="优化列表">优化列表</h3>
+<pre><code>{% extends &#39;base.html&#39; %}
+{% block title %}Welcome to my blog{% endblock %}
+
+{% block content %}
+&lt;h2&gt;博客&lt;/h2&gt;
+&lt;div class=&quot;row&quot;&gt;
+    {% if posts %}
+    {% for post in posts %}
+    &lt;div class=&quot;col-sm-4&quot;&gt;
+        &lt;h2&gt;&lt;a href=&quot;{{ post.get_absolute_url }}&quot;&gt;{{ post.title }}&lt;/a&gt;&lt;/h2&gt;
+        {{post.body | slice:&quot;:80&quot;}}
+        {{post.posted}} - By {{post.author}}
+    &lt;/div&gt;
+    {% endfor %}
+    {% else %}
+    &lt;p&gt;There are no posts.&lt;/p&gt;
+    {% endif %}
+&lt;/div&gt;
+{% endblock %}</code></pre>
 <h1 id="api">API</h1>
 <h2 id="自动完成">自动完成</h2>
 <p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。</p>

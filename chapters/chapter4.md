@@ -222,7 +222,84 @@ Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些�
 
 就先这样简单地介绍了，接着我们就可以实战了。
 
-### Sitemap实战
+### 创建静态页面的Sitemap
+
+```python
+from sitemap.sitemaps import BlogSitemap, PageSitemap, FlatPageSitemap
+
+sitemaps =  {
+    "page": PageSitemap,
+    'flatpages': FlatPageSitemap,
+    "blog": BlogSitemap
+}
+
+urlpatterns = patterns('',
+    url(r'^$', blogpostViews.index, name='main'),
+    url(r'^blog/(?P<slug>[^\.]+).html', 'blogpost.views.view_post', name='view_blog_post'),
+    url(r'^comments/', include('django_comments.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^pages/', include('django.contrib.flatpages.urls')),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+```
+
+```python
+from django.contrib.sitemaps import Sitemap
+from django.core.urlresolvers import reverse
+from blogpost.models import Blogpost
+from django.apps import apps as django_apps
+
+class PageSitemap(Sitemap):
+    priority = 1.0
+    changefreq = 'daily'
+
+    def items(self):
+        return ['main']
+
+    def location(self, item):
+        return reverse(item)
+
+class FlatPageSitemap(Sitemap):
+    priority = 0.8
+
+    def items(self):
+        Site = django_apps.get_model('sites.Site')
+        current_site = Site.objects.get_current()
+        return current_site.flatpage_set.filter(registration_required=False)
+```        
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% spaceless %}
+{% for url in urlset %}
+<url>
+    <loc>{{ url.location }}</loc>
+    {% if url.lastmod %}<lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
+    {% if url.changefreq %}<changefreq>{{ url.changefreq }}</changefreq>{% endif %}
+    {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
+</url>
+{% endfor %}
+{% endspaceless %}
+</urlset>
+```
+
+
+### 创建博客的Sitemap
+
+```
+
+
+class BlogSitemap(Sitemap):
+    changefreq = "never"
+    priority = 0.5
+
+    def items(self):
+        return Blogpost.objects.all()
+
+    def lastmod(self, obj):
+        return obj.posted
+```
 
 
 ### 提交到搜索引擎
