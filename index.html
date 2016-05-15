@@ -105,10 +105,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li><a href="#更多功能">更多功能</a><ul>
+<li><a href="#静态页面">静态页面</a></li>
 <li><a href="#评论功能">评论功能</a></li>
-<li><a href="#sitemap与seo">Sitemap与SEO</a><ul>
-<li><a href="#seo">SEO</a></li>
-<li><a href="#monthly">Monthly</a></li>
+<li><a href="#sitemap">Sitemap</a><ul>
+<li><a href="#站点地图介绍">站点地图介绍</a></li>
+<li><a href="#sitemap实战">Sitemap实战</a></li>
+<li><a href="#提交到搜索引擎">提交到搜索引擎</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#前端框架">前端框架</a><ul>
@@ -785,6 +787,49 @@ Destroying test database for alias &#39;default&#39;...
 <li>一套协助创建地理信息系统（GIS）的基础框架</li>
 </ul>
 <p>这意味着，我们可以直接用Django一些内置的组件来完成很多功能，先让我们来看看怎么完成一个简单的评论功能。</p>
+<h2 id="静态页面">静态页面</h2>
+<p>添加到<code>INSTALLED_APPS</code></p>
+<pre><code>INSTALLED_APPS = (
+    &#39;django.contrib.admin&#39;,
+    &#39;django.contrib.auth&#39;,
+    &#39;django.contrib.contenttypes&#39;,
+    &#39;django.contrib.sessions&#39;,
+    &#39;django.contrib.messages&#39;,
+    &#39;django.contrib.staticfiles&#39;,
+    &#39;django.contrib.sites&#39;,
+    &#39;django.contrib.flatpages&#39;,
+    &#39;django.contrib.sitemaps&#39;,
+    &#39;django_comments&#39;,
+    &#39;rest_framework&#39;,
+    &#39;blogpost&#39;
+)</code></pre>
+<p>添加URL</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">url(<span class="vs">r&#39;^pages/&#39;</span>, include(<span class="st">&#39;django.contrib.flatpages.urls&#39;</span>)),</code></pre></div>
+<p>添加中间件</p>
+<p><code>django.contrib.flatpages.middleware.FlatpageFallbackMiddleware</code>到<code>MIDDLEWARE_CLASSES</code></p>
+<p>数据库迁移</p>
+<pre><code>Operations to perform:
+  Apply all migrations: contenttypes, auth, admin, sites, blogpost, sessions, flatpages, django_comments
+Running migrations:
+  Rendering model states... DONE
+  Applying flatpages.0001_initial... OK</code></pre>
+<p>创建模板</p>
+<pre><code>{% extends &#39;base.html&#39; %}
+{% block title %}关于我{% endblock %}
+
+{% block content %}
+&lt;div class=&quot;mdl-cell mdl-cell--12-col&quot;&gt;
+
+&lt;/div&gt;
+{% endblock %}</code></pre>
+<p>从后台添加URL</p>
+<figure>
+<img src="images/admin-flatpages-create.jpg" alt="admin-flatpages-create.jpg" /><figcaption>admin-flatpages-create.jpg</figcaption>
+</figure>
+<p>高级选项</p>
+<figure>
+<img src="images/flatpages-advance-option.png" alt="flatpages-advance-option.png" /><figcaption>flatpages-advance-option.png</figcaption>
+</figure>
 <h2 id="评论功能">评论功能</h2>
 <p>在早期的Django版本(1.6以前)中，Comments是自带的组件，但是后来它被从标准组件中移除了。因此，我们需要安装comments这个包：</p>
 <pre><code>pip install django-contrib-comments</code></pre>
@@ -857,9 +902,35 @@ Running migrations:
 <figure>
 <img src="images/create-comment-backend.jpg" alt="create-comment-backend.jpg" /><figcaption>create-comment-backend.jpg</figcaption>
 </figure>
-<h2 id="sitemap与seo">Sitemap与SEO</h2>
-<h3 id="seo">SEO</h3>
-<h3 id="monthly">Monthly</h3>
+<h2 id="sitemap">Sitemap</h2>
+<p>我们在之前的文章中提到过SEO的重要性，这里只是简单地对Sitemap的内容进行展开。</p>
+<h3 id="站点地图介绍">站点地图介绍</h3>
+<p>Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些可供抓取的网页。常见的Sitemap的形式是以xml出现了，如下是我博客的sitemap.xml的一部分内容：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
+&lt;url&gt;
+  &lt;loc&gt;https://www.phodal.com/blog/mezzanine-add-new-page/&lt;/loc&gt;
+  &lt;lastmod&gt;2014-08-03&lt;/lastmod&gt;
+  &lt;changefreq&gt;Monthly&lt;/changefreq&gt;
+  &lt;priority&gt;0.2&lt;/priority&gt;
+&lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+<p>从上面的内容中，我们可以发现它包含了下面的一些XML标签：</p>
+<ul>
+<li>urlset，封装该文件，并指明当前协议的标准。</li>
+<li>url，每个URL实体的父标签。</li>
+<li>loc，指明页面的URL</li>
+<li>lastmod（可选），内容最后的修改时间</li>
+<li>changefreq（可选），内容的修改频率，用于告知搜索引擎抓取频率。它包含的值有：<code>always</code>、<code>hourly</code>、<code>daily</code>、<code>weekly</code>、<code>monthly</code>、<code>yearly</code>、<code>never</code></li>
+<li>priority（可选），范围是从0.0~1.0，搜索引擎用于对你网站在搜索结果的排序，即内部的优先级排序。需要注意的是如果你把所有页面的优先级设置为1，那么它就和没有设置的效果是一样的。</li>
+</ul>
+<p>从上面的内容中，我们可以发现：</p>
+<blockquote>
+<p>站点地图能够提供与其中列出的网页相关的宝贵元数据：元数据是网页的相关信息，例如网页的最近更新时间、网页的更改频率以及网页相较于网站中其他网址的重要程度。 ——内容来自 Google Sitemap帮助文档。</p>
+</blockquote>
+<p>就先这样简单地介绍了，接着我们就可以实战了。</p>
+<h3 id="sitemap实战">Sitemap实战</h3>
+<h3 id="提交到搜索引擎">提交到搜索引擎</h3>
 <h1 id="前端框架">前端框架</h1>
 <h2 id="技能选型">技能选型</h2>
 <h1 id="api">API</h1>

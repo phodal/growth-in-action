@@ -930,6 +930,72 @@ chmod u+x ./scripts/ci.sh
 
 这意味着，我们可以直接用Django一些内置的组件来完成很多功能，先让我们来看看怎么完成一个简单的评论功能。
 
+
+静态页面
+---
+
+添加到``INSTALLED_APPS``
+
+```
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'django.contrib.sitemaps',
+    'django_comments',
+    'rest_framework',
+    'blogpost'
+)
+```
+
+
+添加URL
+
+```python
+url(r'^pages/', include('django.contrib.flatpages.urls')),
+```
+
+添加中间件
+
+``django.contrib.flatpages.middleware.FlatpageFallbackMiddleware``到``MIDDLEWARE_CLASSES``
+
+数据库迁移
+
+```
+Operations to perform:
+  Apply all migrations: contenttypes, auth, admin, sites, blogpost, sessions, flatpages, django_comments
+Running migrations:
+  Rendering model states... DONE
+  Applying flatpages.0001_initial... OK
+```
+
+创建模板
+
+```
+{% extends 'base.html' %}
+{% block title %}关于我{% endblock %}
+
+{% block content %}
+<div class="mdl-cell mdl-cell--12-col">
+
+</div>
+{% endblock %}
+```
+
+从后台添加URL
+
+![admin-flatpages-create.jpg](images/admin-flatpages-create.jpg)
+
+高级选项
+
+![flatpages-advance-option.png](images/flatpages-advance-option.png)
+
+
 评论功能
 ---
 
@@ -1036,14 +1102,47 @@ SITE_ID = 1
 
 ![create-comment-backend.jpg](images/create-comment-backend.jpg)
 
-
-
-Sitemap与SEO
+Sitemap
 ---
 
-###SEO
+我们在之前的文章中提到过SEO的重要性，这里只是简单地对Sitemap的内容进行展开。
 
-###Monthly
+### 站点地图介绍
+
+Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些可供抓取的网页。常见的Sitemap的形式是以xml出现了，如下是我博客的sitemap.xml的一部分内容：
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+  <loc>https://www.phodal.com/blog/mezzanine-add-new-page/</loc>
+  <lastmod>2014-08-03</lastmod>
+  <changefreq>Monthly</changefreq>
+  <priority>0.2</priority>
+</url>
+</urlset>
+```
+
+从上面的内容中，我们可以发现它包含了下面的一些XML标签：
+
+ - urlset，封装该文件，并指明当前协议的标准。
+ - url，每个URL实体的父标签。
+ - loc，指明页面的URL
+ - lastmod（可选），内容最后的修改时间
+ - changefreq（可选），内容的修改频率，用于告知搜索引擎抓取频率。它包含的值有：``always``、``hourly``、``daily``、``weekly``、``monthly``、``yearly``、``never``
+ - priority（可选），范围是从0.0~1.0，搜索引擎用于对你网站在搜索结果的排序，即内部的优先级排序。需要注意的是如果你把所有页面的优先级设置为1，那么它就和没有设置的效果是一样的。
+
+从上面的内容中，我们可以发现：
+
+ > 站点地图能够提供与其中列出的网页相关的宝贵元数据：元数据是网页的相关信息，例如网页的最近更新时间、网页的更改频率以及网页相较于网站中其他网址的重要程度。 ——内容来自 Google Sitemap帮助文档。
+
+就先这样简单地介绍了，接着我们就可以实战了。
+
+### Sitemap实战
+
+
+### 提交到搜索引擎
+
 
 前端框架
 ===

@@ -14,6 +14,72 @@
 
 这意味着，我们可以直接用Django一些内置的组件来完成很多功能，先让我们来看看怎么完成一个简单的评论功能。
 
+
+静态页面
+---
+
+添加到``INSTALLED_APPS``
+
+```
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'django.contrib.sitemaps',
+    'django_comments',
+    'rest_framework',
+    'blogpost'
+)
+```
+
+
+添加URL
+
+```python
+url(r'^pages/', include('django.contrib.flatpages.urls')),
+```
+
+添加中间件
+
+``django.contrib.flatpages.middleware.FlatpageFallbackMiddleware``到``MIDDLEWARE_CLASSES``
+
+数据库迁移
+
+```
+Operations to perform:
+  Apply all migrations: contenttypes, auth, admin, sites, blogpost, sessions, flatpages, django_comments
+Running migrations:
+  Rendering model states... DONE
+  Applying flatpages.0001_initial... OK
+```
+
+创建模板
+
+```
+{% extends 'base.html' %}
+{% block title %}关于我{% endblock %}
+
+{% block content %}
+<div class="mdl-cell mdl-cell--12-col">
+
+</div>
+{% endblock %}
+```
+
+从后台添加URL
+
+![admin-flatpages-create.jpg](images/admin-flatpages-create.jpg)
+
+高级选项
+
+![flatpages-advance-option.png](images/flatpages-advance-option.png)
+
+
 评论功能
 ---
 
