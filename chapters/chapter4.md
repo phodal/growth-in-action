@@ -110,6 +110,14 @@ Running migrations:
 
 ![flatpages-advance-option.png](images/flatpages-advance-option.png)
 
+最后，还要所个链接加到首页的导航中：
+
+```html
+<li>
+    <a href="/pages/resume/">简历</a>
+</li>
+```                
+
 下面让我们为我们的博客添加一个简单的评论功能吧！
 
 评论功能
