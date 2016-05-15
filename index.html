@@ -840,22 +840,32 @@ Running migrations:
   Rendering model states... DONE
   Applying flatpages.0001_initial... OK</code></pre>
 <h3 id="创建模板">创建模板</h3>
+<p>接着，我们可以在<code>templates</code>目录下创建<code>flatpages</code>文件，用于存放我们的模板文件，下面是一个简单的模板：</p>
 <pre><code>{% extends &#39;base.html&#39; %}
 {% block title %}关于我{% endblock %}
 
 {% block content %}
-&lt;div class=&quot;mdl-cell mdl-cell--12-col&quot;&gt;
-
+&lt;div&gt;
+&lt;h2&gt;关于博客&lt;/h2&gt;
+    &lt;p&gt;一方面，找到更多志同道合的人；另一方面，扩大影响力。&lt;/p&gt;
+    &lt;p&gt;内容包括&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li&gt;成长记录&lt;/li&gt;
+        &lt;li&gt;技术笔记&lt;/li&gt;
+        &lt;li&gt;生活思考&lt;/li&gt;
+        &lt;li&gt;个人试验&lt;/li&gt;
+    &lt;/ul&gt;
 &lt;/div&gt;
 {% endblock %}</code></pre>
-<p>从后台添加URL</p>
+<p>当我们完成模板后，我们就需要登录后台，并添加对应的静态页面的配置：</p>
 <figure>
 <img src="images/admin-flatpages-create.jpg" alt="admin-flatpages-create.jpg" /><figcaption>admin-flatpages-create.jpg</figcaption>
 </figure>
-<p>高级选项</p>
+<p>然后从高级选项中填写我们的静态页面的路径，我们就可以完成静态页面的创建。如下图所示：</p>
 <figure>
 <img src="images/flatpages-advance-option.png" alt="flatpages-advance-option.png" /><figcaption>flatpages-advance-option.png</figcaption>
 </figure>
+<p>下面让我们为我们的博客添加一个简单的评论功能吧！</p>
 <h2 id="评论功能">评论功能</h2>
 <p>在早期的Django版本(1.6以前)中，Comments是自带的组件，但是后来它被从标准组件中移除了。因此，我们需要安装comments这个包：</p>
 <pre><code>pip install django-contrib-comments</code></pre>

@@ -81,25 +81,36 @@ Running migrations:
 
 ### 创建模板
 
+接着，我们可以在``templates``目录下创建``flatpages``文件，用于存放我们的模板文件，下面是一个简单的模板：
+
 ```
 {% extends 'base.html' %}
 {% block title %}关于我{% endblock %}
 
 {% block content %}
-<div class="mdl-cell mdl-cell--12-col">
-
+<div>
+<h2>关于博客</h2>
+    <p>一方面，找到更多志同道合的人；另一方面，扩大影响力。</p>
+    <p>内容包括</p>
+    <ul>
+        <li>成长记录</li>
+        <li>技术笔记</li>
+        <li>生活思考</li>
+        <li>个人试验</li>
+    </ul>
 </div>
 {% endblock %}
 ```
 
-从后台添加URL
+当我们完成模板后，我们就需要登录后台，并添加对应的静态页面的配置：
 
 ![admin-flatpages-create.jpg](images/admin-flatpages-create.jpg)
 
-高级选项
+然后从高级选项中填写我们的静态页面的路径，我们就可以完成静态页面的创建。如下图所示：
 
 ![flatpages-advance-option.png](images/flatpages-advance-option.png)
 
+下面让我们为我们的博客添加一个简单的评论功能吧！
 
 评论功能
 ---
