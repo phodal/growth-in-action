@@ -18,6 +18,16 @@
 静态页面
 ---
 
+Django带有一个可选的“flatpages”应用，可以让我们存储简单的“扁平化(flat)”页面在数据库中，并且可以通过Django的管理界面以及一个Python API来处理要管理的内容。这样的一个静态页面，一般包含下面的几个属性：
+
+ - 标题
+ - URL
+ - 内容(Content)
+ - Sites
+ - 自定义模板（可选）
+
+为了使用它来创建静态页面，我们需要在数据库中存储对应的映射关系，并创建对应的静态页面。 
+
 添加到``INSTALLED_APPS``
 
 ```
@@ -30,9 +40,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'django.contrib.sitemaps',
-    'django_comments',
-    'rest_framework',
     'blogpost'
 )
 ```

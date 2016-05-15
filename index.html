@@ -794,6 +794,15 @@ Destroying test database for alias &#39;default&#39;...
 </ul>
 <p>这意味着，我们可以直接用Django一些内置的组件来完成很多功能，先让我们来看看怎么完成一个简单的评论功能。</p>
 <h2 id="静态页面">静态页面</h2>
+<p>Django带有一个可选的“flatpages”应用，可以让我们存储简单的“扁平化(flat)”页面在数据库中，并且可以通过Django的管理界面以及一个Python API来处理要管理的内容。这样的一个静态页面，一般包含下面的几个属性：</p>
+<ul>
+<li>标题</li>
+<li>URL</li>
+<li>内容(Content)</li>
+<li>Sites</li>
+<li>自定义模板（可选）</li>
+</ul>
+<p>为了使用它来创建静态页面，我们需要在数据库中存储对应的映射关系，并创建对应的静态页面。</p>
 <p>添加到<code>INSTALLED_APPS</code></p>
 <pre><code>INSTALLED_APPS = (
     &#39;django.contrib.admin&#39;,
@@ -804,9 +813,6 @@ Destroying test database for alias &#39;default&#39;...
     &#39;django.contrib.staticfiles&#39;,
     &#39;django.contrib.sites&#39;,
     &#39;django.contrib.flatpages&#39;,
-    &#39;django.contrib.sitemaps&#39;,
-    &#39;django_comments&#39;,
-    &#39;rest_framework&#39;,
     &#39;blogpost&#39;
 )</code></pre>
 <p>添加URL</p>
