@@ -114,9 +114,9 @@
 
 ![点击导航后的结果](images/nav-in-mobile-with-click.png)
 
-接着，我们可以快速的创建一个标语：
-
 ### 添加标语
+
+接着，我们可以快速的创建一个标语：
 
 ```
 <main class="bs-docs-masthead" id="content" role="main">
@@ -128,6 +128,8 @@
     </div>
 </main>
 ```
+
+这里的代码都比较简单，我想也不需要太多的解释。
 
 ### 优化列表
 
