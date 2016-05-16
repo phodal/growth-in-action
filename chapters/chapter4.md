@@ -423,3 +423,28 @@ class BlogSitemap(Sitemap):
 
 ### 提交到搜索引擎
 
+这里我们以Google Webmaster为例简单的介绍一下如何使用各种站长工具来提交sitemap.xml。
+
+我们可以登录Google的Webmaster：[https://www.google.com/webmasters/tools/home?hl=zh-cn](https://www.google.com/webmasters/tools/home?hl=zh-cn)，然后点击添加属性来创建一个新的网站:
+
+![add-property.png](images/add-property.png)
+
+这时候Google需要确认这个网站是你的，所以它提供几点方法来验证，除了下面的推荐方法：
+
+![google-add-website.png](images/google-add-website.png)
+
+我们可以使用下面的这一些方法：
+
+![google-addition-method.png](images/google-addition-method.png)
+
+我个人比较喜欢用HTML Tag的方式来实现
+
+![html-tag.png](images/html-tag.png)
+
+在我们完成验证之后，我们就可以在后台手动提交Sitemap.xml了。
+
+![google-add-sitemap.png](images/google-add-sitemap.png)
+
+点击上方的**添加/测试站点地图**即可。
+
+
