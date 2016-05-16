@@ -869,11 +869,11 @@ Running migrations:
 {% endblock %}</code></pre>
 <p>当我们完成模板后，我们就需要登录后台，并添加对应的静态页面的配置：</p>
 <figure>
-<img src="images/admin-flatpages-create.jpg" alt="admin-flatpages-create.jpg" /><figcaption>admin-flatpages-create.jpg</figcaption>
+<img src="images/admin-flatpages-create.jpg" alt="管理员界面创建flatpage" /><figcaption>管理员界面创建flatpage</figcaption>
 </figure>
 <p>然后从高级选项中填写我们的静态页面的路径，我们就可以完成静态页面的创建。如下图所示：</p>
 <figure>
-<img src="images/flatpages-advance-option.png" alt="flatpages-advance-option.png" /><figcaption>flatpages-advance-option.png</figcaption>
+<img src="images/flatpages-advance-option.png" alt="flatpage高级选项" /><figcaption>flatpage高级选项</figcaption>
 </figure>
 <p>最后，还要所个链接加到首页的导航中：</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;li&gt;</span>
@@ -944,13 +944,13 @@ Running migrations:
 {% endblock %}</code></pre>
 <p>遗憾的是，当我们刷新页面的时候，页面报错了，原因如下所示：</p>
 <figure>
-<img src="images/site_id_issue.jpg" alt="site_id_issue.jpg" /><figcaption>site_id_issue.jpg</figcaption>
+<img src="images/site_id_issue.jpg" alt="SITE_ID报错" /><figcaption>SITE_ID报错</figcaption>
 </figure>
 <p>我们还需要定义一个<code>SITE_ID</code>，添加下面的代码到<code>settings.py</code>文件中即可：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">SITE_ID <span class="op">=</span> <span class="dv">1</span></code></pre></div>
 <p>然后，我们就可以从后台创建评论：</p>
 <figure>
-<img src="images/create-comment-backend.jpg" alt="create-comment-backend.jpg" /><figcaption>create-comment-backend.jpg</figcaption>
+<img src="images/create-comment-backend.jpg" alt="后台创建评论" /><figcaption>后台创建评论</figcaption>
 </figure>
 <h2 id="sitemap">Sitemap</h2>
 <p>我们在之前的文章中提到过SEO的重要性，这里只是简单地对Sitemap的内容进行展开。</p>
@@ -1095,23 +1095,23 @@ sitemaps =  {
 <p>这里我们以Google Webmaster为例简单的介绍一下如何使用各种站长工具来提交sitemap.xml。</p>
 <p>我们可以登录Google的Webmaster：<a href="https://www.google.com/webmasters/tools/home?hl=zh-cn" class="uri">https://www.google.com/webmasters/tools/home?hl=zh-cn</a>，然后点击添加属性来创建一个新的网站:</p>
 <figure>
-<img src="images/add-property.png" alt="add-property.png" /><figcaption>add-property.png</figcaption>
+<img src="images/add-property.png" alt="添加网站" /><figcaption>添加网站</figcaption>
 </figure>
 <p>这时候Google需要确认这个网站是你的，所以它提供几点方法来验证，除了下面的推荐方法：</p>
 <figure>
-<img src="images/google-add-website.png" alt="google-add-website.png" /><figcaption>google-add-website.png</figcaption>
+<img src="images/google-add-website.png" alt="推荐的验证方式" /><figcaption>推荐的验证方式</figcaption>
 </figure>
 <p>我们可以使用下面的这一些方法：</p>
 <figure>
-<img src="images/google-addition-method.png" alt="google-addition-method.png" /><figcaption>google-addition-method.png</figcaption>
+<img src="images/google-addition-method.png" alt="备选的难方法" /><figcaption>备选的难方法</figcaption>
 </figure>
 <p>我个人比较喜欢用HTML Tag的方式来实现</p>
 <figure>
-<img src="images/html-tag.png" alt="html-tag.png" /><figcaption>html-tag.png</figcaption>
+<img src="images/html-tag.png" alt="HTML标签验证" /><figcaption>HTML标签验证</figcaption>
 </figure>
 <p>在我们完成验证之后，我们就可以在后台手动提交Sitemap.xml了。</p>
 <figure>
-<img src="images/google-add-sitemap.png" alt="google-add-sitemap.png" /><figcaption>google-add-sitemap.png</figcaption>
+<img src="images/google-add-sitemap.png" alt="提交Sitemap.xml" /><figcaption>提交Sitemap.xml</figcaption>
 </figure>
 <p>点击上方的<strong>添加/测试站点地图</strong>即可。</p>
 <h1 id="前端框架">前端框架</h1>
