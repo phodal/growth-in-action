@@ -1031,6 +1031,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 &lt;/urlset&gt;</code></pre>
 <p>下一步，我们仍可以直接创建出对应的静态页面的Sitemap。</p>
 <h3 id="创建静态页面的sitemap">创建静态页面的Sitemap</h3>
+<p>相似的，我们也需要从items访法中，定义出我们所要创建页面的对象。</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.contrib.sitemaps <span class="im">import</span> Sitemap
 <span class="im">from</span> django.core.urlresolvers <span class="im">import</span> reverse
 <span class="im">from</span> django.apps <span class="im">import</span> apps <span class="im">as</span> django_apps
@@ -1042,6 +1043,15 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
         Site <span class="op">=</span> django_apps.get_model(<span class="st">&#39;sites.Site&#39;</span>)
         current_site <span class="op">=</span> Site.objects.get_current()
         <span class="cf">return</span> current_site.flatpage_set.<span class="bu">filter</span>(registration_required<span class="op">=</span><span class="va">False</span>)</code></pre></div>
+<p>只不过这个方法可能会稍微麻烦一些，我们需要从数据库中取中当前的站点。再取出当前站点中的flatpage集合，对过滤出那些不需要注册的页面，即代码中的<code>registration_required=False</code>。</p>
+<p>最近再将这个对象放入sitemaps即可：</p>
+<pre><code>from sitemap.sitemaps import PageSitemap, FlatPageSitemap
+
+sitemaps =  {
+    &quot;page&quot;: PageSitemap,
+    &#39;flatpages&#39;: FlatPageSitemap
+}</code></pre>
+<p>现在，我们可以完成博客的Sitemap了。</p>
 <h3 id="创建博客的sitemap">创建博客的Sitemap</h3>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogSitemap(Sitemap):
     changefreq <span class="op">=</span> <span class="st">&quot;never&quot;</span>
