@@ -1381,6 +1381,54 @@ class BlogSitemap(Sitemap):
 
 我们在不同的设计上看到的是不是同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。
 
+### 引入前端框架
+
+下好Bootstrap，将里面的内容复制到``static/``目录，如下所示：
+
+```
+.
+├── css
+│   ├── bootstrap-theme.css
+│   ├── bootstrap-theme.css.map
+│   ├── bootstrap-theme.min.css
+│   ├── bootstrap-theme.min.css.map
+│   ├── bootstrap.css
+│   ├── bootstrap.css.map
+│   ├── bootstrap.min.css
+│   ├── bootstrap.min.css.map
+│   └── styles.css
+├── fonts
+│   ├── glyphicons-halflings-regular.eot
+│   ├── glyphicons-halflings-regular.svg
+│   ├── glyphicons-halflings-regular.ttf
+│   ├── glyphicons-halflings-regular.woff
+│   └── glyphicons-halflings-regular.woff2
+└── js
+    ├── bootstrap.js
+    ├── bootstrap.min.js
+    └── npm.js
+```    
+
+它包含了JavaScript、CSS还有字体，需要注意的一点是bootstrap依赖于jquery。因此，我们需要下载jquery并放到这个目录里。然后在我们的head里引入这些css
+
+```
+<head>
+    <title>{% block head_title %}Welcome to my blog{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+```
+
+在我们的body结尾的地方：
+
+```
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+```
+
+在这里，将Script放在body的尾部有利于用户打开页面的速度。而对于一些纯前端的框架来说，它们就需要放在页面开始的地方。
+
 页面美化
 ---
 

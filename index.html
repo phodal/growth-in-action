@@ -128,7 +128,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li><a href="#前端框架">前端框架</a><ul>
-<li><a href="#响应式设计">响应式设计</a></li>
+<li><a href="#响应式设计">响应式设计</a><ul>
+<li><a href="#引入前端框架">引入前端框架</a></li>
+</ul></li>
 <li><a href="#页面美化">页面美化</a><ul>
 <li><a href="#添加导航">添加导航</a></li>
 <li><a href="#添加标语">添加标语</a></li>
@@ -1123,6 +1125,40 @@ sitemaps =  {
 <img src="images/responsive-design.png" alt="响应式设计" /><figcaption>响应式设计</figcaption>
 </figure>
 <p>我们在不同的设计上看到的是不是同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。</p>
+<h3 id="引入前端框架">引入前端框架</h3>
+<p>下好Bootstrap，将里面的内容复制到<code>static/</code>目录，如下所示：</p>
+<pre><code>.
+├── css
+│   ├── bootstrap-theme.css
+│   ├── bootstrap-theme.css.map
+│   ├── bootstrap-theme.min.css
+│   ├── bootstrap-theme.min.css.map
+│   ├── bootstrap.css
+│   ├── bootstrap.css.map
+│   ├── bootstrap.min.css
+│   ├── bootstrap.min.css.map
+│   └── styles.css
+├── fonts
+│   ├── glyphicons-halflings-regular.eot
+│   ├── glyphicons-halflings-regular.svg
+│   ├── glyphicons-halflings-regular.ttf
+│   ├── glyphicons-halflings-regular.woff
+│   └── glyphicons-halflings-regular.woff2
+└── js
+    ├── bootstrap.js
+    ├── bootstrap.min.js
+    └── npm.js</code></pre>
+<p>它包含了JavaScript、CSS还有字体，需要注意的一点是bootstrap依赖于jquery。因此，我们需要下载jquery并放到这个目录里。然后在我们的head里引入这些css</p>
+<pre><code>&lt;head&gt;
+    &lt;title&gt;{% block head_title %}Welcome to my blog{% endblock %}&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;{% static &#39;css/bootstrap.min.css&#39; %}&quot;&gt;
+&lt;/head&gt;</code></pre>
+<p>在我们的body结尾的地方：</p>
+<pre><code>&lt;script src=&quot;{% static &#39;js/jquery.min.js&#39; %}&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;{% static &#39;js/bootstrap.min.js&#39; %}&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>在这里，将Script放在body的尾部有利于用户打开页面的速度。而对于一些纯前端的框架来说，它们就需要放在页面开始的地方。</p>
 <h2 id="页面美化">页面美化</h2>
 <h3 id="添加导航">添加导航</h3>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;header</span><span class="ot"> class=</span><span class="st">&quot;navbar navbar-static-top bs-docs-nav&quot;</span><span class="ot"> id=</span><span class="st">&quot;top&quot;</span><span class="ot"> role=</span><span class="st">&quot;banner&quot;</span><span class="kw">&gt;</span>
