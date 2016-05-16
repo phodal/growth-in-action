@@ -65,7 +65,11 @@
 页面美化
 ---
 
+现在，我们就可以创建一个导航了。
+
 ### 添加导航
+
+根据Bootstrap的官方文档的Demo，我们可以创建对应的导航。
 
 ```html
 <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
@@ -97,6 +101,20 @@
     </div>
 </header>
 ```
+
+它在桌面下的效果大致如下图所示：
+
+![桌面浏览器下的Bootstrap导航](images/bootstrap-nav-desktop.png)
+
+而在移动浏览器下则是这样的效果：
+
+![移动设备上的导航](images/nav-in-mobile.png)
+
+当我们点击右上角的菜单按钮时，会出现我们的菜单
+
+![点击导航后的结果](images/nav-in-mobile-with-click.png)
+
+接着，我们可以快速的创建一个标语：
 
 ### 添加标语
 

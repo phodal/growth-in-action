@@ -1160,7 +1160,9 @@ sitemaps =  {
 &lt;/html&gt;</code></pre>
 <p>在这里，将Script放在body的尾部有利于用户打开页面的速度。而对于一些纯前端的框架来说，它们就需要放在页面开始的地方。</p>
 <h2 id="页面美化">页面美化</h2>
+<p>现在，我们就可以创建一个导航了。</p>
 <h3 id="添加导航">添加导航</h3>
+<p>根据Bootstrap的官方文档的Demo，我们可以创建对应的导航。</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;header</span><span class="ot"> class=</span><span class="st">&quot;navbar navbar-static-top bs-docs-nav&quot;</span><span class="ot"> id=</span><span class="st">&quot;top&quot;</span><span class="ot"> role=</span><span class="st">&quot;banner&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
         <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;navbar-header&quot;</span><span class="kw">&gt;</span>
@@ -1189,6 +1191,19 @@ sitemaps =  {
         <span class="kw">&lt;/nav&gt;</span>
     <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/header&gt;</span></code></pre></div>
+<p>它在桌面下的效果大致如下图所示：</p>
+<figure>
+<img src="images/bootstrap-nav-desktop.png" alt="桌面浏览器下的Bootstrap导航" /><figcaption>桌面浏览器下的Bootstrap导航</figcaption>
+</figure>
+<p>而在移动浏览器下则是这样的效果：</p>
+<figure>
+<img src="images/nav-in-mobile.png" alt="移动设备上的导航" /><figcaption>移动设备上的导航</figcaption>
+</figure>
+<p>当我们点击右上角的菜单按钮时，会出现我们的菜单</p>
+<figure>
+<img src="images/nav-in-mobile-with-click.png" alt="点击导航后的结果" /><figcaption>点击导航后的结果</figcaption>
+</figure>
+<p>接着，我们可以快速的创建一个标语：</p>
 <h3 id="添加标语">添加标语</h3>
 <pre><code>&lt;main class=&quot;bs-docs-masthead&quot; id=&quot;content&quot; role=&quot;main&quot;&gt;
     &lt;div class=&quot;container&quot;&gt;
