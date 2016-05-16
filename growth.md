@@ -687,7 +687,7 @@ def test_blogpost_create_with_show_in_homepage(self):
 
 我们用同样的方法创建了一篇博客，然后在首页测试返回的内容中是否含有``This is a blog``。
 
-功能测试与搭建持续集成
+功能测试与持续集成
 ===
 
 在上一章最后，我们写的测试可以算得上是单元测试，接着我们可以写一些自动化测试。
@@ -1336,7 +1336,6 @@ class BlogSitemap(Sitemap):
 </urlset>
 ```
 
-
 ### 提交到搜索引擎
 
 这里我们以Google Webmaster为例简单的介绍一下如何使用各种站长工具来提交sitemap.xml。
@@ -1362,6 +1361,7 @@ class BlogSitemap(Sitemap):
 ![google-add-sitemap.png](images/google-add-sitemap.png)
 
 点击上方的**添加/测试站点地图**即可。
+
 
 
 

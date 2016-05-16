@@ -420,7 +420,6 @@ class BlogSitemap(Sitemap):
 </urlset>
 ```
 
-
 ### 提交到搜索引擎
 
 这里我们以Google Webmaster为例简单的介绍一下如何使用各种站长工具来提交sitemap.xml。
@@ -446,5 +445,6 @@ class BlogSitemap(Sitemap):
 ![google-add-sitemap.png](images/google-add-sitemap.png)
 
 点击上方的**添加/测试站点地图**即可。
+
 
 

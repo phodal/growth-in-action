@@ -95,7 +95,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#测试详情页">测试详情页</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#功能测试与搭建持续集成">功能测试与搭建持续集成</a><ul>
+<li><a href="#功能测试与持续集成">功能测试与持续集成</a><ul>
 <li><a href="#编写自动化测试">编写自动化测试</a><ul>
 <li><a href="#selenium与第一个ui测试">Selenium与第一个UI测试</a></li>
 </ul></li>
@@ -615,7 +615,7 @@ Destroying test database for alias &#39;default&#39;...
     response <span class="op">=</span> <span class="va">self</span>.client.get(<span class="st">&#39;/&#39;</span>)
     <span class="va">self</span>.assertIn(b<span class="st">&#39;This is a blog&#39;</span>, response.content)</code></pre></div>
 <p>我们用同样的方法创建了一篇博客，然后在首页测试返回的内容中是否含有<code>This is a blog</code>。</p>
-<h1 id="功能测试与搭建持续集成">功能测试与搭建持续集成</h1>
+<h1 id="功能测试与持续集成">功能测试与持续集成</h1>
 <p>在上一章最后，我们写的测试可以算得上是单元测试，接着我们可以写一些自动化测试。</p>
 <h2 id="编写自动化测试">编写自动化测试</h2>
 <p>接着我们就可以用Selenium来做自动化测试。这是ThoughtWorks出品的一个强大的基于浏览器的开源自动化测试工具，它通常用来编写Web 应用的自动化测试。</p>
