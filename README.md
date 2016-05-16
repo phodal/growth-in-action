@@ -14,6 +14,11 @@
  - 添加单页面应用的前端
  - 自动化部署
 
+
+欢迎关注我的微信公众号(搜索Phodal)：
+
+![QRCode](https://raw.githubusercontent.com/phodal/growth/master/www/img/wechat.jpg)
+
 Web应用代码: [https://github.com/phodal/growth-in-action-django-code](https://github.com/phodal/growth-in-action-django-code)
 
 APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.com/phodal/growth-in-action-hybird)
