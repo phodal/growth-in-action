@@ -235,7 +235,7 @@ Sitemap
 
 Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些可供抓取的网页。常见的Sitemap的形式是以xml出现了，如下是我博客的sitemap.xml的一部分内容：
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
@@ -271,16 +271,15 @@ Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些�
 
 ### 创建首页的Sitemap
 
-### 创建静态页面的Sitemap
+同样的，添加``django.contrib.sitemaps``到``INSTALLED_APPS``
+
  
 
 ```python
-from sitemap.sitemaps import BlogSitemap, PageSitemap, FlatPageSitemap
+from sitemap.sitemaps import PageSitemap
 
 sitemaps =  {
-    "page": PageSitemap,
-    'flatpages': FlatPageSitemap,
-    "blog": BlogSitemap
+    "page": PageSitemap
 }
 
 urlpatterns = patterns('',
@@ -294,11 +293,6 @@ urlpatterns = patterns('',
 ```
 
 ```python
-from django.contrib.sitemaps import Sitemap
-from django.core.urlresolvers import reverse
-from blogpost.models import Blogpost
-from django.apps import apps as django_apps
-
 class PageSitemap(Sitemap):
     priority = 1.0
     changefreq = 'daily'
@@ -309,14 +303,8 @@ class PageSitemap(Sitemap):
     def location(self, item):
         return reverse(item)
 
-class FlatPageSitemap(Sitemap):
-    priority = 0.8
+```
 
-    def items(self):
-        Site = django_apps.get_model('sites.Site')
-        current_site = Site.objects.get_current()
-        return current_site.flatpage_set.filter(registration_required=False)
-```        
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -334,12 +322,25 @@ class FlatPageSitemap(Sitemap):
 </urlset>
 ```
 
+### 创建静态页面的Sitemap
+
+```python
+from django.contrib.sitemaps import Sitemap
+from django.core.urlresolvers import reverse
+from django.apps import apps as django_apps
+
+class FlatPageSitemap(Sitemap):
+    priority = 0.8
+
+    def items(self):
+        Site = django_apps.get_model('sites.Site')
+        current_site = Site.objects.get_current()
+        return current_site.flatpage_set.filter(registration_required=False)
+```
 
 ### 创建博客的Sitemap
 
-```
-
-
+```python
 class BlogSitemap(Sitemap):
     changefreq = "never"
     priority = 0.5
