@@ -383,6 +383,8 @@ sitemaps =  {
 
 ### 创建博客的Sitemap
 
+同上面一样的是，我们依然需要在items方法中返回所有的博客内容。并且在lastmod中，返回这篇博客的发表日期——以免他们返回的是同一个日期：
+
 ```python
 class BlogSitemap(Sitemap):
     changefreq = "never"
@@ -393,6 +395,29 @@ class BlogSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.posted
+```
+
+最近我们的Sitemap.xml，如下所示:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://www.phodal.com/about/</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>http://www.phodal.com/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>http://www.phodal.com/blog/hello.html</loc>
+        <lastmod>2016-03-24</lastmod>
+        <changefreq>never</changefreq>
+        <priority>0.5</priority>
+    </url>
+</urlset>
 ```
 
 

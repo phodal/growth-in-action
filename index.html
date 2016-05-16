@@ -1053,6 +1053,7 @@ sitemaps =  {
 }</code></pre>
 <p>现在，我们可以完成博客的Sitemap了。</p>
 <h3 id="创建博客的sitemap">创建博客的Sitemap</h3>
+<p>同上面一样的是，我们依然需要在items方法中返回所有的博客内容。并且在lastmod中，返回这篇博客的发表日期——以免他们返回的是同一个日期：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogSitemap(Sitemap):
     changefreq <span class="op">=</span> <span class="st">&quot;never&quot;</span>
     priority <span class="op">=</span> <span class="fl">0.5</span>
@@ -1062,6 +1063,25 @@ sitemaps =  {
 
     <span class="kw">def</span> lastmod(<span class="va">self</span>, obj):
         <span class="cf">return</span> obj.posted</code></pre></div>
+<p>最近我们的Sitemap.xml，如下所示:</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<span class="kw">&lt;urlset</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;url&gt;</span>
+        <span class="kw">&lt;loc&gt;</span>http://www.phodal.com/about/<span class="kw">&lt;/loc&gt;</span>
+        <span class="kw">&lt;priority&gt;</span>0.8<span class="kw">&lt;/priority&gt;</span>
+    <span class="kw">&lt;/url&gt;</span>
+    <span class="kw">&lt;url&gt;</span>
+        <span class="kw">&lt;loc&gt;</span>http://www.phodal.com/<span class="kw">&lt;/loc&gt;</span>
+        <span class="kw">&lt;changefreq&gt;</span>daily<span class="kw">&lt;/changefreq&gt;</span>
+        <span class="kw">&lt;priority&gt;</span>1.0<span class="kw">&lt;/priority&gt;</span>
+    <span class="kw">&lt;/url&gt;</span>
+    <span class="kw">&lt;url&gt;</span>
+        <span class="kw">&lt;loc&gt;</span>http://www.phodal.com/blog/hello.html<span class="kw">&lt;/loc&gt;</span>
+        <span class="kw">&lt;lastmod&gt;</span>2016-03-24<span class="kw">&lt;/lastmod&gt;</span>
+        <span class="kw">&lt;changefreq&gt;</span>never<span class="kw">&lt;/changefreq&gt;</span>
+        <span class="kw">&lt;priority&gt;</span>0.5<span class="kw">&lt;/priority&gt;</span>
+    <span class="kw">&lt;/url&gt;</span>
+<span class="kw">&lt;/urlset&gt;</span></code></pre></div>
 <h3 id="提交到搜索引擎">提交到搜索引擎</h3>
 <h1 id="前端框架">前端框架</h1>
 <h2 id="技能选型">技能选型</h2>
