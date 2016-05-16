@@ -947,15 +947,15 @@ Running migrations:
 <p>我们在之前的文章中提到过SEO的重要性，这里只是简单地对Sitemap的内容进行展开。</p>
 <h3 id="站点地图介绍">站点地图介绍</h3>
 <p>Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些可供抓取的网页。常见的Sitemap的形式是以xml出现了，如下是我博客的sitemap.xml的一部分内容：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
-&lt;url&gt;
-  &lt;loc&gt;https://www.phodal.com/blog/mezzanine-add-new-page/&lt;/loc&gt;
-  &lt;lastmod&gt;2014-08-03&lt;/lastmod&gt;
-  &lt;changefreq&gt;Monthly&lt;/changefreq&gt;
-  &lt;priority&gt;0.2&lt;/priority&gt;
-&lt;/url&gt;
-&lt;/urlset&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<span class="kw">&lt;urlset</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;url&gt;</span>
+  <span class="kw">&lt;loc&gt;</span>https://www.phodal.com/blog/mezzanine-add-new-page/<span class="kw">&lt;/loc&gt;</span>
+  <span class="kw">&lt;lastmod&gt;</span>2014-08-03<span class="kw">&lt;/lastmod&gt;</span>
+  <span class="kw">&lt;changefreq&gt;</span>Monthly<span class="kw">&lt;/changefreq&gt;</span>
+  <span class="kw">&lt;priority&gt;</span>0.2<span class="kw">&lt;/priority&gt;</span>
+<span class="kw">&lt;/url&gt;</span>
+<span class="kw">&lt;/urlset&gt;</span></code></pre></div>
 <p>从上面的内容中，我们可以发现它包含了下面的一些XML标签：</p>
 <ul>
 <li>urlset，封装该文件，并指明当前协议的标准。</li>
@@ -977,13 +977,25 @@ Running migrations:
 </ul>
 <p>下面就让我们从首页说起。</p>
 <h3 id="创建首页的sitemap">创建首页的Sitemap</h3>
-<h3 id="创建静态页面的sitemap">创建静态页面的Sitemap</h3>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sitemap.sitemaps <span class="im">import</span> BlogSitemap, PageSitemap, FlatPageSitemap
+<p>与上面创建静态页面时一样，我们也需要添加<code>django.contrib.sitemaps</code>到<code>INSTALLED_APPS</code>中。</p>
+<p>然后，我们需要指定一个URL规则。通常来说，这个URL是叫sitemap.xml——一个约定俗成的标准。我们需要创建一个sitemaps对象来存储所有的sitemaps:</p>
+<pre><code>url(r&#39;^sitemap\.xml$&#39;, sitemap, {&#39;sitemaps&#39;: sitemaps}, name=&#39;django.contrib.sitemaps.views.sitemap&#39;)</code></pre>
+<p>因此，我们需要创建几种不同类型的sitemap，如下是首页的Sitemap，它继承自Django的Sitemap类：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> PageSitemap(Sitemap):
+    priority <span class="op">=</span> <span class="fl">1.0</span>
+    changefreq <span class="op">=</span> <span class="st">&#39;daily&#39;</span>
+
+    <span class="kw">def</span> items(<span class="va">self</span>):
+        <span class="cf">return</span> [<span class="st">&#39;main&#39;</span>]
+
+    <span class="kw">def</span> location(<span class="va">self</span>, item):
+        <span class="cf">return</span> reverse(item)</code></pre></div>
+<p>它定义了自己的priority是最高的1.0，同时每新频率为<code>daily</code>。然后在items里面去取它所要获取的URL，即<code>urls.py</code>中对应的<code>name</code>的<code>main</code>的URL。在这里我们只返回了<code>main</code>一个值，依据于下面的location方法中的<code>reverse</code>，它找到了main对应的URL，即首页。</p>
+<p>最后结合首页sitemap.xml的<code>urls.py</code>代码如下所示：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sitemap.sitemaps <span class="im">import</span> PageSitemap
 
 sitemaps <span class="op">=</span>  {
-    <span class="st">&quot;page&quot;</span>: PageSitemap,
-    <span class="co">&#39;flatpages&#39;</span>: FlatPageSitemap,
-    <span class="co">&quot;blog&quot;</span>: BlogSitemap
+    <span class="st">&quot;page&quot;</span>: PageSitemap
 }
 
 urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span>,
@@ -994,28 +1006,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
     url(<span class="vs">r&#39;^pages/&#39;</span>, include(<span class="st">&#39;django.contrib.flatpages.urls&#39;</span>)),
     url(<span class="vs">r&#39;^sitemap\.xml$&#39;</span>, sitemap, {<span class="st">&#39;sitemaps&#39;</span>: sitemaps}, name<span class="op">=</span><span class="st">&#39;django.contrib.sitemaps.views.sitemap&#39;</span>)
 ) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.contrib.sitemaps <span class="im">import</span> Sitemap
-<span class="im">from</span> django.core.urlresolvers <span class="im">import</span> reverse
-<span class="im">from</span> blogpost.models <span class="im">import</span> Blogpost
-<span class="im">from</span> django.apps <span class="im">import</span> apps <span class="im">as</span> django_apps
-
-<span class="kw">class</span> PageSitemap(Sitemap):
-    priority <span class="op">=</span> <span class="fl">1.0</span>
-    changefreq <span class="op">=</span> <span class="st">&#39;daily&#39;</span>
-
-    <span class="kw">def</span> items(<span class="va">self</span>):
-        <span class="cf">return</span> [<span class="st">&#39;main&#39;</span>]
-
-    <span class="kw">def</span> location(<span class="va">self</span>, item):
-        <span class="cf">return</span> reverse(item)
-
-<span class="kw">class</span> FlatPageSitemap(Sitemap):
-    priority <span class="op">=</span> <span class="fl">0.8</span>
-
-    <span class="kw">def</span> items(<span class="va">self</span>):
-        Site <span class="op">=</span> django_apps.get_model(<span class="st">&#39;sites.Site&#39;</span>)
-        current_site <span class="op">=</span> Site.objects.get_current()
-        <span class="cf">return</span> current_site.flatpage_set.<span class="bu">filter</span>(registration_required<span class="op">=</span><span class="va">False</span>)</code></pre></div>
+<p>除此，我们还需要创建自己的<code>sitemap.xml</code>模板——自带的系统模板比较简单。</p>
 <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
 <span class="kw">&lt;urlset</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span><span class="kw">&gt;</span>
 {% spaceless %}
@@ -1029,18 +1020,38 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 {% endfor %}
 {% endspaceless %}
 <span class="kw">&lt;/urlset&gt;</span></code></pre></div>
+<p>最后，我们访问<a href="http://localhost:8000/sitemap.xml" class="uri">http://localhost:8000/sitemap.xml</a>，我们就可以获取到我们的<code>sitemap.xml</code>：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
+    &lt;url&gt;
+        &lt;loc&gt;http://www.phodal.com/&lt;/loc&gt;
+        &lt;changefreq&gt;daily&lt;/changefreq&gt;
+        &lt;priority&gt;1.0&lt;/priority&gt;
+    &lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+<p>下一步，我们仍可以直接创建出对应的静态页面的Sitemap。</p>
+<h3 id="创建静态页面的sitemap">创建静态页面的Sitemap</h3>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.contrib.sitemaps <span class="im">import</span> Sitemap
+<span class="im">from</span> django.core.urlresolvers <span class="im">import</span> reverse
+<span class="im">from</span> django.apps <span class="im">import</span> apps <span class="im">as</span> django_apps
+
+<span class="kw">class</span> FlatPageSitemap(Sitemap):
+    priority <span class="op">=</span> <span class="fl">0.8</span>
+
+    <span class="kw">def</span> items(<span class="va">self</span>):
+        Site <span class="op">=</span> django_apps.get_model(<span class="st">&#39;sites.Site&#39;</span>)
+        current_site <span class="op">=</span> Site.objects.get_current()
+        <span class="cf">return</span> current_site.flatpage_set.<span class="bu">filter</span>(registration_required<span class="op">=</span><span class="va">False</span>)</code></pre></div>
 <h3 id="创建博客的sitemap">创建博客的Sitemap</h3>
-<pre><code>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogSitemap(Sitemap):
+    changefreq <span class="op">=</span> <span class="st">&quot;never&quot;</span>
+    priority <span class="op">=</span> <span class="fl">0.5</span>
 
-class BlogSitemap(Sitemap):
-    changefreq = &quot;never&quot;
-    priority = 0.5
+    <span class="kw">def</span> items(<span class="va">self</span>):
+        <span class="cf">return</span> Blogpost.objects.<span class="bu">all</span>()
 
-    def items(self):
-        return Blogpost.objects.all()
-
-    def lastmod(self, obj):
-        return obj.posted</code></pre>
+    <span class="kw">def</span> lastmod(<span class="va">self</span>, obj):
+        <span class="cf">return</span> obj.posted</code></pre></div>
 <h3 id="提交到搜索引擎">提交到搜索引擎</h3>
 <h1 id="前端框架">前端框架</h1>
 <h2 id="技能选型">技能选型</h2>
