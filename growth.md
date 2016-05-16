@@ -1500,6 +1500,13 @@ class BlogSitemap(Sitemap):
 
 ### 优化列表
 
+接着，我们可以简单的对首页的博客列表做一个优化，方法比较简单：
+
+ - 为博客列表添加一个``row``的class，表示它可以滚动
+ - 在每一篇博客里添加``col-sm-4``的class，在不同的大小下会有不同的布局
+
+代码如下所示：
+
 ```
 {% extends 'base.html' %}
 {% block title %}Welcome to my blog{% endblock %}
@@ -1521,6 +1528,17 @@ class BlogSitemap(Sitemap):
 </div>
 {% endblock %}
 ```
+
+它在桌面和自动设备上的效果如下图所示：
+
+![桌面设备效果](images/desktop-blogposts.png)
+
+![移动设备效果](images/mobile-blogposts.png)
+
+
+
+
+
 
 API
 ===

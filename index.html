@@ -1215,6 +1215,12 @@ sitemaps =  {
 &lt;/main&gt;</code></pre>
 <p>这里的代码都比较简单，我想也不需要太多的解释。</p>
 <h3 id="优化列表">优化列表</h3>
+<p>接着，我们可以简单的对首页的博客列表做一个优化，方法比较简单：</p>
+<ul>
+<li>为博客列表添加一个<code>row</code>的class，表示它可以滚动</li>
+<li>在每一篇博客里添加<code>col-sm-4</code>的class，在不同的大小下会有不同的布局</li>
+</ul>
+<p>代码如下所示：</p>
 <pre><code>{% extends &#39;base.html&#39; %}
 {% block title %}Welcome to my blog{% endblock %}
 
@@ -1234,6 +1240,13 @@ sitemaps =  {
     {% endif %}
 &lt;/div&gt;
 {% endblock %}</code></pre>
+<p>它在桌面和自动设备上的效果如下图所示：</p>
+<figure>
+<img src="images/desktop-blogposts.png" alt="桌面设备效果" /><figcaption>桌面设备效果</figcaption>
+</figure>
+<figure>
+<img src="images/mobile-blogposts.png" alt="移动设备效果" /><figcaption>移动设备效果</figcaption>
+</figure>
 <h1 id="api">API</h1>
 <h2 id="自动完成">自动完成</h2>
 <p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。</p>
