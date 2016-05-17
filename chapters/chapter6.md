@@ -3,7 +3,7 @@ API
 
 在下一章开始之前，我们先来搭建一下API平台，不仅仅可以提供一些额外的功能，还可以为我们的APP提供API。
 
-RESTful
+博客列表
 ---
 
 ### Django REST Framework
@@ -101,11 +101,38 @@ urlpatterns = patterns('',
 url(r'^api/', include(apiRouter.urls))
 ```
 
-### 自动完成
+### 测试 API
+
+现在，我们可以访问[http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)来访问我们现在的API。由于Django REST Framework提供了一个UI机制，所以我们可以在网页上直接看到我们所有的API：
+
+![Django REST Framework列表](images/django-rest-framework-api-lists.png)
+
+然后，点击页面中的[http://127.0.0.1:8000/api/blogpost/](http://127.0.0.1:8000/api/blogpost/)，我们就可以访问博客相关的API了，如下图所示:
+
+![博客API](images/drf-blogppost-set-list.png)
+
+在页面上显示了所有的博客内容，在页面的下面有一个表单可以先让我们来创建数据：
+
+![创建博客的表单](images/api-post-form.png)
+
+直接在表单中添加数据，我们就可以完成数据创建了。
+
+当然，我们也可以直接用命令行工具来测试，执行：
+
+```bash
+curl -i  http://127.0.0.1:8000/api/blogpost/
+```
+
+即可返回相应的结果：
+
+![CuRL API](images/curl-api.png)
+
+自动完成
+---
 
 AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。
 
-跨域
+跨域支持
 ---
 
 ### CORS
