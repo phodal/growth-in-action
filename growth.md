@@ -1708,7 +1708,7 @@ AutoComplete是一个很有意思的功能，特别是当我们的文章很多�
 
 当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。
 
-### 搜索博客标题
+### 搜索API
 
 为了实现这个功能我们需要对之前的博客API做一些简单的改造——可以支持搜索博客标题。这里我们需要稍微扩展一下我们的博客API即可：
 
@@ -1735,6 +1735,17 @@ class BlogpostSet(viewsets.ModelViewSet):
 
 ```python
 apiRouter.register(r'blogpost', BlogpostSet, 'Blogpost')
+```
+
+### 页面实现
+
+接着，我们就可以在页面上实现这个功能。在这里我们使用一个名为[Bootstrap-3-Typeahead](https://github.com/bassjobsen/Bootstrap-3-Typeahead)的插件来实现，下载这个插件以及它对应的CSS：[https://github.com/bassjobsen/typeahead.js-bootstrap-css](https://github.com/bassjobsen/typeahead.js-bootstrap-css)，并添加到``base.html``中，然后创建一个``main.js``文件负责相关的逻辑处理。
+
+```html
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap3-typeahead.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 ```
 
 

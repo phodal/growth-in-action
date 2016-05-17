@@ -140,7 +140,7 @@ AutoComplete是一个很有意思的功能，特别是当我们的文章很多�
 
 当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。
 
-### 搜索博客标题
+### 搜索API
 
 为了实现这个功能我们需要对之前的博客API做一些简单的改造——可以支持搜索博客标题。这里我们需要稍微扩展一下我们的博客API即可：
 
@@ -169,6 +169,82 @@ class BlogpostSet(viewsets.ModelViewSet):
 apiRouter.register(r'blogpost', BlogpostSet, 'Blogpost')
 ```
 
+### 页面实现
+
+接着，我们就可以在页面上实现这个功能。在这里我们使用一个名为[Bootstrap-3-Typeahead](https://github.com/bassjobsen/Bootstrap-3-Typeahead)的插件来实现，下载这个插件以及它对应的CSS：[https://github.com/bassjobsen/typeahead.js-bootstrap-css](https://github.com/bassjobsen/typeahead.js-bootstrap-css)，并添加到``base.html``中，然后创建一个``main.js``文件负责相关的逻辑处理。
+
+```html
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap3-typeahead.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+```
+
+接着我们需要在页面上创建对应的UI，我们可以直接在``登录``后面添加这个搜索按钮：
+
+```
+<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+    <ul class="nav navbar-nav">
+        <li>
+            <a href="/pages/about/">关于我</a>
+        </li>
+        <li>
+            <a href="/pages/resume/">简历</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="/admin" id="loginLink">登录</a></li>
+    </ul>
+    <div class="col-sm-3 col-md-3 pull-right">
+        <form class="navbar-form" role="search">
+            <div class="input-group">
+                <input type="text" id="typeahead-input" class="form-control" placeholder="Search" name="search" data-provide="typeahead">
+                <div class="input-group-btn">
+                    <button class="btn btn-default search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+```      
+
+我们主要是使用input标签，标签上对应有一个id
+
+```
+<input type="text" id="typeahead-input" class="form-control" placeholder="Search" 
+```  
+
+对应于这个ID，我们就可以开始编写我们的功能了：
+
+```javascript
+$(document).ready(function () {
+    $('#typeahead-input').typeahead({
+        source: function (query, process) {
+            return $.get('/api/blogpost/?format=json&title=' + query, function (data) {
+                return process(data);
+            });
+        },
+        updater: function (item) {
+            return item;
+        },
+        displayText: function (item) {
+            return item.title;
+        },
+        afterSelect: function (item) {
+            location.href = 'http://localhost:8000/blog/' + item.slug + ".html";
+        },
+        delay: 500
+    });
+});
+```
+
+
+虽然我们使用的是插件来完成我们的功能，但是总体的处理逻辑是：
+
+1. 监听我们的输入文本
+2. 获取API的返回结果
+3. 对返回结果进行处理——如高亮输入文本、显示到页面上
+4. 处理用户点击事件
 
 跨域支持
 ---
