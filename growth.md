@@ -1569,18 +1569,22 @@ class BlogSitemap(Sitemap):
 API
 ===
 
+在下一章开始之前，我们先来搭建一下API平台，不仅仅可以提供一些额外的功能，还可以为我们的APP提供API。
+
 RESTful
 ---
 
-###Django REST Framework
+### Django REST Framework
 
-> Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。
+在这里，我们需要用到一个名为Django REST Framework的RESTful API库。通过这个库，我们可以快速创建我们所需要的API。
+
+Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。因此，首先我们仍是要安装这个库：
 
 ```
 pip install djangorestframework
-pip install markdown       # Markdown support for the browsable API.
-pip install django-filter  # Filtering support
 ```
+
+然后把它添加到``INSTALLED_APPS``中：
 
 ```python
 INSTALLED_APPS = (
@@ -1604,6 +1608,8 @@ INSTALLED_APPS = (
 )
 ```
 
+接着我们可以在我们的API中创建一个URL，用于匹配它的授权机制。
+
 ```
 urlpatterns = [
     ...
@@ -1611,7 +1617,61 @@ urlpatterns = [
 ]
 ```
 
+不过这个API，目前并没有多大的用途。只有当我们在制作一些需要权限验证的接口时，它才会突显它的重要性。
 
+### 创建博客列表API
+
+为了方便我们继续展开后面的内容，我们先来创建一个博客列表API。参考Django REST Framework的官方文档，我们可以很快地创建出下面的Demo:
+
+```
+from django.contrib.auth.models import User
+from rest_framework import serializers, viewsets
+from blogpost.models import Blogpost
+
+
+class BlogpsotSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Blogpost
+        fields = ('title', 'author', 'body', 'slug')
+
+class BlogpostSet(viewsets.ModelViewSet):
+    queryset = Blogpost.objects.all()
+    serializer_class = BlogpsotSerializer
+```
+
+在上面这个例子中，API由两个部分组成：
+
+ - ViewSets，用于定义视图的展现形式——如返回哪些内容，需要做哪些权限处理
+ - Serializers，用于定义API的表现形式——如返回哪些字段，返回怎样的格式
+
+我们在我们的URL中，会定义相应的规则到ViewSet，而ViewSet则通过``serializer_class``找到对应的``Serializers``。我们将Blogpost的所有对象赋予queryset，并返回这些值。在BlogpsotSerializer中，我们定义了我们要返回的几个字段：``title``、``author``、``body``、``slug``。
+
+接着，我们可以在我们的``urls.py``配置URL。
+
+```python
+...
+
+from rest_framework import routers
+from blogpost.api import BlogpostSet
+
+apiRouter = routers.DefaultRouter()
+apiRouter.register(r'blogpost', BlogpostSet)
+
+urlpatterns = patterns('',
+    ...
+    url(r'^api/', include(apiRouter.urls)),
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+```
+
+我们使用默认的Router来配置我们的URL，即DefaultRouter，它提供了一个非常简单的机制来自动检测URL规则。因此，我们只需要注册好我们的url——``blogpost``以及它值``BlogpostSet``即可。随后，我们再为其定义一个根URL即可:
+
+```python
+url(r'^api/', include(apiRouter.urls))
+```
+
+### 自动完成
+
+AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。
 
 跨域
 ---

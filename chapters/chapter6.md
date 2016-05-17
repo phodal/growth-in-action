@@ -49,9 +49,57 @@ urlpatterns = [
 ]
 ```
 
+不过这个API，目前并没有多大的用途。只有当我们在制作一些需要权限验证的接口时，它才会突显它的重要性。
+
 ### 创建博客列表API
 
+为了方便我们继续展开后面的内容，我们先来创建一个博客列表API。参考Django REST Framework的官方文档，我们可以很快地创建出下面的Demo:
 
+```
+from django.contrib.auth.models import User
+from rest_framework import serializers, viewsets
+from blogpost.models import Blogpost
+
+
+class BlogpsotSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Blogpost
+        fields = ('title', 'author', 'body', 'slug')
+
+class BlogpostSet(viewsets.ModelViewSet):
+    queryset = Blogpost.objects.all()
+    serializer_class = BlogpsotSerializer
+```
+
+在上面这个例子中，API由两个部分组成：
+
+ - ViewSets，用于定义视图的展现形式——如返回哪些内容，需要做哪些权限处理
+ - Serializers，用于定义API的表现形式——如返回哪些字段，返回怎样的格式
+
+我们在我们的URL中，会定义相应的规则到ViewSet，而ViewSet则通过``serializer_class``找到对应的``Serializers``。我们将Blogpost的所有对象赋予queryset，并返回这些值。在BlogpsotSerializer中，我们定义了我们要返回的几个字段：``title``、``author``、``body``、``slug``。
+
+接着，我们可以在我们的``urls.py``配置URL。
+
+```python
+...
+
+from rest_framework import routers
+from blogpost.api import BlogpostSet
+
+apiRouter = routers.DefaultRouter()
+apiRouter.register(r'blogpost', BlogpostSet)
+
+urlpatterns = patterns('',
+    ...
+    url(r'^api/', include(apiRouter.urls)),
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+```
+
+我们使用默认的Router来配置我们的URL，即DefaultRouter，它提供了一个非常简单的机制来自动检测URL规则。因此，我们只需要注册好我们的url——``blogpost``以及它值``BlogpostSet``即可。随后，我们再为其定义一个根URL即可:
+
+```python
+url(r'^api/', include(apiRouter.urls))
+```
 
 ### 自动完成
 

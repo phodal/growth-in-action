@@ -141,6 +141,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#api">API</a><ul>
 <li><a href="#restful">RESTful</a><ul>
 <li><a href="#django-rest-framework">Django REST Framework</a></li>
+<li><a href="#创建博客列表api">创建博客列表API</a></li>
+<li><a href="#自动完成">自动完成</a></li>
 </ul></li>
 <li><a href="#跨域">跨域</a><ul>
 <li><a href="#cors">CORS</a></li>
@@ -1273,14 +1275,13 @@ sitemaps =  {
   <span class="kw">margin:</span> <span class="dt">20px</span> <span class="dt">0</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></div>
 <h1 id="api">API</h1>
+<p>在下一章开始之前，我们先来搭建一下API平台，不仅仅可以提供一些额外的功能，还可以为我们的APP提供API。</p>
 <h2 id="restful">RESTful</h2>
 <h3 id="django-rest-framework">Django REST Framework</h3>
-<blockquote>
-<p>Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。</p>
-</blockquote>
-<pre><code>pip install djangorestframework
-pip install markdown       # Markdown support for the browsable API.
-pip install django-filter  # Filtering support</code></pre>
+<p>在这里，我们需要用到一个名为Django REST Framework的RESTful API库。通过这个库，我们可以快速创建我们所需要的API。</p>
+<p>Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。因此，首先我们仍是要安装这个库：</p>
+<pre><code>pip install djangorestframework</code></pre>
+<p>然后把它添加到<code>INSTALLED_APPS</code>中：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">INSTALLED_APPS <span class="op">=</span> (
     ...
     <span class="st">&#39;rest_framework&#39;</span>,
@@ -1296,10 +1297,50 @@ pip install django-filter  # Filtering support</code></pre>
     &#39;rest_framework&#39;,
     &#39;blogpost&#39;
 )</code></pre>
+<p>接着我们可以在我们的API中创建一个URL，用于匹配它的授权机制。</p>
 <pre><code>urlpatterns = [
     ...
     url(r&#39;^api-auth/&#39;, include(&#39;rest_framework.urls&#39;, namespace=&#39;rest_framework&#39;))
 ]</code></pre>
+<p>不过这个API，目前并没有多大的用途。只有当我们在制作一些需要权限验证的接口时，它才会突显它的重要性。</p>
+<h3 id="创建博客列表api">创建博客列表API</h3>
+<p>为了方便我们继续展开后面的内容，我们先来创建一个博客列表API。参考Django REST Framework的官方文档，我们可以很快地创建出下面的Demo:</p>
+<pre><code>from django.contrib.auth.models import User
+from rest_framework import serializers, viewsets
+from blogpost.models import Blogpost
+
+
+class BlogpsotSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Blogpost
+        fields = (&#39;title&#39;, &#39;author&#39;, &#39;body&#39;, &#39;slug&#39;)
+
+class BlogpostSet(viewsets.ModelViewSet):
+    queryset = Blogpost.objects.all()
+    serializer_class = BlogpsotSerializer</code></pre>
+<p>在上面这个例子中，API由两个部分组成：</p>
+<ul>
+<li>ViewSets，用于定义视图的展现形式——如返回哪些内容，需要做哪些权限处理</li>
+<li>Serializers，用于定义API的表现形式——如返回哪些字段，返回怎样的格式</li>
+</ul>
+<p>我们在我们的URL中，会定义相应的规则到ViewSet，而ViewSet则通过<code>serializer_class</code>找到对应的<code>Serializers</code>。我们将Blogpost的所有对象赋予queryset，并返回这些值。在BlogpsotSerializer中，我们定义了我们要返回的几个字段：<code>title</code>、<code>author</code>、<code>body</code>、<code>slug</code>。</p>
+<p>接着，我们可以在我们的<code>urls.py</code>配置URL。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">...
+
+<span class="im">from</span> rest_framework <span class="im">import</span> routers
+<span class="im">from</span> blogpost.api <span class="im">import</span> BlogpostSet
+
+apiRouter <span class="op">=</span> routers.DefaultRouter()
+apiRouter.register(<span class="vs">r&#39;blogpost&#39;</span>, BlogpostSet)
+
+urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span>,
+    ...
+    url(<span class="vs">r&#39;^api/&#39;</span>, include(apiRouter.urls)),
+) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
+<p>我们使用默认的Router来配置我们的URL，即DefaultRouter，它提供了一个非常简单的机制来自动检测URL规则。因此，我们只需要注册好我们的url——<code>blogpost</code>以及它值<code>BlogpostSet</code>即可。随后，我们再为其定义一个根URL即可:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">url(<span class="vs">r&#39;^api/&#39;</span>, include(apiRouter.urls))</code></pre></div>
+<h3 id="自动完成">自动完成</h3>
+<p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。</p>
 <h2 id="跨域">跨域</h2>
 <h3 id="cors">CORS</h3>
 <h3 id="添加跨域支持">添加跨域支持</h3>
