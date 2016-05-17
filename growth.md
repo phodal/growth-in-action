@@ -1708,6 +1708,36 @@ AutoComplete是一个很有意思的功能，特别是当我们的文章很多�
 
 当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。
 
+### 搜索博客标题
+
+为了实现这个功能我们需要对之前的博客API做一些简单的改造——可以支持搜索博客标题。这里我们需要稍微扩展一下我们的博客API即可：
+
+```python
+class BlogpostSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = BlogpsotSerializer
+    search_fields = 'title'
+
+    def list(self, request):
+        queryset = Blogpost.objects.all()
+
+        search_param = self.request.query_params.get('title', None)
+        if search_param is not None:
+            queryset = Blogpost.objects.filter(title__contains=search_param)
+
+        serializer = BlogpsotSerializer(queryset, many=True)
+        return Response(serializer.data)
+```
+
+我们添加了一个名为``search_fields``的变量，顾名思义就是定义搜索字段。接着我们覆写了ModelViewSet的list方法，它是用于列出(list)所有的结果。我们会尝试在我们的请求中获取搜索参量，如果没有的话我们就返回所有的结果。如果搜索的参数中含有标题，则从所有博客中过滤出标题中含有搜索标题中的内容，再返回这些结果。如下是一个搜索的URL：[http://127.0.0.1:8000/api/blogpost/?format=json&title=test](http://127.0.0.1:8000/api/blogpost/?format=json&title=test)，我们搜索标题中含有``test``的内容。
+
+同时，我们还需要为我们的apiRouter设置一个basename，即下面代码中最后的``Blogpost``
+
+```python
+apiRouter.register(r'blogpost', BlogpostSet, 'Blogpost')
+```
+
+
 跨域支持
 ---
 

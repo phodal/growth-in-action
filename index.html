@@ -145,7 +145,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#创建博客列表api">创建博客列表API</a></li>
 <li><a href="#测试-api">测试 API</a></li>
 </ul></li>
-<li><a href="#自动完成">自动完成</a></li>
+<li><a href="#自动完成">自动完成</a><ul>
+<li><a href="#搜索博客标题">搜索博客标题</a></li>
+</ul></li>
 <li><a href="#跨域支持">跨域支持</a><ul>
 <li><a href="#cors">CORS</a></li>
 <li><a href="#添加跨域支持">添加跨域支持</a></li>
@@ -1371,6 +1373,25 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <img src="images/autocomplete-example.png" alt="自动完成" /><figcaption>自动完成</figcaption>
 </figure>
 <p>当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。</p>
+<h3 id="搜索博客标题">搜索博客标题</h3>
+<p>为了实现这个功能我们需要对之前的博客API做一些简单的改造——可以支持搜索博客标题。这里我们需要稍微扩展一下我们的博客API即可：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> BlogpostSet(viewsets.ModelViewSet):
+    permission_classes <span class="op">=</span> (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class <span class="op">=</span> BlogpsotSerializer
+    search_fields <span class="op">=</span> <span class="st">&#39;title&#39;</span>
+
+    <span class="kw">def</span> <span class="bu">list</span>(<span class="va">self</span>, request):
+        queryset <span class="op">=</span> Blogpost.objects.<span class="bu">all</span>()
+
+        search_param <span class="op">=</span> <span class="va">self</span>.request.query_params.get(<span class="st">&#39;title&#39;</span>, <span class="va">None</span>)
+        <span class="cf">if</span> search_param <span class="op">is</span> <span class="op">not</span> <span class="va">None</span>:
+            queryset <span class="op">=</span> Blogpost.objects.<span class="bu">filter</span>(title__contains<span class="op">=</span>search_param)
+
+        serializer <span class="op">=</span> BlogpsotSerializer(queryset, many<span class="op">=</span><span class="va">True</span>)
+        <span class="cf">return</span> Response(serializer.data)</code></pre></div>
+<p>我们添加了一个名为<code>search_fields</code>的变量，顾名思义就是定义搜索字段。接着我们覆写了ModelViewSet的list方法，它是用于列出(list)所有的结果。我们会尝试在我们的请求中获取搜索参量，如果没有的话我们就返回所有的结果。如果搜索的参数中含有标题，则从所有博客中过滤出标题中含有搜索标题中的内容，再返回这些结果。如下是一个搜索的URL：<a href="http://127.0.0.1:8000/api/blogpost/?format=json&amp;title=test" class="uri">http://127.0.0.1:8000/api/blogpost/?format=json&amp;title=test</a>，我们搜索标题中含有<code>test</code>的内容。</p>
+<p>同时，我们还需要为我们的apiRouter设置一个basename，即下面代码中最后的<code>Blogpost</code></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">apiRouter.register(<span class="vs">r&#39;blogpost&#39;</span>, BlogpostSet, <span class="st">&#39;Blogpost&#39;</span>)</code></pre></div>
 <h2 id="跨域支持">跨域支持</h2>
 <h3 id="cors">CORS</h3>
 <h3 id="添加跨域支持">添加跨域支持</h3>
