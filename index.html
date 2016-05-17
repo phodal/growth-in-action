@@ -61,17 +61,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <p>我的其他电子书：</p>
 <ul>
+<li>《<a href="https://github.com/phodal/growth-ebook">全栈增长工程师指南</a>》</li>
 <li>《<a href="https://github.com/phodal/designiot">一步步搭建物联网系统</a>》</li>
 <li>《<a href="https://github.com/phodal/github-roam">GitHub 漫游指南</a>》</li>
 <li>《<a href="https://github.com/phodal/repractise">RePractise</a>》</li>
-<li>《<a href="https://github.com/phodal/growth-ebook">RePractise</a>》</li>
-
 </ul>
 <div style="width:800px">
 
 <iframe src="http://ghbtns.com/github-btn.html?user=phodal&repo=growth-in-action-django&type=watch&count=true"
         allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
 </div>
+
+<h2>全栈增长工程师实战目录</h2>
 <nav id="TOC">
 <ul>
 <li><a href="#growth-in-action-django">Growth In Action Django</a><ul>
@@ -139,12 +140,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li><a href="#api">API</a><ul>
-<li><a href="#restful">RESTful</a><ul>
+<li><a href="#博客列表">博客列表</a><ul>
 <li><a href="#django-rest-framework">Django REST Framework</a></li>
 <li><a href="#创建博客列表api">创建博客列表API</a></li>
-<li><a href="#自动完成">自动完成</a></li>
+<li><a href="#测试-api">测试 API</a></li>
 </ul></li>
-<li><a href="#跨域">跨域</a><ul>
+<li><a href="#自动完成">自动完成</a></li>
+<li><a href="#跨域支持">跨域支持</a><ul>
 <li><a href="#cors">CORS</a></li>
 <li><a href="#添加跨域支持">添加跨域支持</a></li>
 </ul></li>
@@ -1276,7 +1278,7 @@ sitemaps =  {
 <span class="kw">}</span></code></pre></div>
 <h1 id="api">API</h1>
 <p>在下一章开始之前，我们先来搭建一下API平台，不仅仅可以提供一些额外的功能，还可以为我们的APP提供API。</p>
-<h2 id="restful">RESTful</h2>
+<h2 id="博客列表">博客列表</h2>
 <h3 id="django-rest-framework">Django REST Framework</h3>
 <p>在这里，我们需要用到一个名为Django REST Framework的RESTful API库。通过这个库，我们可以快速创建我们所需要的API。</p>
 <p>Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。因此，首先我们仍是要安装这个库：</p>
@@ -1339,9 +1341,37 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 ) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
 <p>我们使用默认的Router来配置我们的URL，即DefaultRouter，它提供了一个非常简单的机制来自动检测URL规则。因此，我们只需要注册好我们的url——<code>blogpost</code>以及它值<code>BlogpostSet</code>即可。随后，我们再为其定义一个根URL即可:</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">url(<span class="vs">r&#39;^api/&#39;</span>, include(apiRouter.urls))</code></pre></div>
-<h3 id="自动完成">自动完成</h3>
-<p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。</p>
-<h2 id="跨域">跨域</h2>
+<h3 id="测试-api">测试 API</h3>
+<p>现在，我们可以访问<a href="http://127.0.0.1:8000/api/" class="uri">http://127.0.0.1:8000/api/</a>来访问我们现在的API。由于Django REST Framework提供了一个UI机制，所以我们可以在网页上直接看到我们所有的API：</p>
+<figure>
+<img src="images/django-rest-framework-api-lists.png" alt="Django REST Framework列表" /><figcaption>Django REST Framework列表</figcaption>
+</figure>
+<p>然后，点击页面中的<a href="http://127.0.0.1:8000/api/blogpost/" class="uri">http://127.0.0.1:8000/api/blogpost/</a>，我们就可以访问博客相关的API了，如下图所示:</p>
+<figure>
+<img src="images/drf-blogppost-set-list.png" alt="博客API" /><figcaption>博客API</figcaption>
+</figure>
+<p>在页面上显示了所有的博客内容，在页面的下面有一个表单可以先让我们来创建数据：</p>
+<figure>
+<img src="images/api-post-form.png" alt="创建博客的表单" /><figcaption>创建博客的表单</figcaption>
+</figure>
+<p>直接在表单中添加数据，我们就可以完成数据创建了。</p>
+<p>当然，我们也可以直接用命令行工具来测试，执行：</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -i  http://127.0.0.1:8000/api/blogpost/</code></pre></div>
+<p>即可返回相应的结果：</p>
+<figure>
+<img src="images/curl-api.png" alt="CuRL API" /><figcaption>CuRL API</figcaption>
+</figure>
+<h2 id="自动完成">自动完成</h2>
+<p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。以Google为例，Google在我们输入一些关键字的时候，会向我们推荐一些比较流行的词条可以让我们选择。</p>
+<figure>
+<img src="images/google-autocomplete.png" alt="Google AutoComplete" /><figcaption>Google AutoComplete</figcaption>
+</figure>
+<p>同样的，我们也可以实现一个同样的效果用于我们的博客搜索：</p>
+<figure>
+<img src="images/autocomplete-example.png" alt="自动完成" /><figcaption>自动完成</figcaption>
+</figure>
+<p>当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。</p>
+<h2 id="跨域支持">跨域支持</h2>
 <h3 id="cors">CORS</h3>
 <h3 id="添加跨域支持">添加跨域支持</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install django-cors-headers</code></pre></div>
