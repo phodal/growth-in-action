@@ -445,6 +445,3 @@ class BlogSitemap(Sitemap):
 ![提交Sitemap.xml](images/google-add-sitemap.png)
 
 点击上方的**添加/测试站点地图**即可。
-
-
-

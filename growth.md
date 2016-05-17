@@ -1362,9 +1362,6 @@ class BlogSitemap(Sitemap):
 
 点击上方的**添加/测试站点地图**即可。
 
-
-
-
 前端框架
 ===
 
@@ -1569,20 +1566,8 @@ class BlogSitemap(Sitemap):
 }
 ```
 
-
-
-
-
-
-
-
 API
 ===
-
-自动完成
----
-
-AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。
 
 RESTful
 ---
