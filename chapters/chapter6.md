@@ -130,7 +130,15 @@ curl -i  http://127.0.0.1:8000/api/blogpost/
 自动完成
 ---
 
-AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。
+AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。以Google为例，Google在我们输入一些关键字的时候，会向我们推荐一些比较流行的词条可以让我们选择。
+
+![Google AutoComplete](images/google-autocomplete.png)
+
+同样的，我们也可以实现一个同样的效果用于我们的博客搜索：
+
+![自动完成](images/autocomplete-example.png)
+
+当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。
 
 跨域支持
 ---
