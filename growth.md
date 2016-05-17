@@ -1535,6 +1535,42 @@ class BlogSitemap(Sitemap):
 
 ![移动设备效果](images/mobile-blogposts.png)
 
+### 添加footer
+
+最后，我们可以在页面的最下方添加一个footer，来做一些版权声明：
+
+```html
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">@Copyright Phodal.com</p>
+    </div>
+</footer>
+```
+
+它拥有一些简单的样式，来将footer固定在页面的最下方：
+
+```css
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+.footer .container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+
+.footer .container .text-muted {
+  margin: 20px 0;
+}
+```
+
+
+
 
 
 

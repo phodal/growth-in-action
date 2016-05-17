@@ -135,6 +135,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#添加导航">添加导航</a></li>
 <li><a href="#添加标语">添加标语</a></li>
 <li><a href="#优化列表">优化列表</a></li>
+<li><a href="#添加footer">添加footer</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#api">API</a><ul>
@@ -1247,6 +1248,31 @@ sitemaps =  {
 <figure>
 <img src="images/mobile-blogposts.png" alt="移动设备效果" /><figcaption>移动设备效果</figcaption>
 </figure>
+<h3 id="添加footer">添加footer</h3>
+<p>最后，我们可以在页面的最下方添加一个footer，来做一些版权声明：</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;footer</span><span class="ot"> class=</span><span class="st">&quot;footer&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;text-muted&quot;</span><span class="kw">&gt;</span>@Copyright Phodal.com<span class="kw">&lt;/p&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/footer&gt;</span></code></pre></div>
+<p>它拥有一些简单的样式，来将footer固定在页面的最下方：</p>
+<div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.footer</span> <span class="kw">{</span>
+  <span class="kw">position:</span> <span class="dt">absolute</span><span class="kw">;</span>
+  <span class="kw">bottom:</span> <span class="dt">0</span><span class="kw">;</span>
+  <span class="kw">width:</span> <span class="dt">100%</span><span class="kw">;</span>
+  <span class="co">/* Set the fixed height of the footer here */</span>
+  <span class="kw">height:</span> <span class="dt">60px</span><span class="kw">;</span>
+  <span class="kw">background-color:</span> <span class="dt">#f5f5f5</span><span class="kw">;</span>
+<span class="kw">}</span>
+<span class="fl">.footer</span> <span class="fl">.container</span> <span class="kw">{</span>
+  <span class="kw">width:</span> <span class="dt">auto</span><span class="kw">;</span>
+  <span class="kw">max-width:</span> <span class="dt">680px</span><span class="kw">;</span>
+  <span class="kw">padding:</span> <span class="dt">0</span> <span class="dt">15px</span><span class="kw">;</span>
+<span class="kw">}</span>
+
+<span class="fl">.footer</span> <span class="fl">.container</span> <span class="fl">.text-muted</span> <span class="kw">{</span>
+  <span class="kw">margin:</span> <span class="dt">20px</span> <span class="dt">0</span><span class="kw">;</span>
+<span class="kw">}</span></code></pre></div>
 <h1 id="api">API</h1>
 <h2 id="自动完成">自动完成</h2>
 <p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。</p>
