@@ -1,18 +1,22 @@
 API
 ===
 
+在下一章开始之前，我们先来搭建一下API平台，不仅仅可以提供一些额外的功能，还可以为我们的APP提供API。
+
 RESTful
 ---
 
-###Django REST Framework
+### Django REST Framework
 
-> Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。
+在这里，我们需要用到一个名为Django REST Framework的RESTful API库。通过这个库，我们可以快速创建我们所需要的API。
+
+Django REST Framework 这个名字很直白，就是基于 Django 的 REST 框架。因此，首先我们仍是要安装这个库：
 
 ```
 pip install djangorestframework
-pip install markdown       # Markdown support for the browsable API.
-pip install django-filter  # Filtering support
 ```
+
+然后把它添加到``INSTALLED_APPS``中：
 
 ```python
 INSTALLED_APPS = (
@@ -36,6 +40,8 @@ INSTALLED_APPS = (
 )
 ```
 
+接着我们可以在我们的API中创建一个URL，用于匹配它的授权机制。
+
 ```
 urlpatterns = [
     ...
@@ -43,7 +49,13 @@ urlpatterns = [
 ]
 ```
 
+### 创建博客列表API
 
+
+
+### 自动完成
+
+AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。
 
 跨域
 ---
