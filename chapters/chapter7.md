@@ -1,7 +1,7 @@
 移动应用
 ===
 
-依靠习惯我们还将用Ionic 2继续创建hello,world。
+依照国庆惯例，我们还将用Ionic 2继续创建hello,world。
 
 hello,world
 ---
@@ -331,6 +331,8 @@ export class BlogpostServices {
   }
 }
 ```
+
+我们将通过这个API来获取相关的数据，并将数据返回到BlogList类中。接着将更新blogposts的值，并重新渲染页面。
 
 ### 详情页
 

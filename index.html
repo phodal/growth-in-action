@@ -1490,7 +1490,7 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
 <pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
 <p>现在，让我们进行下一步，开始APP吧！</p>
 <h1 id="移动应用">移动应用</h1>
-<p>依靠习惯我们还将用Ionic 2继续创建hello,world。</p>
+<p>依照国庆惯例，我们还将用Ionic 2继续创建hello,world。</p>
 <h2 id="helloworld">hello,world</h2>
 <p>开始之前我们需要先安装Ionic的命令行工具，后来我们需要用这个工具来创建工程。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install -g ionic@beta</code></pre></div>
@@ -1739,6 +1739,7 @@ export class BlogpostServices {
     return this.http.get(url).map(res =&gt; res);
   }
 }</code></pre>
+<p>我们将通过这个API来获取相关的数据，并将数据返回到BlogList类中。接着将更新blogposts的值，并重新渲染页面。</p>
 <h3 id="详情页">详情页</h3>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> g page blog-detail --ts</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">app/pages/blog-detail/</span>
