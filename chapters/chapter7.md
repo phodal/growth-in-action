@@ -220,7 +220,10 @@ ionic run android
 博客列表页
 ---
 
-现在，让我们来结合我们的博客APP，做一个相应的展示博客的APP。
+现在，让我们来结合我们的博客APP，做一个相应的展示博客的APP。在这一步我们所要做的事情比较简单：
+
+ - 获取博客列表API
+ - 渲染博客列表
 
 ### 列表页
 
@@ -335,6 +338,25 @@ export class BlogpostServices {
 我们将通过这个API来获取相关的数据，并将数据返回到BlogList类中。接着将更新blogposts的值，并重新渲染页面。
 
 ### 详情页
+
+在我们的博客API中，每个内容都对应有一个id，如下所示:
+
+```
+{
+    "title": "这是一个标题",
+    "author": "Phodal2",
+    "body": "这是一个测试的内容",
+    "slug": "this-is-a-test",
+    "id": 3
+}
+```
+
+我们只需要访问这个id，就可以获取这个结果，如：[http://localhost:8000/api/blogpost/3/](http://localhost:8000/api/blogpost/3/)
+
+因此，我们所需要做的就是：
+
+ - 在渲染博客列表的时候，为每一项赋予一个ID
+ - 点击某一项时，将跳转到详情页，并去获取相应的API的数据，并渲染到页面上。
 
 ```bash
 ionic g page blog-detail --ts

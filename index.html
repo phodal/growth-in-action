@@ -1652,7 +1652,11 @@ Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/0
 <p>最近，再执行<code>run</code>就可以在对应的平台上运行，如:</p>
 <pre><code>ionic run android</code></pre>
 <h2 id="博客列表页">博客列表页</h2>
-<p>现在，让我们来结合我们的博客APP，做一个相应的展示博客的APP。</p>
+<p>现在，让我们来结合我们的博客APP，做一个相应的展示博客的APP。在这一步我们所要做的事情比较简单：</p>
+<ul>
+<li>获取博客列表API</li>
+<li>渲染博客列表</li>
+</ul>
 <h3 id="列表页">列表页</h3>
 <p>在上一个章节里我们已经有了一个博客详细的API，我们只需要获取这个API并显示即可。不过，让我们简单地熟悉一下显示数据的这部分内容：</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ion-navbar</span> <span class="er">*navbar</span><span class="kw">&gt;</span>
@@ -1741,6 +1745,20 @@ export class BlogpostServices {
 }</code></pre>
 <p>我们将通过这个API来获取相关的数据，并将数据返回到BlogList类中。接着将更新blogposts的值，并重新渲染页面。</p>
 <h3 id="详情页">详情页</h3>
+<p>在我们的博客API中，每个内容都对应有一个id，如下所示:</p>
+<pre><code>{
+    &quot;title&quot;: &quot;这是一个标题&quot;,
+    &quot;author&quot;: &quot;Phodal2&quot;,
+    &quot;body&quot;: &quot;这是一个测试的内容&quot;,
+    &quot;slug&quot;: &quot;this-is-a-test&quot;,
+    &quot;id&quot;: 3
+}</code></pre>
+<p>我们只需要访问这个id，就可以获取这个结果，如：<a href="http://localhost:8000/api/blogpost/3/" class="uri">http://localhost:8000/api/blogpost/3/</a></p>
+<p>因此，我们所需要做的就是：</p>
+<ul>
+<li>在渲染博客列表的时候，为每一项赋予一个ID</li>
+<li>点击某一项时，将跳转到详情页，并去获取相应的API的数据，并渲染到页面上。</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> g page blog-detail --ts</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">app/pages/blog-detail/</span>
 ├── <span class="kw">blog-detail.html</span>
