@@ -1759,12 +1759,14 @@ export class BlogpostServices {
 <li>在渲染博客列表的时候，为每一项赋予一个ID</li>
 <li>点击某一项时，将跳转到详情页，并去获取相应的API的数据，并渲染到页面上。</li>
 </ul>
+<p>好了，我们可以用ionic的生成命令来创建博客详情页。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> g page blog-detail --ts</code></pre></div>
+<p>它将在app/pages目录下，生成下面的内容：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">app/pages/blog-detail/</span>
 ├── <span class="kw">blog-detail.html</span>
 ├── <span class="kw">blog-detail.ts</span>
 └── <span class="kw">blog-detail.scss</span></code></pre></div>
-<p>修改<code>app.ts</code>添加Route:</p>
+<p>我们可以遵循之前添加Django App的习惯，先添加Router。因此我们可以在<code>app.ts</code>添加新的Route:</p>
 <pre><code>const ROUTES = [
   {path: &#39;/app/blog/:id&#39;, component: BlogDetailPage}
 ];
@@ -1789,6 +1791,7 @@ export class MyApp {
     });
   }
 }</code></pre>
+<p>我们用RouteConfig来关联我们的URL和App Component。</p>
 <p>添加服务</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">
   <span class="at">getBlogpostDetail</span>(id) <span class="op">{</span>

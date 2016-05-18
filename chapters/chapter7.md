@@ -358,9 +358,13 @@ export class BlogpostServices {
  - 在渲染博客列表的时候，为每一项赋予一个ID
  - 点击某一项时，将跳转到详情页，并去获取相应的API的数据，并渲染到页面上。
 
+好了，我们可以用ionic的生成命令来创建博客详情页。    
+
 ```bash
 ionic g page blog-detail --ts
 ```
+
+它将在app/pages目录下，生成下面的内容：
 
 ```bash
 app/pages/blog-detail/
@@ -369,7 +373,7 @@ app/pages/blog-detail/
 └── blog-detail.scss
 ```
 
-修改``app.ts``添加Route:
+我们可以遵循之前添加Django App的习惯，先添加Router。因此我们可以在``app.ts``添加新的Route:
 
 ```
 const ROUTES = [
@@ -397,6 +401,8 @@ export class MyApp {
   }
 }
 ```
+
+我们用RouteConfig来关联我们的URL和App Component。
 
 添加服务
 
