@@ -9,9 +9,9 @@
  - 如何编写单元测试、功能测试、自动化UI测试
  - 搭建并使用持续集成
  - 添加SEO支持——Sitemap、站长工具和Google Analytics
- - 使用API，并开发一个AutoComplete的功能
- - 开发相应的APP及其API——登录、注册、发现文章、查看文章
- - 添加单页面应用的前端
+ - 使用API，制作AutoComplete
+ - 开发相应的APP及其API——查看文章、用户登录、发表文章
+ - 制作单页面应用
  - 自动化部署
 
 欢迎关注我的微信公众号(搜索Phodal)：
