@@ -1792,13 +1792,13 @@ export class MyApp {
   }
 }</code></pre>
 <p>我们用RouteConfig来关联我们的URL和App Component。</p>
-<p>添加服务</p>
+<p>同上面的博客列表页面一样，我们也可以直接添加我们的API服务。有所区别的是，我们需要依据id去获取我们的博客内容。</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">
   <span class="at">getBlogpostDetail</span>(id) <span class="op">{</span>
     <span class="kw">var</span> url <span class="op">=</span> <span class="st">&#39;http://localhost:8000/api/blogpost/&#39;</span> <span class="op">+</span> id <span class="op">+</span> <span class="st">&#39;?format=json&#39;</span><span class="op">;</span>
     <span class="cf">return</span> <span class="kw">this</span>.<span class="va">http</span>.<span class="at">get</span>(url).<span class="at">map</span>(res <span class="op">=&gt;</span> res)<span class="op">;</span>
   <span class="op">}</span></code></pre></div>
-<p>添加Controller</p>
+<p>和之前的博客列表一样，我们需要几乎一样的方法来获取数据：</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="im">import</span> <span class="op">{</span>Page<span class="op">,</span> NavController<span class="op">,</span> NavParams<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ionic-angular&#39;</span><span class="op">;</span>
 <span class="im">import</span> <span class="op">{</span>BlogpostServices<span class="op">}</span> <span class="im">from</span> <span class="st">&quot;../../services/BlogpostServices&quot;</span><span class="op">;</span>
 
@@ -1831,6 +1831,10 @@ export class MyApp {
     )<span class="op">;</span>
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
+<p>现在我们几乎已经完成了博客详情页的工作，我们可以直接通过URL来访问博客详情页：<a href="http://localhost:8100/#/app/blog/1" class="uri">http://localhost:8100/#/app/blog/1</a>。结果如下图所示：</p>
+<figure>
+<img src="images/blog-detail-page.png" alt="访问博客详情页" /><figcaption>访问博客详情页</figcaption>
+</figure>
 <h2 id="profile">Profile</h2>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
 <pre><code>pip install djangorestframework-jwt</code></pre>

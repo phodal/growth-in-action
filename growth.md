@@ -2282,7 +2282,7 @@ export class MyApp {
 
 我们用RouteConfig来关联我们的URL和App Component。
 
-添加服务
+同上面的博客列表页面一样，我们也可以直接添加我们的API服务。有所区别的是，我们需要依据id去获取我们的博客内容。
 
 ```javascript
 
@@ -2292,7 +2292,7 @@ export class MyApp {
   }
 ```  
 
-添加Controller
+和之前的博客列表一样，我们需要几乎一样的方法来获取数据：
 
 ```javascript
 import {Page, NavController, NavParams} from 'ionic-angular';
@@ -2329,6 +2329,9 @@ export class BlogDetailPage {
 }
 ```
 
+现在我们几乎已经完成了博客详情页的工作，我们可以直接通过URL来访问博客详情页：[http://localhost:8100/#/app/blog/1](http://localhost:8100/#/app/blog/1)。结果如下图所示：
+
+![访问博客详情页](images/blog-detail-page.png)
 
 
 Profile
