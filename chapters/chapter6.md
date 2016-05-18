@@ -238,6 +238,13 @@ $(document).ready(function () {
 });
 ```
 
+$(document).ready()方法可以是在DOM完成加载后，运行其中的函数。接着我们开始监听``#typeahead-input``，对应的便是id为``typeahead-input``的元素。可以看到在这其中有五个对象：
+
+ - source，即搜索的来源，我们返回的是我们搜索的URL。
+ - updater，即每次更新要做的事
+ - displayText，显示在页面上的内容，如在这里我们返回的是博客的标题
+ - afterSelect，每用户选中某一项后做的事，这里我们直接中转到对应的博客。
+ - delay，延时500ms。
 
 虽然我们使用的是插件来完成我们的功能，但是总体的处理逻辑是：
 
@@ -249,13 +256,17 @@ $(document).ready(function () {
 跨域支持
 ---
 
-### CORS
+当我们想为其他的网页提供我们的API时，可能会报错——原因是不支持跨域请求。为了方便我们下一章更好的展开，内容我们在这里对跨域进行支持。
 
 ### 添加跨域支持
+
+有一个名为``django-cors-headers``的插件用于实现对跨域请求的支持，我们只使用安装它，并进行一些简单的配置即可。
 
 ```bash
 pip install django-cors-headers
 ```
+
+安装过程如下：
 
 ```
 Collecting django-cors-headers
@@ -268,9 +279,7 @@ Installing collected packages: django-cors-headers
 Successfully installed django-cors-headers-1.1.0
 ```
 
-添加到``django-cors-headers=1.1.0``到``requirements.txt``文件中。
-
-添加到``settings.py``中：
+我们还需要添加到``django-cors-headers=1.1.0``到``requirements.txt``文件中，以及添加到``settings.py``中：
 
 ```
 INSTALLED_APPS = (
@@ -291,9 +300,10 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
-对应的配置：
+同时还有对应的配置：
 
 ```
 CORS_ALLOW_CREDENTIALS = True
 ```
 
+现在，让我们进行下一步，开始APP吧！

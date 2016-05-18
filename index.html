@@ -150,7 +150,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#页面实现">页面实现</a></li>
 </ul></li>
 <li><a href="#跨域支持">跨域支持</a><ul>
-<li><a href="#cors">CORS</a></li>
 <li><a href="#添加跨域支持">添加跨域支持</a></li>
 </ul></li>
 </ul></li>
@@ -1399,10 +1398,73 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;{% static &#39;js/bootstrap.min.js&#39; %}&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
 <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;{% static &#39;js/bootstrap3-typeahead.min.js&#39; %}&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
 <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;{% static &#39;js/main.js&#39; %}&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></code></pre></div>
+<p>接着我们需要在页面上创建对应的UI，我们可以直接在<code>登录</code>后面添加这个搜索按钮：</p>
+<pre><code>&lt;nav class=&quot;collapse navbar-collapse bs-navbar-collapse&quot; role=&quot;navigation&quot;&gt;
+    &lt;ul class=&quot;nav navbar-nav&quot;&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;/pages/about/&quot;&gt;关于我&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;/pages/resume/&quot;&gt;简历&lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;/admin&quot; id=&quot;loginLink&quot;&gt;登录&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class=&quot;col-sm-3 col-md-3 pull-right&quot;&gt;
+        &lt;form class=&quot;navbar-form&quot; role=&quot;search&quot;&gt;
+            &lt;div class=&quot;input-group&quot;&gt;
+                &lt;input type=&quot;text&quot; id=&quot;typeahead-input&quot; class=&quot;form-control&quot; placeholder=&quot;Search&quot; name=&quot;search&quot; data-provide=&quot;typeahead&quot;&gt;
+                &lt;div class=&quot;input-group-btn&quot;&gt;
+                    &lt;button class=&quot;btn btn-default search-button&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-search&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+<p>我们主要是使用input标签，标签上对应有一个id</p>
+<pre><code>&lt;input type=&quot;text&quot; id=&quot;typeahead-input&quot; class=&quot;form-control&quot; placeholder=&quot;Search&quot; </code></pre>
+<p>对应于这个ID，我们就可以开始编写我们的功能了：</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">$</span>(document).<span class="at">ready</span>(<span class="kw">function</span> () <span class="op">{</span>
+    <span class="at">$</span>(<span class="st">&#39;#typeahead-input&#39;</span>).<span class="at">typeahead</span>(<span class="op">{</span>
+        <span class="dt">source</span><span class="op">:</span> <span class="kw">function</span> (query<span class="op">,</span> process) <span class="op">{</span>
+            <span class="cf">return</span> <span class="va">$</span>.<span class="at">get</span>(<span class="st">&#39;/api/blogpost/?format=json&amp;title=&#39;</span> <span class="op">+</span> query<span class="op">,</span> <span class="kw">function</span> (data) <span class="op">{</span>
+                <span class="cf">return</span> <span class="at">process</span>(data)<span class="op">;</span>
+            <span class="op">}</span>)<span class="op">;</span>
+        <span class="op">},</span>
+        <span class="dt">updater</span><span class="op">:</span> <span class="kw">function</span> (item) <span class="op">{</span>
+            <span class="cf">return</span> item<span class="op">;</span>
+        <span class="op">},</span>
+        <span class="dt">displayText</span><span class="op">:</span> <span class="kw">function</span> (item) <span class="op">{</span>
+            <span class="cf">return</span> <span class="va">item</span>.<span class="at">title</span><span class="op">;</span>
+        <span class="op">},</span>
+        <span class="dt">afterSelect</span><span class="op">:</span> <span class="kw">function</span> (item) <span class="op">{</span>
+            <span class="va">location</span>.<span class="at">href</span> <span class="op">=</span> <span class="st">&#39;http://localhost:8000/blog/&#39;</span> <span class="op">+</span> <span class="va">item</span>.<span class="at">slug</span> <span class="op">+</span> <span class="st">&quot;.html&quot;</span><span class="op">;</span>
+        <span class="op">},</span>
+        <span class="dt">delay</span><span class="op">:</span> <span class="dv">500</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>$(document).ready()方法可以是在DOM完成加载后，运行其中的函数。接着我们开始监听<code>#typeahead-input</code>，对应的便是id为<code>typeahead-input</code>的元素。可以看到在这其中有五个对象：</p>
+<ul>
+<li>source，即搜索的来源，我们返回的是我们搜索的URL。</li>
+<li>updater，即每次更新要做的事</li>
+<li>displayText，显示在页面上的内容，如在这里我们返回的是博客的标题</li>
+<li>afterSelect，每用户选中某一项后做的事，这里我们直接中转到对应的博客。</li>
+<li>delay，延时500ms。</li>
+</ul>
+<p>虽然我们使用的是插件来完成我们的功能，但是总体的处理逻辑是：</p>
+<ol type="1">
+<li>监听我们的输入文本</li>
+<li>获取API的返回结果</li>
+<li>对返回结果进行处理——如高亮输入文本、显示到页面上</li>
+<li>处理用户点击事件</li>
+</ol>
 <h2 id="跨域支持">跨域支持</h2>
-<h3 id="cors">CORS</h3>
+<p>当我们想为其他的网页提供我们的API时，可能会报错——原因是不支持跨域请求。为了方便我们下一章更好的展开，内容我们在这里对跨域进行支持。</p>
 <h3 id="添加跨域支持">添加跨域支持</h3>
+<p>有一个名为<code>django-cors-headers</code>的插件用于实现对跨域请求的支持，我们只使用安装它，并进行一些简单的配置即可。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install django-cors-headers</code></pre></div>
+<p>安装过程如下：</p>
 <pre><code>Collecting django-cors-headers
   Downloading django-cors-headers-1.1.0.tar.gz
 Building wheels for collected packages: django-cors-headers
@@ -1411,8 +1473,7 @@ Building wheels for collected packages: django-cors-headers
 Successfully built django-cors-headers
 Installing collected packages: django-cors-headers
 Successfully installed django-cors-headers-1.1.0</code></pre>
-<p>添加到<code>django-cors-headers=1.1.0</code>到<code>requirements.txt</code>文件中。</p>
-<p>添加到<code>settings.py</code>中：</p>
+<p>我们还需要添加到<code>django-cors-headers=1.1.0</code>到<code>requirements.txt</code>文件中，以及添加到<code>settings.py</code>中：</p>
 <pre><code>INSTALLED_APPS = (
     ...
     &#39;corsheaders&#39;,
@@ -1425,8 +1486,9 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
     &#39;django.middleware.common.CommonMiddleware&#39;,
     ...
 )</code></pre>
-<p>对应的配置：</p>
+<p>同时还有对应的配置：</p>
 <pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
+<p>现在，让我们进行下一步，开始APP吧！</p>
 <h1 id="移动应用">移动应用</h1>
 <p>依靠习惯我们还将用Ionic 2继续创建hello,world。</p>
 <h2 id="helloworld">hello,world</h2>

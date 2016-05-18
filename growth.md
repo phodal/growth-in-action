@@ -1748,17 +1748,93 @@ apiRouter.register(r'blogpost', BlogpostSet, 'Blogpost')
 <script src="{% static 'js/main.js' %}"></script>
 ```
 
+接着我们需要在页面上创建对应的UI，我们可以直接在``登录``后面添加这个搜索按钮：
+
+```
+<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+    <ul class="nav navbar-nav">
+        <li>
+            <a href="/pages/about/">关于我</a>
+        </li>
+        <li>
+            <a href="/pages/resume/">简历</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="/admin" id="loginLink">登录</a></li>
+    </ul>
+    <div class="col-sm-3 col-md-3 pull-right">
+        <form class="navbar-form" role="search">
+            <div class="input-group">
+                <input type="text" id="typeahead-input" class="form-control" placeholder="Search" name="search" data-provide="typeahead">
+                <div class="input-group-btn">
+                    <button class="btn btn-default search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+```      
+
+我们主要是使用input标签，标签上对应有一个id
+
+```
+<input type="text" id="typeahead-input" class="form-control" placeholder="Search" 
+```  
+
+对应于这个ID，我们就可以开始编写我们的功能了：
+
+```javascript
+$(document).ready(function () {
+    $('#typeahead-input').typeahead({
+        source: function (query, process) {
+            return $.get('/api/blogpost/?format=json&title=' + query, function (data) {
+                return process(data);
+            });
+        },
+        updater: function (item) {
+            return item;
+        },
+        displayText: function (item) {
+            return item.title;
+        },
+        afterSelect: function (item) {
+            location.href = 'http://localhost:8000/blog/' + item.slug + ".html";
+        },
+        delay: 500
+    });
+});
+```
+
+$(document).ready()方法可以是在DOM完成加载后，运行其中的函数。接着我们开始监听``#typeahead-input``，对应的便是id为``typeahead-input``的元素。可以看到在这其中有五个对象：
+
+ - source，即搜索的来源，我们返回的是我们搜索的URL。
+ - updater，即每次更新要做的事
+ - displayText，显示在页面上的内容，如在这里我们返回的是博客的标题
+ - afterSelect，每用户选中某一项后做的事，这里我们直接中转到对应的博客。
+ - delay，延时500ms。
+
+虽然我们使用的是插件来完成我们的功能，但是总体的处理逻辑是：
+
+1. 监听我们的输入文本
+2. 获取API的返回结果
+3. 对返回结果进行处理——如高亮输入文本、显示到页面上
+4. 处理用户点击事件
 
 跨域支持
 ---
 
-### CORS
+当我们想为其他的网页提供我们的API时，可能会报错——原因是不支持跨域请求。为了方便我们下一章更好的展开，内容我们在这里对跨域进行支持。
 
 ### 添加跨域支持
+
+有一个名为``django-cors-headers``的插件用于实现对跨域请求的支持，我们只使用安装它，并进行一些简单的配置即可。
 
 ```bash
 pip install django-cors-headers
 ```
+
+安装过程如下：
 
 ```
 Collecting django-cors-headers
@@ -1771,9 +1847,7 @@ Installing collected packages: django-cors-headers
 Successfully installed django-cors-headers-1.1.0
 ```
 
-添加到``django-cors-headers=1.1.0``到``requirements.txt``文件中。
-
-添加到``settings.py``中：
+我们还需要添加到``django-cors-headers=1.1.0``到``requirements.txt``文件中，以及添加到``settings.py``中：
 
 ```
 INSTALLED_APPS = (
@@ -1794,12 +1868,13 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
-对应的配置：
+同时还有对应的配置：
 
 ```
 CORS_ALLOW_CREDENTIALS = True
 ```
 
+现在，让我们进行下一步，开始APP吧！
 
 移动应用
 ===
