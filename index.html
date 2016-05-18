@@ -1835,6 +1835,33 @@ export class MyApp {
 <figure>
 <img src="images/blog-detail-page.png" alt="访问博客详情页" /><figcaption>访问博客详情页</figcaption>
 </figure>
+<p>不过，这时候我们的列表页并没有和详情页关联到一起。我们还需要做一些额外的工作：</p>
+<ul>
+<li>在列表页的每一项中添加对点击事件的处理</li>
+</ul>
+<p>在我们的模板页里ion-item里添加一个click事件，这个事件将调用navigate函数，并把博客id传到这个函数里。</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ion-item</span> <span class="er">*ngFor</span><span class="ot">=</span><span class="st">&quot;#blogpost of blogposts&quot;</span> <span class="er">(click)</span><span class="ot">=</span><span class="st">&quot;navigate(blogpost.id)&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;h1</span> <span class="er">*ngIf</span><span class="ot">=</span><span class="st">&quot;blogpost&quot;</span><span class="kw">&gt;</span>
+    {{blogpost.title}}
+  <span class="kw">&lt;/h1&gt;</span>
+
+  <span class="kw">&lt;p</span> <span class="er">*ngIf</span><span class="ot">=</span><span class="st">&quot;blogpost&quot;</span><span class="kw">&gt;</span>
+    {{blogpost.body}}
+  <span class="kw">&lt;/p&gt;</span>
+<span class="kw">&lt;/ion-item&gt;</span></code></pre></div>
+<p>随后在我们的博客详情页的初始化里，我们要初始化一个NavController:</p>
+<pre class="javscript"><code>constructor(nav: NavController, blogpostServices:BlogpostServices) {
+    this.blogListService = blogpostServices;
+    this.nav = nav;
+    this.initService();
+  }</code></pre>
+<p>接着，在navigate里我们只需要将BlogDetailPage页面及参数push给navController，并交由它来渲染页面。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">navigate</span>(id)<span class="op">{</span>
+  <span class="kw">this</span>.<span class="va">nav</span>.<span class="at">push</span>(BlogDetailPage<span class="op">,</span> <span class="op">{</span>
+    <span class="dt">id</span><span class="op">:</span> id
+  <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>现在，我们可以试试从首页跳转到这个博客详情页。</p>
 <h2 id="profile">Profile</h2>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
 <pre><code>pip install djangorestframework-jwt</code></pre>

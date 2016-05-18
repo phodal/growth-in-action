@@ -2333,6 +2333,45 @@ export class BlogDetailPage {
 
 ![访问博客详情页](images/blog-detail-page.png)
 
+不过，这时候我们的列表页并没有和详情页关联到一起。我们还需要做一些额外的工作：
+
+ - 在列表页的每一项中添加对点击事件的处理
+
+在我们的模板页里ion-item里添加一个click事件，这个事件将调用navigate函数，并把博客id传到这个函数里。
+
+```html
+<ion-item *ngFor="#blogpost of blogposts" (click)="navigate(blogpost.id)">
+  <h1 *ngIf="blogpost">
+    {{blogpost.title}}
+  </h1>
+
+  <p *ngIf="blogpost">
+    {{blogpost.body}}
+  </p>
+</ion-item>
+```
+
+随后在我们的博客详情页的初始化里，我们要初始化一个NavController:
+
+```javscript
+constructor(nav: NavController, blogpostServices:BlogpostServices) {
+    this.blogListService = blogpostServices;
+    this.nav = nav;
+    this.initService();
+  }
+```
+
+接着，在navigate里我们只需要将BlogDetailPage页面及参数push给navController，并交由它来渲染页面。
+
+```javascript
+navigate(id){
+  this.nav.push(BlogDetailPage, {
+    id: id
+  });
+}
+```  
+
+现在，我们可以试试从首页跳转到这个博客详情页。
 
 Profile
 ---
