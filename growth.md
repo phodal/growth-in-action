@@ -2376,11 +2376,17 @@ navigate(id){
 Profile
 ---
 
+现在，我们要做一个更有意思的东西了。不过这个内容是为后面的创建文章提供一个技术基础。在用户授权这一部分，我们使用不同的技术来实现，如Cookies、HTTP基本认证等等。而在手机端继续Cookie来进行用户授权，不是一件简单的事。因此我们就需要JSON Web Tokens，这是一种基于token 的认证方案。
+
 ###Json Web Tokens
+
+同样，为了实现这部分功能，我们仍然可以使用其他框架来帮助我们完成基础功能。这里我们就用到了一个名为``djangorestframework-jwt``的库，从它的名字上我们就可以知道，它就是基于Django REST Framework之上的JWT实现。还 是继续使用pip来安装这个库，记得把它添加到``requirements.txt``中。
 
 ```
 pip install djangorestframework-jwt
 ```
+
+接着，我们需要在我们的URL中配置用于获取token的API即可使用。
 
 ```
 urlpatterns = patterns(
@@ -2390,6 +2396,8 @@ urlpatterns = patterns(
     url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
 )
 ```
+
+
 
 ```
 constructor(http: Http, nav:NavController) {
@@ -2481,8 +2489,72 @@ TODO
 ---
 
 
-前端重构
+Mobile Web
 ===
+
+移动设备处理
+---
+
+```
+pip install django_mobile
+```
+
+添加MIDDLEWARE_CLASSES 
+
+```
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django_mobile.middleware.MobileDetectionMiddleware',
+    'django_mobile.middleware.SetFlavourMiddleware'
+)
+```
+
+修改Template配置，添加对应的Loader和context_processor
+
+```
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            'templates/'
+        ],
+        'LOADERS': {
+            'django_mobile.loader.Loader'
+        },
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django_mobile.context_processors.flavour'
+            ],
+        },
+    },
+]
+```
+
+添加Loader
+
+```
+'loaders': {
+    'django_mobile.loader.Loader',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader'
+},
+```           
+
+创建``template/mobile/index.html ``。
+
 
 MVVM
 ---
