@@ -167,7 +167,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#profile-1">Profile</a></li>
 </ul></li>
 <li><a href="#创建博客">创建博客</a></li>
-<li><a href="#todo">TODO</a></li>
 </ul></li>
 <li><a href="#mobile-web">Mobile Web</a><ul>
 <li><a href="#移动设备处理">移动设备处理</a></li>
@@ -1953,6 +1952,7 @@ authSuccess(token) {
 <span class="op">}</span>)</code></pre></div>
 <p>现在，我们就可以用和Http一样的方式去获取用户信息。</p>
 <h4 id="获取用户信息">获取用户信息</h4>
+<p>现在我们所需要做的就是发出我们的API去获取用户的信息：</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">authSuccess</span>(token) <span class="op">{</span>
   <span class="kw">this</span>.<span class="va">local</span>.<span class="at">set</span>(<span class="st">&#39;id_token&#39;</span><span class="op">,</span> token)<span class="op">;</span>
   <span class="kw">this</span>.<span class="at">user</span> <span class="op">=</span> <span class="kw">this</span>.<span class="va">jwtHelper</span>.<span class="at">decodeToken</span>(token).<span class="at">username</span><span class="op">;</span>
@@ -1968,13 +1968,22 @@ authSuccess(token) {
       err <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(err)
     )<span class="op">;</span>
 <span class="op">}</span></code></pre></div>
-<pre><code>def list(self, request):
-    search_param = self.request.query_params.get(&#39;username&#39;, None)
-    if search_param is not None:
-        queryset = User.objects.filter(username__contains=search_param)
+<p>只是我们的API似乎还不支持这样的功能。它的实现方式和我们之前的AutoComplete是一样的，也是搜索用户名：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> <span class="bu">list</span>(<span class="va">self</span>, request):
+    search_param <span class="op">=</span> <span class="va">self</span>.request.query_params.get(<span class="st">&#39;username&#39;</span>, <span class="va">None</span>)
+    <span class="cf">if</span> search_param <span class="op">is</span> <span class="op">not</span> <span class="va">None</span>:
+        queryset <span class="op">=</span> User.objects.<span class="bu">filter</span>(username__contains<span class="op">=</span>search_param)
 
-    serializer = UserSerializer(queryset, many=True)
-    return Response(serializer.data)</code></pre>
+    serializer <span class="op">=</span> UserSerializer(queryset, many<span class="op">=</span><span class="va">True</span>)
+    <span class="cf">return</span> Response(serializer.data)</code></pre></div>
+<p>然后再显示这些数据：</p>
+<pre><code>&lt;div *ngIf=&quot;auth.authenticated()&quot;&gt;
+  &lt;div padding&gt;
+    &lt;h1&gt;Welcome, {{ user }}&lt;/h1&gt;
+    &lt;h2 *ngIf=&quot;user_info&quot;&gt;Last login {{user_info.last_login}}&lt;/h2&gt;
+    &lt;button block (click)=&quot;logout()&quot;&gt;Logout&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
 <h2 id="创建博客">创建博客</h2>
 <p>权限管理</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">SAFE_METHODS <span class="op">=</span> [<span class="st">&#39;GET&#39;</span>, <span class="st">&#39;HEAD&#39;</span>, <span class="st">&#39;OPTIONS&#39;</span>]
@@ -2001,7 +2010,6 @@ authSuccess(token) {
     permission_classes <span class="op">=</span> (permissions.IsAuthenticatedOrReadOnly,)
     queryset <span class="op">=</span> Blogpost.objects.<span class="bu">all</span>()
     serializer_class <span class="op">=</span> BlogpsotSerializer</code></pre></div>
-<h2 id="todo">TODO</h2>
 <h1 id="mobile-web">Mobile Web</h1>
 <h2 id="移动设备处理">移动设备处理</h2>
 <pre><code>pip install django_mobile</code></pre>

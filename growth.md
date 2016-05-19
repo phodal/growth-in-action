@@ -2508,6 +2508,8 @@ npm install angular2-jwt
 
 #### 获取用户信息
 
+现在我们所需要做的就是发出我们的API去获取用户的信息：
+
 ```javascript
 authSuccess(token) {
   this.local.set('id_token', token);
@@ -2526,8 +2528,9 @@ authSuccess(token) {
 }
 ```
 
+只是我们的API似乎还不支持这样的功能。它的实现方式和我们之前的AutoComplete是一样的，也是搜索用户名：
 
-```
+```python
 def list(self, request):
     search_param = self.request.query_params.get('username', None)
     if search_param is not None:
@@ -2536,6 +2539,19 @@ def list(self, request):
     serializer = UserSerializer(queryset, many=True)
     return Response(serializer.data)
 ```
+
+
+然后再显示这些数据：
+
+```
+<div *ngIf="auth.authenticated()">
+  <div padding>
+    <h1>Welcome, {{ user }}</h1>
+    <h2 *ngIf="user_info">Last login {{user_info.last_login}}</h2>
+    <button block (click)="logout()">Logout</button>
+  </div>
+</div>
+```  
 
 创建博客
 ---
@@ -2569,11 +2585,6 @@ class BlogpostSet(viewsets.ModelViewSet):
     serializer_class = BlogpsotSerializer
 
 ```        
-
-
-TODO
----
-
 
 Mobile Web
 ===
