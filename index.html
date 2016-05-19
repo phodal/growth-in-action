@@ -1933,6 +1933,41 @@ authSuccess(token) {
   this.user = null;
 }</code></pre>
 <h3 id="profile-1">Profile</h3>
+<p>当我们获取到这个Token，我们也可以顺便获取用户的用户名、邮件等等的信息给用户。我们所要做的就是再获取一次API，但是在获取这次API的时候，我们需要上传我们的Token。因此我们需要一个简单的AuthHelper来帮助我们。</p>
+<h4 id="authhttp">AuthHttp</h4>
+<p>虽然我们要做的仅仅只是在我们的Header中，添加一个字段，它的值就是Token的值。但是这部分的逻辑交给Angular2-JWT来做可能会好一点，它提供了一个AuthHTTP方法可以让每次请求都带上这个Header。首先我们需要安装这个库：</p>
+<pre><code>npm install angular2-jwt</code></pre>
+<p>然后在我们<code>app.ts</code>中添加这个provider，并指明它的header前缀是JWT。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">@<span class="at">App</span>(<span class="op">{</span>
+  <span class="dt">template</span><span class="op">:</span> <span class="st">&#39;&lt;ion-nav [root]=&quot;rootPage&quot;&gt;&lt;/ion-nav&gt;&#39;</span><span class="op">,</span>
+  <span class="dt">config</span><span class="op">:</span> <span class="op">{},</span> <span class="co">// http://ionicframework.com/docs/v2/api/config/Config/</span>
+  <span class="dt">providers</span><span class="op">:</span> [
+    <span class="at">provide</span>(AuthHttp<span class="op">,</span> <span class="op">{</span>
+      <span class="dt">useFactory</span><span class="op">:</span> (http) <span class="op">=&gt;</span> <span class="op">{</span>
+        <span class="kw">var</span> authConfig <span class="op">=</span> <span class="kw">new</span> <span class="at">AuthConfig</span>(<span class="op">{</span><span class="dt">headerPrefix</span><span class="op">:</span> <span class="st">&#39;JWT&#39;</span><span class="op">}</span>)<span class="op">;</span>
+        <span class="cf">return</span> <span class="kw">new</span> <span class="at">AuthHttp</span>(authConfig<span class="op">,</span> http)<span class="op">;</span>
+      <span class="op">},</span>
+      <span class="dt">deps</span><span class="op">:</span> [Http]
+    <span class="op">}</span>)
+  ]
+<span class="op">}</span>)</code></pre></div>
+<p>现在，我们就可以用和Http一样的方式去获取用户信息。</p>
+<h4 id="获取用户信息">获取用户信息</h4>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">authSuccess</span>(token) <span class="op">{</span>
+  <span class="kw">this</span>.<span class="va">local</span>.<span class="at">set</span>(<span class="st">&#39;id_token&#39;</span><span class="op">,</span> token)<span class="op">;</span>
+  <span class="kw">this</span>.<span class="at">user</span> <span class="op">=</span> <span class="kw">this</span>.<span class="va">jwtHelper</span>.<span class="at">decodeToken</span>(token).<span class="at">username</span><span class="op">;</span>
+  <span class="kw">let</span> <span class="dt">params</span><span class="op">:</span>URLSearchParams <span class="op">=</span> <span class="kw">new</span> <span class="at">URLSearchParams</span>()<span class="op">;</span>
+  <span class="va">params</span>.<span class="at">set</span>(<span class="st">&#39;username&#39;</span><span class="op">,</span> <span class="kw">this</span>.<span class="at">user</span>)<span class="op">;</span>
+
+  <span class="kw">this</span>.<span class="va">authHttp</span>.<span class="at">request</span>(<span class="st">&#39;http://localhost:8000/api/user/&#39;</span><span class="op">,</span> <span class="op">{</span>
+      <span class="dt">search</span><span class="op">:</span> params
+    <span class="op">}</span>)
+    .<span class="at">map</span>(res <span class="op">=&gt;</span> <span class="va">res</span>.<span class="at">text</span>())
+    .<span class="at">subscribe</span>(
+      data <span class="op">=&gt;</span> <span class="kw">this</span>.<span class="va">local</span>.<span class="at">set</span>(<span class="st">&#39;user_info&#39;</span><span class="op">,</span> <span class="va">JSON</span>.<span class="at">stringify</span>(<span class="va">JSON</span>.<span class="at">parse</span>(data)[<span class="dv">0</span>]))<span class="op">,</span>
+      err <span class="op">=&gt;</span> <span class="va">console</span>.<span class="at">log</span>(err)
+    )<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
 <pre><code>def list(self, request):
     search_param = self.request.query_params.get(&#39;username&#39;, None)
     if search_param is not None:

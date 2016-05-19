@@ -2476,6 +2476,57 @@ logout() {
 
 ### Profile
 
+当我们获取到这个Token，我们也可以顺便获取用户的用户名、邮件等等的信息给用户。我们所要做的就是再获取一次API，但是在获取这次API的时候，我们需要上传我们的Token。因此我们需要一个简单的AuthHelper来帮助我们。
+
+####AuthHttp
+
+虽然我们要做的仅仅只是在我们的Header中，添加一个字段，它的值就是Token的值。但是这部分的逻辑交给Angular2-JWT来做可能会好一点，它提供了一个AuthHTTP方法可以让每次请求都带上这个Header。首先我们需要安装这个库：
+
+```
+npm install angular2-jwt
+```
+
+然后在我们``app.ts``中添加这个provider，并指明它的header前缀是JWT。
+
+```javascript
+@App({
+  template: '<ion-nav [root]="rootPage"></ion-nav>',
+  config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
+  providers: [
+    provide(AuthHttp, {
+      useFactory: (http) => {
+        var authConfig = new AuthConfig({headerPrefix: 'JWT'});
+        return new AuthHttp(authConfig, http);
+      },
+      deps: [Http]
+    })
+  ]
+})
+```
+
+现在，我们就可以用和Http一样的方式去获取用户信息。
+
+#### 获取用户信息
+
+```javascript
+authSuccess(token) {
+  this.local.set('id_token', token);
+  this.user = this.jwtHelper.decodeToken(token).username;
+  let params:URLSearchParams = new URLSearchParams();
+  params.set('username', this.user);
+
+  this.authHttp.request('http://localhost:8000/api/user/', {
+      search: params
+    })
+    .map(res => res.text())
+    .subscribe(
+      data => this.local.set('user_info', JSON.stringify(JSON.parse(data)[0])),
+      err => console.log(err)
+    );
+}
+```
+
+
 ```
 def list(self, request):
     search_param = self.request.query_params.get('username', None)
