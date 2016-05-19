@@ -2413,6 +2413,30 @@ curl -H "Content-Type: application/json" -X POST -d '{"username":"admin","passwo
 {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhAcGhvZGFsLmNvbSIsInVzZXJfaWQiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE0NjQ4NzQ1MDZ9.B5LEeIlGDTGggD6dh9akGRKx0Hk09wjylQRLas6kjGM"}
 ```
 
+### 登录表单
+
+现在，我们要先做的一件事就是，创建一个用于登录的表单。
+
+```
+<form #loginCreds="ngForm" (ngSubmit)="login(loginCreds.value)">
+  <ion-item>
+    <ion-label>Username</ion-label>
+    <ion-input type="text" ngControl="username"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Password</ion-label>
+    <ion-input type="password" ngControl="password"></ion-input>
+  </ion-item>
+
+  <div padding>
+    <button block type="submit">登录</button>
+  </div>
+</form>
+```
+
+我们创建一个名为``loginCreds``的ngForm，在我们提交的时候我们就调用login方法，并把其中的值（username、password）传过去。而在我们的代码里，我们所要做的就是和上面一样将数据post到之前的Auth API的地址：
+
 ```
 constructor(http: Http, nav:NavController) {
   this.nav = nav;
@@ -2440,17 +2464,14 @@ authSuccess(token) {
 }
 ```
 
+在我们成功的获取到Token的时候，保存这个Token，并调用jwtHelper来解码Token，并从中获取我们的username。
+
+同时，对于我们来说要登出就是一件容易的，删除这个token，将清空用户名。
 ```
 logout() {
   this.local.remove('id_token');
   this.user = null;
 }
-```
-
-Install Angular JWT
-
-```bash
-npm install angular2-jwt
 ```
 
 ### Profile
