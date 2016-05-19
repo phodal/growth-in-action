@@ -519,7 +519,21 @@ urlpatterns = patterns(
 )
 ```
 
+在我们完成了上面的步骤之后，我们可以用``curl``命令或者Chrome浏览器的Postman来做测试：
 
+ - 向服务器发送我们的用户名和密码，获取对应的Token。
+
+如下是``curl``创建的请求，在这其中我们发送了我们的用户和密码。
+
+```
+curl -H "Content-Type: application/json" -X POST -d '{"username":"admin","password":"root"}' http://localhost:8000/api-token-auth
+``` 
+
+然后服务端后我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：
+
+```
+{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhAcGhvZGFsLmNvbSIsInVzZXJfaWQiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE0NjQ4NzQ1MDZ9.B5LEeIlGDTGggD6dh9akGRKx0Hk09wjylQRLas6kjGM"}
+```
 
 ```
 constructor(http: Http, nav:NavController) {

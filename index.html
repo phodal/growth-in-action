@@ -1875,6 +1875,14 @@ export class MyApp {
 
     url(r&#39;^api-token-auth/&#39;, &#39;rest_framework_jwt.views.obtain_jwt_token&#39;),
 )</code></pre>
+<p>在我们完成了上面的步骤之后，我们可以用<code>curl</code>命令或者Chrome浏览器的Postman来做测试：</p>
+<ul>
+<li>向服务器发送我们的用户名和密码，获取对应的Token。</li>
+</ul>
+<p>如下是<code>curl</code>创建的请求，在这其中我们发送了我们的用户和密码。</p>
+<pre><code>curl -H &quot;Content-Type: application/json&quot; -X POST -d &#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;root&quot;}&#39; http://localhost:8000/api-token-auth</code></pre>
+<p>然后服务端后我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：</p>
+<pre><code>{&quot;token&quot;:&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhAcGhvZGFsLmNvbSIsInVzZXJfaWQiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE0NjQ4NzQ1MDZ9.B5LEeIlGDTGggD6dh9akGRKx0Hk09wjylQRLas6kjGM&quot;}</code></pre>
 <pre><code>constructor(http: Http, nav:NavController) {
   this.nav = nav;
   this.http = http;
