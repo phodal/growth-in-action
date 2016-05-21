@@ -46,7 +46,7 @@ TEMPLATES = [
         },
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
+            'context_processors':    [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -62,5 +62,70 @@ TEMPLATES = [
 
 然后在template目录中创建``template/mobile/index.html ``文件，即可。
 
-RIOT
+
+前后端分离
 ---
+
+为了方便我们讲述模块化，也不改变系统原有架构，我决定挖个大坑使用Riot.js来展示这一部分的内容。
+
+### Riot.js
+
+Riot拥有创建现代客户端应用的所有必需的成分:
+
+ - “响应式” 视图层用来创建用户界面
+ - 用来在各独立模块之间进行通信的事件库
+ - 用来管理URL和浏览器回退按钮的路由器（Router）
+
+等等。
+
+接着让我们引入riot.js这个库，顺便也引入rxjs吧:
+
+```
+<script src="{% static 'js/mobile/riot+compiler.min.js' %}"></script>
+<script src="{% static 'js/mobile/rx.core.min.js' %}"></script>
+```
+
+###ReactiveJS构建服务
+
+由于我们所要做的服务比较简单，并且我们也更愿意使用Promise来加载API服务，因此我们引入了这个库来加速我们的开发。下面是我们用于获取博客API的代码：
+
+```
+var responseStream = function (blogId) {
+    var url = '/api/blogpost/?format=json';
+
+    if(blogId) {
+        url = '/api/blogpost/' + blogId + '?format=json';
+    }
+
+    return Rx.Observable.create(function (observer) {
+        jQuery.getJSON(url)
+            .done(function (response) {
+                observer.onNext(response);
+            })
+            .fail(function (jqXHR, status, error) {
+                observer.onError(error);
+            })
+            .always(function () {
+                observer.onCompleted();
+            });
+    });
+};
+```
+
+当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用``'/api/blogpost/' + blogId + '?format=json'``作为URL。接着我们创建了创建自己定制的事件流——使用jQuery去获取API：
+
+ - 成功的时候(done)，我们将用onNext()来通知观察者
+ - 失败的时候(fail)，我们就调用onError()来通知观察者
+ - 不论成功或者失败，都会执行always
+
+在使用的时候，我们只需要调用其``subscribe``方法即可：
+
+```
+responseStream().subscribe(function (response) {
+
+})
+```
+
+### 创建博客列表页
+
+
