@@ -1,4 +1,4 @@
-Growth In Action Django
+全栈增长工程师实战
 ===
 
 准备工作和工具

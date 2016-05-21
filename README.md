@@ -25,7 +25,7 @@ APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.co
 目录
 ---
 
-*   [Growth In Action Django](http://growth-in-action.phodal.com/#growth-in-action-django)
+*   [全栈增长工程师实战](http://growth-in-action.phodal.com/#全栈增长工程师实战)
     *   [准备工作和工具](http://growth-in-action.phodal.com/#准备工作和工具)
 *   [深入浅出Django](http://growth-in-action.phodal.com/#深入浅出django)
     *   [Django简介](http://growth-in-action.phodal.com/#django简介)
