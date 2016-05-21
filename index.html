@@ -1984,8 +1984,9 @@ authSuccess(token) {
     &lt;button block (click)=&quot;logout()&quot;&gt;Logout&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
+<p>不过由于我们Django自带的用户管理模块只有这点信息，我们也就只能显示这些信息了。下一步，我们就可以实现在我们的APP里去创建博客。</p>
 <h2 id="创建博客">创建博客</h2>
-<p>权限管理</p>
+<p>在我们开始在APP端实现这个功能之前，我们先要实现一个高级点的用户授权管理——即只有用户登录或者用户的请求中带有Token的时候，我们才能创建博客。于是在这里我们所要做的就是实现一个<code>IsAuthenticatedOrReadOnly</code>，来判断用户是否有权限，如果没有的话，那么只让用户看到博客的内容。代码如下所示：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">SAFE_METHODS <span class="op">=</span> [<span class="st">&#39;GET&#39;</span>, <span class="st">&#39;HEAD&#39;</span>, <span class="st">&#39;OPTIONS&#39;</span>]
 
 <span class="kw">class</span> IsAuthenticatedOrReadOnly(BasePermission):
@@ -1999,6 +2000,7 @@ authSuccess(token) {
             request.user.is_authenticated()):
             <span class="cf">return</span> <span class="va">True</span>
         <span class="cf">return</span> <span class="va">False</span>
+
 <span class="kw">class</span> BlogpsotSerializer(serializers.HyperlinkedModelSerializer):
     <span class="kw">class</span> Meta:
         model <span class="op">=</span> Blogpost
@@ -2010,6 +2012,72 @@ authSuccess(token) {
     permission_classes <span class="op">=</span> (permissions.IsAuthenticatedOrReadOnly,)
     queryset <span class="op">=</span> Blogpost.objects.<span class="bu">all</span>()
     serializer_class <span class="op">=</span> BlogpsotSerializer</code></pre></div>
+<p>接着，我们可以创建一个Modal来做这个工作。对于我们的博客表单来说，和登录没有太大的区别。</p>
+<pre><code>  &lt;form #blogpostForm=&quot;ngForm&quot; (ngSubmit)=&quot;create(blogpostForm.value)&quot;&gt;
+    &lt;ion-item&gt;
+      &lt;ion-label&gt;标题&lt;/ion-label&gt;
+      &lt;ion-input type=&quot;text&quot; ngControl=&quot;title&quot;&gt;&lt;/ion-input&gt;
+    &lt;/ion-item&gt;
+
+    &lt;ion-item&gt;
+      &lt;ion-label&gt;作者&lt;/ion-label&gt;
+      &lt;ion-input type=&quot;text&quot; ngControl=&quot;author&quot;&gt;&lt;/ion-input&gt;
+    &lt;/ion-item&gt;
+
+    &lt;ion-item&gt;
+      &lt;ion-label&gt;URL&lt;/ion-label&gt;
+      &lt;ion-input type=&quot;text&quot; ngControl=&quot;slug&quot;&gt;&lt;/ion-input&gt;
+    &lt;/ion-item&gt;
+
+    &lt;ion-item&gt;
+      &lt;ion-label&gt;内容&lt;/ion-label&gt;
+      &lt;ion-textarea type=&quot;text&quot; ngControl=&quot;body&quot;&gt;&lt;/ion-textarea&gt;
+    &lt;/ion-item&gt;
+
+    &lt;div padding&gt;
+      &lt;button block type=&quot;submit&quot;&gt;创建&lt;/button&gt;
+    &lt;/div&gt;
+
+  &lt;/form&gt;</code></pre>
+<p>稍有不同的是在我们的标题栏里会有一个关闭按钮。</p>
+<pre><code>&lt;ion-toolbar&gt;
+  &lt;ion-title&gt;
+    创建博客
+  &lt;/ion-title&gt;
+  &lt;ion-buttons start&gt;
+    &lt;button (click)=&quot;close()&quot;&gt;
+      &lt;span primary showWhen=&quot;ios&quot;&gt;取消&lt;/span&gt;
+      &lt;ion-icon name=&quot;md-close&quot; showWhen=&quot;android,windows&quot;&gt;&lt;/ion-icon&gt;
+    &lt;/button&gt;
+  &lt;/ion-buttons&gt;
+&lt;/ion-toolbar&gt;</code></pre>
+<p>对于我们的实现代码来说，也是类似的，除了我们在发表成功的时候做的事情不一样——关闭这个Modal。</p>
+<pre><code>  close() {
+    this.viewCtrl.dismiss();
+  }
+
+  create(value) {
+    this.contentHeader = new Headers({&quot;Content-Type&quot;: &quot;application/json&quot;});
+    this.authHttp.post(&#39;http://127.0.0.1:8000/api/blogpost/&#39;, JSON.stringify(value), {headers: this.contentHeader})
+      .map(res =&gt; res.json())
+      .subscribe(
+        data =&gt; this.postSuccess(data),
+        err =&gt; console.log(err)
+      );
+  }
+
+  postSuccess(data) {
+    this.close()
+  }</code></pre>
+<p>同时，我们需要在我们的首页里添加这样的一个入口。</p>
+<pre><code>  &lt;button fab fab-bottom fab-right (click)=&quot;createBlog()&quot; calm&gt;
+    &lt;ion-icon name=&quot;add&quot;&gt;&lt;/ion-icon&gt;
+  &lt;/button&gt;</code></pre>
+<p>以及它的处理逻辑：</p>
+<pre><code>  createBlog() {
+    let modal = Modal.create(CreateBlogModal);
+    this.nav.present(modal)
+  }</code></pre>
 <h1 id="mobile-web">Mobile Web</h1>
 <h2 id="移动设备处理">移动设备处理</h2>
 <pre><code>pip install django_mobile</code></pre>

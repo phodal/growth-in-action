@@ -2553,10 +2553,12 @@ def list(self, request):
 </div>
 ```  
 
+不过由于我们Django自带的用户管理模块只有这点信息，我们也就只能显示这些信息了。下一步，我们就可以实现在我们的APP里去创建博客。
+
 创建博客
 ---
 
-权限管理
+在我们开始在APP端实现这个功能之前，我们先要实现一个高级点的用户授权管理——即只有用户登录或者用户的请求中带有Token的时候，我们才能创建博客。于是在这里我们所要做的就是实现一个``IsAuthenticatedOrReadOnly``，来判断用户是否有权限，如果没有的话，那么只让用户看到博客的内容。代码如下所示：
 
 ```python
 SAFE_METHODS = ['GET', 'HEAD', 'OPTIONS']
@@ -2572,6 +2574,7 @@ class IsAuthenticatedOrReadOnly(BasePermission):
             request.user.is_authenticated()):
             return True
         return False
+
 class BlogpsotSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Blogpost
@@ -2585,6 +2588,95 @@ class BlogpostSet(viewsets.ModelViewSet):
     serializer_class = BlogpsotSerializer
 
 ```        
+
+接着，我们可以创建一个Modal来做这个工作。对于我们的博客表单来说，和登录没有太大的区别。
+
+```
+  <form #blogpostForm="ngForm" (ngSubmit)="create(blogpostForm.value)">
+    <ion-item>
+      <ion-label>标题</ion-label>
+      <ion-input type="text" ngControl="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>作者</ion-label>
+      <ion-input type="text" ngControl="author"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>URL</ion-label>
+      <ion-input type="text" ngControl="slug"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>内容</ion-label>
+      <ion-textarea type="text" ngControl="body"></ion-textarea>
+    </ion-item>
+
+    <div padding>
+      <button block type="submit">创建</button>
+    </div>
+
+  </form>
+```  
+
+稍有不同的是在我们的标题栏里会有一个关闭按钮。
+
+```
+<ion-toolbar>
+  <ion-title>
+    创建博客
+  </ion-title>
+  <ion-buttons start>
+    <button (click)="close()">
+      <span primary showWhen="ios">取消</span>
+      <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+对于我们的实现代码来说，也是类似的，除了我们在发表成功的时候做的事情不一样——关闭这个Modal。
+
+```
+  close() {
+    this.viewCtrl.dismiss();
+  }
+
+  create(value) {
+    this.contentHeader = new Headers({"Content-Type": "application/json"});
+    this.authHttp.post('http://127.0.0.1:8000/api/blogpost/', JSON.stringify(value), {headers: this.contentHeader})
+      .map(res => res.json())
+      .subscribe(
+        data => this.postSuccess(data),
+        err => console.log(err)
+      );
+  }
+
+  postSuccess(data) {
+    this.close()
+  }
+```  
+
+同时，我们需要在我们的首页里添加这样的一个入口。
+
+```
+  <button fab fab-bottom fab-right (click)="createBlog()" calm>
+    <ion-icon name="add"></ion-icon>
+  </button>
+```
+
+以及它的处理逻辑：
+
+```
+  createBlog() {
+    let modal = Modal.create(CreateBlogModal);
+    this.nav.present(modal)
+  }
+```
+  
+
+
 
 Mobile Web
 ===
