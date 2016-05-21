@@ -2882,7 +2882,7 @@ this.on('mount', function (id) {
 click(event)
 {
     this.unmount();
-    riot.route("blogDetail/" + event.item.id);
+    riot.route("blog/" + event.item.id);
 }
 ```
 我们将卸载当前的tag，然后加载blogDetail的内容。
@@ -2894,7 +2894,7 @@ click(event)
 ```
 riot.route.base('#');
 
-riot.route('blogDetail/*', function(id) {
+riot.route('blog/*', function(id) {
     riot.mount("blogDetail", {id: id})
 });
 
@@ -2923,6 +2923,61 @@ riot.route.start();
 </blogDetail>
 ```
 同样的，我们也将去获取这篇博客的内容，然后显示。
+
+### 添加导航
+
+在上面的例子里，我们少了一部分很重要的内容就是在页面间跳转，现在就让我们来创建``navbar.tag``吧。
+
+首先，我们需要重新规则一下route，在系统初始化的时候我们将使用的路由是blog，在进入详情页的时候，我们用blog/*。
+
+```javascript
+riot.route.base('#');
+
+riot.route('blog/*', function (id) {
+    riot.mount("blogDetail", {id: id})
+});
+
+riot.route('blog', function () {
+    riot.mount("blog")
+});
+
+riot.route.start();
+
+riot.route("blog");
+```
+
+然后将我们的navbar标签放在``blog``和``blogDetail``中，如下所示：
+
+```
+<blogDetail class="row">
+    <navbar title="{ opts.title }"></navbar>
+    <div class="col-sm-4">
+        <h2>{ opts.title }</h2>
+        { opts.body }
+        { opts.posted } - By { opts.author }
+    </div>
+</blogDetail>      
+
+当我们到了博客详情页，我们将把标题作为参数传给title。接着，我们在navbar中我们就可以创造一个breadcrumb导航了:
+
+```
+<navbar>
+    <ol class="breadcrumb">
+        <li><a href="#/" onclick={parent.clickTitle}>Home</a></li>
+        <li if="opts.title">{ opts.title} </li>
+    </ol>
+</navbar>
+```
+
+最后可以在我们的blogDetail标签中添加一个点击事件来跳转到首页：
+
+```
+clickTitle(event) {
+    self.unmount(true);
+    riot.route("blog");
+}
+```
+        
 
 部署
 ===

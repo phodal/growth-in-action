@@ -175,6 +175,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#reactivejs构建服务">ReactiveJS构建服务</a></li>
 <li><a href="#创建博客列表页-1">创建博客列表页</a></li>
 <li><a href="#博客详情页">博客详情页</a></li>
+<li><a href="#添加导航-1">添加导航</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#部署">部署</a><ul>
@@ -2221,14 +2222,14 @@ authSuccess(token) {
 <pre><code>click(event)
 {
     this.unmount();
-    riot.route(&quot;blogDetail/&quot; + event.item.id);
+    riot.route(&quot;blog/&quot; + event.item.id);
 }</code></pre>
 <p>我们将卸载当前的tag，然后加载blogDetail的内容。</p>
 <h3 id="博客详情页">博客详情页</h3>
 <p>在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正规表达式<code>blogDetail/*</code>来获取博客的id:</p>
 <pre><code>riot.route.base(&#39;#&#39;);
 
-riot.route(&#39;blogDetail/*&#39;, function(id) {
+riot.route(&#39;blog/*&#39;, function(id) {
     riot.mount(&quot;blogDetail&quot;, {id: id})
 });
 
@@ -2252,6 +2253,44 @@ riot.route.start();</code></pre>
     &lt;/script&gt;
 &lt;/blogDetail&gt;</code></pre>
 <p>同样的，我们也将去获取这篇博客的内容，然后显示。</p>
+<h3 id="添加导航-1">添加导航</h3>
+<p>在上面的例子里，我们少了一部分很重要的内容就是在页面间跳转，现在就让我们来创建<code>navbar.tag</code>吧。</p>
+<p>首先，我们需要重新规则一下route，在系统初始化的时候我们将使用的路由是blog，在进入详情页的时候，我们用blog/*。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">riot</span>.<span class="va">route</span>.<span class="at">base</span>(<span class="st">&#39;#&#39;</span>)<span class="op">;</span>
+
+<span class="va">riot</span>.<span class="at">route</span>(<span class="st">&#39;blog/*&#39;</span><span class="op">,</span> <span class="kw">function</span> (id) <span class="op">{</span>
+    <span class="va">riot</span>.<span class="at">mount</span>(<span class="st">&quot;blogDetail&quot;</span><span class="op">,</span> <span class="op">{</span><span class="dt">id</span><span class="op">:</span> id<span class="op">}</span>)
+<span class="op">}</span>)<span class="op">;</span>
+
+<span class="va">riot</span>.<span class="at">route</span>(<span class="st">&#39;blog&#39;</span><span class="op">,</span> <span class="kw">function</span> () <span class="op">{</span>
+    <span class="va">riot</span>.<span class="at">mount</span>(<span class="st">&quot;blog&quot;</span>)
+<span class="op">}</span>)<span class="op">;</span>
+
+<span class="va">riot</span>.<span class="va">route</span>.<span class="at">start</span>()<span class="op">;</span>
+
+<span class="va">riot</span>.<span class="at">route</span>(<span class="st">&quot;blog&quot;</span>)<span class="op">;</span></code></pre></div>
+<p>然后将我们的navbar标签放在<code>blog</code>和<code>blogDetail</code>中，如下所示：</p>
+<pre><code>&lt;blogDetail class=&quot;row&quot;&gt;
+    &lt;navbar title=&quot;{ opts.title }&quot;&gt;&lt;/navbar&gt;
+    &lt;div class=&quot;col-sm-4&quot;&gt;
+        &lt;h2&gt;{ opts.title }&lt;/h2&gt;
+        { opts.body }
+        { opts.posted } - By { opts.author }
+    &lt;/div&gt;
+&lt;/blogDetail&gt;      
+
+当我们到了博客详情页，我们将把标题作为参数传给title。接着，我们在navbar中我们就可以创造一个breadcrumb导航了:
+</code></pre>
+<navbar>
+<ol class="breadcrumb">
+<pre><code>    &lt;li&gt;&lt;a href=&quot;#/&quot; onclick={parent.clickTitle}&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li if=&quot;opts.title&quot;&gt;{ opts.title} &lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<p></navbar></p>
+<pre><code>
+最后可以在我们的blogDetail标签中添加一个点击事件来跳转到首页：
+</code></pre>
+<p>clickTitle(event) { self.unmount(true); riot.route(“blog”); } ```</p>
 <h1 id="部署">部署</h1>
 <h2 id="配置管理">配置管理</h2>
 <p>local_settings.py</p>
