@@ -178,10 +178,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#添加导航-1">添加导航</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#部署">部署</a><ul>
-<li><a href="#配置管理">配置管理</a></li>
-<li><a href="#fabric">Fabric</a></li>
-</ul></li>
+<li><a href="#security-warning-keep-the-secret-key-used-in-production-secret">SECURITY WARNING: keep the secret key used in production secret!</a></li>
+<li><a href="#security-warning-dont-run-with-debug-turned-on-in-production">SECURITY WARNING: don’t run with debug turned on in production!</a></li>
+<li><a href="#database">Database</a></li>
+<li><a href="#httpsdocs.djangoproject.comen1.7refsettingsdatabases">https://docs.djangoproject.com/en/1.7/ref/settings/#databases</a></li>
 </ul>
 </nav>
 <h1 id="growth-in-action-django">Growth In Action Django</h1>
@@ -2290,19 +2290,33 @@ riot.route.start();</code></pre>
 <pre><code>
 最后可以在我们的blogDetail标签中添加一个点击事件来跳转到首页：
 </code></pre>
-<p>clickTitle(event) { self.unmount(true); riot.route(“blog”); } ```</p>
-<h1 id="部署">部署</h1>
-<h2 id="配置管理">配置管理</h2>
-<p>local_settings.py</p>
-<h2 id="fabric">Fabric</h2>
-<ul>
-<li>NGINX - public facing web server</li>
-<li>gunicorn - internal HTTP application server</li>
-<li>PostgreSQL - database server</li>
-<li>memcached - in-memory caching server</li>
-<li>supervisord - process control and monitor</li>
-<li>virtualenv - isolated Python environments for each project</li>
-<li>git or mercurial - version control systems (optional)</li>
-</ul>
+<p>clickTitle(event) { self.unmount(true); riot.route(“blog”); }</p>
+<pre><code>        
+
+配置管理 
+===
+
+作为一个开源项目，我们在这方面做得并不是特别好——当然是有意如此的。不过，这里我们还是做一些简单的介绍。对于我们的项目来说，我们需要一些额外的配置，如我们的数据库中的``DATABASES``、``DEFAULT_AUTHENTICATION_CLASSES``、``CORS_ORIGIN_ALLOW_ALL``、``SECRET_KEY``应该在不同的环境中都有不同的配置。
+
+我们可以一个创建``local_settings.py``，在里面放置一些关键的服务器相关的配置，如:
+</code></pre>
+<h1 id="security-warning-keep-the-secret-key-used-in-production-secret">SECURITY WARNING: keep the secret key used in production secret!</h1>
+<p>SECRET_KEY = ’hpi!zb8!(j%40)r55@+_5k<em>^9qcjf9sx0o_it</em>jlp3=x9^2ak@’</p>
+<h1 id="security-warning-dont-run-with-debug-turned-on-in-production">SECURITY WARNING: don’t run with debug turned on in production!</h1>
+<p>DEBUG = True</p>
+<p>TEMPLATE_DEBUG = True</p>
+<h1 id="database">Database</h1>
+<h1 id="httpsdocs.djangoproject.comen1.7refsettingsdatabases">https://docs.djangoproject.com/en/1.7/ref/settings/#databases</h1>
+<p>DATABASES = { ‘default’: { ‘ENGINE’: ‘django.db.backends.sqlite3’, ‘NAME’: ‘db.sqlite3’, } }</p>
+<p>REST_FRAMEWORK = { ‘DEFAULT_PERMISSION_CLASSES’: (</p>
+<pre><code>),
+&#39;DEFAULT_AUTHENTICATION_CLASSES&#39;: (
+    &#39;rest_framework.authentication.SessionAuthentication&#39;,
+    &#39;rest_framework.authentication.BasicAuthentication&#39;,
+    &#39;rest_framework_jwt.authentication.JSONWebTokenAuthentication&#39;,
+),</code></pre>
+<p>}</p>
+<p>CORS_ORIGIN_ALLOW_ALL = True ```</p>
+<p>接着，我们只需要在我们的主<code>settiings.py</code>中引用即可:</p>
 </body>
 </html>

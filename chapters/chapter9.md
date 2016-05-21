@@ -1,8 +1,5 @@
-部署
-===
-
 配置管理 
----
+===
 
 作为一个开源项目，我们在这方面做得并不是特别好——当然是有意如此的。不过，这里我们还是做一些简单的介绍。对于我们的项目来说，我们需要一些额外的配置，如我们的数据库中的``DATABASES``、``DEFAULT_AUTHENTICATION_CLASSES``、``CORS_ORIGIN_ALLOW_ALL``、``SECRET_KEY``应该在不同的环境中都有不同的配置。
 
@@ -42,18 +39,3 @@ CORS_ORIGIN_ALLOW_ALL = True
 ```
 
 接着，我们只需要在我们的主``settiings.py``中引用即可:
-
-```
-from blog.local_settings import *
-```
-
-Fabric
----
-
- - NGINX - public facing web server
- - gunicorn - internal HTTP application server
- - PostgreSQL - database server
- - memcached - in-memory caching server
- - supervisord - process control and monitor
- - virtualenv - isolated Python environments for each project
- - git or mercurial - version control systems (optional)
