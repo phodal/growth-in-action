@@ -25,6 +25,9 @@ APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.co
 目录
 ---
 
+*   [序：如何成为全栈增长工程师？](http://growth-in-action.phodal.com/#序如何成为全栈增长工程师)
+    *   [先成为全栈工程师](http://growth-in-action.phodal.com/#先成为全栈工程师)
+    *   [再成为增长工程师](http://growth-in-action.phodal.com/#再成为增长工程师)
 *   [全栈增长工程师实战](http://growth-in-action.phodal.com/#全栈增长工程师实战)
     *   [准备工作和工具](http://growth-in-action.phodal.com/#准备工作和工具)
 *   [深入浅出Django](http://growth-in-action.phodal.com/#深入浅出django)
