@@ -170,8 +170,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#mobile-web">Mobile Web</a><ul>
 <li><a href="#移动设备处理">移动设备处理</a></li>
-<li><a href="#mvvm">MVVM</a></li>
-<li><a href="#ux">UX</a></li>
+<li><a href="#riot">RIOT</a></li>
 </ul></li>
 <li><a href="#部署">部署</a><ul>
 <li><a href="#配置管理">配置管理</a></li>
@@ -2079,9 +2078,11 @@ authSuccess(token) {
     this.nav.present(modal)
   }</code></pre>
 <h1 id="mobile-web">Mobile Web</h1>
+<p>为了实现在移动设备上的访问，这里就以riot.js为例做一个简单的Demo。不过，首先我们需要在后台判断用户是来自于某种设备，再对其进行特殊的处理。</p>
 <h2 id="移动设备处理">移动设备处理</h2>
+<p>幸运的是我们又找到了一个库名为<code>django_mobile</code>，可以根据用户的User-Agent来区别设备，并为其分配一个移动设备专用的模板。因此，我们需要安装这个库：</p>
 <pre><code>pip install django_mobile</code></pre>
-<p>添加MIDDLEWARE_CLASSES</p>
+<p>并将<code>'django_mobile.middleware.MobileDetectionMiddleware'</code>和<code>'django_mobile.middleware.SetFlavourMiddleware'</code>添加MIDDLEWARE_CLASSES中：</p>
 <pre><code>MIDDLEWARE_CLASSES = (
     &#39;django.contrib.sessions.middleware.SessionMiddleware&#39;,
     &#39;corsheaders.middleware.CorsMiddleware&#39;,
@@ -2095,7 +2096,7 @@ authSuccess(token) {
     &#39;django_mobile.middleware.MobileDetectionMiddleware&#39;,
     &#39;django_mobile.middleware.SetFlavourMiddleware&#39;
 )</code></pre>
-<p>修改Template配置，添加对应的Loader和context_processor</p>
+<p>修改Template配置，添加对应的loader和context_processor，如下所示的内容即是修改完后的结果：</p>
 <pre><code>TEMPLATES = [
     {
         &#39;BACKEND&#39;: &#39;django.template.backends.django.DjangoTemplates&#39;,
@@ -2103,7 +2104,9 @@ authSuccess(token) {
             &#39;templates/&#39;
         ],
         &#39;LOADERS&#39;: {
-            &#39;django_mobile.loader.Loader&#39;
+                &#39;django_mobile.loader.Loader&#39;,
+                &#39;django.template.loaders.filesystem.Loader&#39;,
+                &#39;django.template.loaders.app_directories.Loader&#39;
         },
         &#39;APP_DIRS&#39;: True,
         &#39;OPTIONS&#39;: {
@@ -2117,15 +2120,9 @@ authSuccess(token) {
         },
     },
 ]</code></pre>
-<p>添加Loader</p>
-<pre><code>&#39;loaders&#39;: {
-    &#39;django_mobile.loader.Loader&#39;,
-    &#39;django.template.loaders.filesystem.Loader&#39;,
-    &#39;django.template.loaders.app_directories.Loader&#39;
-},</code></pre>
-<p>创建<code>template/mobile/index.html</code>。</p>
-<h2 id="mvvm">MVVM</h2>
-<h2 id="ux">UX</h2>
+<p>我们在LOADERS中添加了<code>'django_mobile.loader.Loader'</code>，在<code>context_processors</code>中添加了<code>django_mobile.context_processors.flavour</code>。</p>
+<p>然后在template目录中创建<code>template/mobile/index.html</code>文件，即可。</p>
+<h2 id="riot">RIOT</h2>
 <h1 id="部署">部署</h1>
 <h2 id="配置管理">配置管理</h2>
 <p>local_settings.py</p>
