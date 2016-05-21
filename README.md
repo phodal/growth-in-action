@@ -24,6 +24,7 @@ APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.co
 
 目录
 ---
+
 *   [Growth In Action Django](http://growth-in-action.phodal.com/#growth-in-action-django)
     *   [准备工作和工具](http://growth-in-action.phodal.com/#准备工作和工具)
 *   [深入浅出Django](http://growth-in-action.phodal.com/#深入浅出django)
@@ -89,16 +90,19 @@ APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.co
         *   [详情页](http://growth-in-action.phodal.com/#详情页)
     *   [Profile](http://growth-in-action.phodal.com/#profile)
         *   [Json Web Tokens](http://growth-in-action.phodal.com/#json-web-tokens)
+        *   [登录表单](http://growth-in-action.phodal.com/#登录表单)
         *   [Profile](http://growth-in-action.phodal.com/#profile-1)
     *   [创建博客](http://growth-in-action.phodal.com/#创建博客)
-    *   [TODO](http://growth-in-action.phodal.com/#todo)
 *   [Mobile Web](http://growth-in-action.phodal.com/#mobile-web)
     *   [移动设备处理](http://growth-in-action.phodal.com/#移动设备处理)
-    *   [MVVM](http://growth-in-action.phodal.com/#mvvm)
-    *   [UX](http://growth-in-action.phodal.com/#ux)
-*   [部署](http://growth-in-action.phodal.com/#部署)
-    *   [配置管理](http://growth-in-action.phodal.com/#配置管理)
-    *   [Fabric](http://growth-in-action.phodal.com/#fabric)
+    *   [前后端分离](http://growth-in-action.phodal.com/#前后端分离)
+        *   [Riot.js](http://growth-in-action.phodal.com/#riot.js)
+        *   [ReactiveJS构建服务](http://growth-in-action.phodal.com/#reactivejs构建服务)
+        *   [创建博客列表页](http://growth-in-action.phodal.com/#创建博客列表页-1)
+        *   [博客详情页](http://growth-in-action.phodal.com/#博客详情页)
+        *   [添加导航](http://growth-in-action.phodal.com/#添加导航-1)
+*   [配置管理](http://growth-in-action.phodal.com/#配置管理)
+    *   [local settings](http://growth-in-action.phodal.com/#local-settings)
     
 License
 ---
