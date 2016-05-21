@@ -170,7 +170,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#mobile-web">Mobile Web</a><ul>
 <li><a href="#移动设备处理">移动设备处理</a></li>
-<li><a href="#riot">RIOT</a></li>
+<li><a href="#前后端分离">前后端分离</a><ul>
+<li><a href="#riot.js">Riot.js</a></li>
+<li><a href="#reactivejs构建服务">ReactiveJS构建服务</a></li>
+<li><a href="#创建博客列表页-1">创建博客列表页</a></li>
+<li><a href="#博客详情页">博客详情页</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#部署">部署</a><ul>
 <li><a href="#配置管理">配置管理</a></li>
@@ -2110,7 +2115,7 @@ authSuccess(token) {
         },
         &#39;APP_DIRS&#39;: True,
         &#39;OPTIONS&#39;: {
-            &#39;context_processors&#39;: [
+            &#39;context_processors&#39;:    [
                 &#39;django.template.context_processors.debug&#39;,
                 &#39;django.template.context_processors.request&#39;,
                 &#39;django.contrib.auth.context_processors.auth&#39;,
@@ -2122,7 +2127,131 @@ authSuccess(token) {
 ]</code></pre>
 <p>我们在LOADERS中添加了<code>'django_mobile.loader.Loader'</code>，在<code>context_processors</code>中添加了<code>django_mobile.context_processors.flavour</code>。</p>
 <p>然后在template目录中创建<code>template/mobile/index.html</code>文件，即可。</p>
-<h2 id="riot">RIOT</h2>
+<h2 id="前后端分离">前后端分离</h2>
+<p>为了方便我们讲述模块化，也不改变系统原有架构，我决定挖个大坑使用Riot.js来展示这一部分的内容。</p>
+<h3 id="riot.js">Riot.js</h3>
+<p>Riot拥有创建现代客户端应用的所有必需的成分:</p>
+<ul>
+<li>“响应式” 视图层用来创建用户界面</li>
+<li>用来在各独立模块之间进行通信的事件库</li>
+<li>用来管理URL和浏览器回退按钮的路由器（Router）</li>
+</ul>
+<p>等等。</p>
+<p>接着让我们引入riot.js这个库，顺便也引入rxjs吧:</p>
+<pre><code>&lt;script src=&quot;{% static &#39;js/mobile/riot+compiler.min.js&#39; %}&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;{% static &#39;js/mobile/rx.core.min.js&#39; %}&quot;&gt;&lt;/script&gt;</code></pre>
+<h3 id="reactivejs构建服务">ReactiveJS构建服务</h3>
+<p>由于我们所要做的服务比较简单，并且我们也更愿意使用Promise来加载API服务，因此我们引入了这个库来加速我们的开发。下面是我们用于获取博客API的代码：</p>
+<pre><code>var responseStream = function (blogId) {
+    var url = &#39;/api/blogpost/?format=json&#39;;
+
+    if(blogId) {
+        url = &#39;/api/blogpost/&#39; + blogId + &#39;?format=json&#39;;
+    }
+
+    return Rx.Observable.create(function (observer) {
+        jQuery.getJSON(url)
+            .done(function (response) {
+                observer.onNext(response);
+            })
+            .fail(function (jqXHR, status, error) {
+                observer.onError(error);
+            })
+            .always(function () {
+                observer.onCompleted();
+            });
+    });
+};</code></pre>
+<p>当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用<code>'/api/blogpost/' + blogId + '?format=json'</code>作为URL。接着我们创建了创建自己定制的事件流——使用jQuery去获取API：</p>
+<ul>
+<li>成功的时候(done)，我们将用onNext()来通知观察者</li>
+<li>失败的时候(fail)，我们就调用onError()来通知观察者</li>
+<li>不论成功或者失败，都会执行always</li>
+</ul>
+<p>在使用的时候，我们只需要调用其<code>subscribe</code>方法即可：</p>
+<pre><code>responseStream().subscribe(function (response) {
+
+})</code></pre>
+<h3 id="创建博客列表页-1">创建博客列表页</h3>
+<p>现在，我们可以修改原生的博客模板，将其中的container内容变为：</p>
+<pre><code>&lt;div class=&quot;container&quot; id=&quot;container&quot;&gt;
+    &lt;blog&gt;&lt;/blog&gt;
+&lt;/div&gt;</code></pre>
+<p>接着，我们可以创建一个<code>blog.tag</code>文件，添加加载这个文件:`</p>
+<pre><code>&lt;script src=&quot;{% static &#39;riot/blog.tag&#39; %}&quot; type=&quot;riot/tag&quot;&gt;&lt;/script&gt;</code></pre>
+<p>为了调用这个tag的内容，我们需要在我们的<code>main.js</code>加上一句：</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">riot</span>.<span class="at">mount</span>(<span class="st">&quot;blog&quot;</span>)<span class="op">;</span></code></pre></div>
+<p>随后我们可以在我们的tag文件中，来对blog的内容进行操作。</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;blog</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;col-sm-4&quot;</span><span class="ot"> each=</span><span class="st">{</span><span class="ot"> opts</span> <span class="er">}</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;h2&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#/blogDetail/{id}&quot;</span><span class="ot"> onclick=</span><span class="st">{</span><span class="ot"> parent.click</span> <span class="er">}</span><span class="kw">&gt;</span>{ title }<span class="kw">&lt;/a&gt;&lt;/h2&gt;</span>
+        { body }
+        { posted } - By { author }
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;script&gt;</span>
+        <span class="kw">var</span> self <span class="op">=</span> <span class="kw">this</span><span class="op">;</span>
+        <span class="kw">this</span>.<span class="at">on</span>(<span class="st">&#39;mount&#39;</span><span class="op">,</span> <span class="kw">function</span> (id) <span class="op">{</span>
+            <span class="at">responseStream</span>().<span class="at">subscribe</span>(<span class="kw">function</span> (response) <span class="op">{</span>
+                <span class="va">self</span>.<span class="at">opts</span> <span class="op">=</span> response<span class="op">;</span>
+                <span class="va">self</span>.<span class="at">update</span>()<span class="op">;</span>
+            <span class="op">}</span>)
+        <span class="op">}</span>)
+
+        <span class="at">click</span>(event)
+        <span class="op">{</span>
+            <span class="kw">this</span>.<span class="at">unmount</span>()<span class="op">;</span>
+            <span class="va">riot</span>.<span class="at">route</span>(<span class="st">&quot;blogDetail/&quot;</span> <span class="op">+</span> <span class="va">event</span>.<span class="va">item</span>.<span class="at">id</span>)<span class="op">;</span>
+        <span class="op">}</span>
+    <span class="op">&lt;</span><span class="ss">/script&gt;</span>
+<span class="ss">&lt;/blog</span><span class="op">&gt;</span></code></pre></div>
+<p>在Riot中，变量默认是以opts的方式传递起来的，因此我们也遵循这个方式。在模板方面，我们遍历每个博客取出其中的内容：</p>
+<pre><code>&lt;div class=&quot;col-sm-4&quot; each={ opts }&gt;
+    &lt;h2&gt;&lt;a href=&quot;#/blogDetail/{id}&quot; onclick={ parent.click }&gt;{ title }&lt;/a&gt;&lt;/h2&gt;
+    { body }
+    { posted } - By { author }
+&lt;/div&gt;</code></pre>
+<p>而博客的数据需要依赖于我们监听<code>mount</code>事件才会去获取——即我们加载了这个tag。</p>
+<pre><code>this.on(&#39;mount&#39;, function (id) {
+    responseStream().subscribe(function (response) {
+        self.opts = response;
+        self.update();
+    })
+})</code></pre>
+<p>在这个页面中，还有一个单击事件<code>onclick={ parent.click }</code>，即当我们点击某个博客的标题时执行的函数:</p>
+<pre><code>click(event)
+{
+    this.unmount();
+    riot.route(&quot;blogDetail/&quot; + event.item.id);
+}</code></pre>
+<p>我们将卸载当前的tag，然后加载blogDetail的内容。</p>
+<h3 id="博客详情页">博客详情页</h3>
+<p>在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正规表达式<code>blogDetail/*</code>来获取博客的id:</p>
+<pre><code>riot.route.base(&#39;#&#39;);
+
+riot.route(&#39;blogDetail/*&#39;, function(id) {
+    riot.mount(&quot;blogDetail&quot;, {id: id})
+});
+
+riot.route.start();</code></pre>
+<p>然后将由相应的tag来执行：</p>
+<pre><code>&lt;blogDetail class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-sm-4&quot;&gt;
+        &lt;h2&gt;{ opts.title }&lt;/h2&gt;
+        { opts.body }
+        { opts.posted } - By { opts.author }
+    &lt;/div&gt;
+    &lt;script&gt;
+        var self = this;
+
+        this.on(&#39;mount&#39;, function (id) {
+            responseStream(this.opts.id).subscribe(function (response) {
+                self.opts = response;
+                self.update();
+            })
+        })
+    &lt;/script&gt;
+&lt;/blogDetail&gt;</code></pre>
+<p>同样的，我们也将去获取这篇博客的内容，然后显示。</p>
 <h1 id="部署">部署</h1>
 <h2 id="配置管理">配置管理</h2>
 <p>local_settings.py</p>

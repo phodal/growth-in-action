@@ -128,4 +128,118 @@ responseStream().subscribe(function (response) {
 
 ### 创建博客列表页
 
+现在，我们可以修改原生的博客模板，将其中的container内容变为：
 
+```
+<div class="container" id="container">
+    <blog></blog>
+</div>
+```
+
+接着，我们可以创建一个``blog.tag``文件，添加加载这个文件:`
+
+```
+<script src="{% static 'riot/blog.tag' %}" type="riot/tag"></script>
+```
+
+为了调用这个tag的内容，我们需要在我们的``main.js``加上一句：
+
+```javascript
+riot.mount("blog");
+```
+
+随后我们可以在我们的tag文件中，来对blog的内容进行操作。
+
+```html
+<blog class="row">
+    <div class="col-sm-4" each={ opts }>
+        <h2><a href="#/blogDetail/{id}" onclick={ parent.click }>{ title }</a></h2>
+        { body }
+        { posted } - By { author }
+    </div>
+    <script>
+        var self = this;
+        this.on('mount', function (id) {
+            responseStream().subscribe(function (response) {
+                self.opts = response;
+                self.update();
+            })
+        })
+
+        click(event)
+        {
+            this.unmount();
+            riot.route("blogDetail/" + event.item.id);
+        }
+    </script>
+</blog>
+```
+
+在Riot中，变量默认是以opts的方式传递起来的，因此我们也遵循这个方式。在模板方面，我们遍历每个博客取出其中的内容：
+
+```
+<div class="col-sm-4" each={ opts }>
+    <h2><a href="#/blogDetail/{id}" onclick={ parent.click }>{ title }</a></h2>
+    { body }
+    { posted } - By { author }
+</div>
+```
+
+而博客的数据需要依赖于我们监听``mount``事件才会去获取——即我们加载了这个tag。
+
+```
+this.on('mount', function (id) {
+    responseStream().subscribe(function (response) {
+        self.opts = response;
+        self.update();
+    })
+})
+```
+
+在这个页面中，还有一个单击事件``onclick={ parent.click }``，即当我们点击某个博客的标题时执行的函数:
+
+```
+click(event)
+{
+    this.unmount();
+    riot.route("blogDetail/" + event.item.id);
+}
+```
+我们将卸载当前的tag，然后加载blogDetail的内容。
+
+### 博客详情页
+
+在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正规表达式``blogDetail/*``来获取博客的id:
+
+```
+riot.route.base('#');
+
+riot.route('blogDetail/*', function(id) {
+    riot.mount("blogDetail", {id: id})
+});
+
+riot.route.start();
+```
+
+然后将由相应的tag来执行：
+
+```
+<blogDetail class="row">
+    <div class="col-sm-4">
+        <h2>{ opts.title }</h2>
+        { opts.body }
+        { opts.posted } - By { opts.author }
+    </div>
+    <script>
+        var self = this;
+
+        this.on('mount', function (id) {
+            responseStream(this.opts.id).subscribe(function (response) {
+                self.opts = response;
+                self.update();
+            })
+        })
+    </script>
+</blogDetail>
+```
+同样的，我们也将去获取这篇博客的内容，然后显示。
