@@ -1,15 +1,13 @@
 [全栈增长工程师](https://github.com/phodal/growth-ebook)实战
 ===
 
-在Growth中我们介绍的只是一系列的实践，而Growth实战则会带领读者去履行这些实践。
+在Growth中我们介绍的只是一系列的实践，而Growth实战则会带领读者去履行这些实践。你将会看到：
 
-你将会看到：
-
- - 如何去开发一个Web应用（博客）
- - 如何编写单元测试、功能测试、自动化UI测试
+ - 如何开发一个Web应用（博客）
+ - 如何编写测试——单元测试、功能测试、自动化UI测试
  - 搭建并使用持续集成
  - 添加SEO支持——Sitemap、站长工具和Google Analytics
- - 使用API，制作AutoComplete
+ - 创建API，制作AutoComplete
  - 开发相应的APP及其API——查看文章、用户登录、发表文章
  - 制作单页面应用
  - 可配置管理
