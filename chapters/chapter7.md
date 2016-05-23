@@ -1,12 +1,12 @@
 移动应用
 ===
 
-依照国庆惯例，我们还将用Ionic 2继续创建hello,world。
+依照国际惯例，我们还将用Ionic 2继续创建hello,world。
 
 hello,world
 ---
 
-开始之前我们需要先安装Ionic的命令行工具，后来我们需要用这个工具来创建工程。
+开始之前我们需要先安装Ionic的命令行工具，后面我们需要用这个工具来创建工程。
 
 ```bash
 npm install -g ionic@beta
@@ -133,7 +133,7 @@ ionic start growth-blog-app --v2 --ts
 
 ``--ts``表示使用的是``typescript``来创建项目，安装的过程是一样的，不一样的是后面写的代码。
 
-执行相应的起serve命令，我们就可以开始我们的项目了：
+执行相应的启动serve命令，我们就可以开始我们的项目了：
 
 ```bash
 ionic serve
@@ -211,7 +211,7 @@ Android project created with cordova-android@5.1.1
 Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app
 ```
 
-最近，再执行``run``就可以在对应的平台上运行，如:
+最后，再执行``run``就可以在对应的平台上运行，如:
 
 ```
 ionic run android
@@ -251,7 +251,7 @@ ionic run android
 
  - <ion-navbar> 显示在导航栏中的内容
  - <ion-content> 显示APP的内容
- - <ion-item> 即将博客成每一项
+ - <ion-item> 即将博客展示成每一项
 
 而从上面的内容中，我们可以看到：我们在ngFor中遍历了blogposts，然后显示每篇文章的标题和内容。对应的代码也就比较简单了:
 
@@ -271,7 +271,7 @@ export class BlogList {
 }
 ```
 
-但是我们要去哪里获取博客的值呢，先我们我们看完改造后听BlogList的Controller：
+但是我们要去哪里获取博客的值呢，我们先看看改造后的BlogList的Controller：
 
 
 ```javascript
@@ -502,7 +502,7 @@ Profile
 
 ###Json Web Tokens
 
-同样，为了实现这部分功能，我们仍然可以使用其他框架来帮助我们完成基础功能。这里我们就用到了一个名为``djangorestframework-jwt``的库，从它的名字上我们就可以知道，它就是基于Django REST Framework之上的JWT实现。还 是继续使用pip来安装这个库，记得把它添加到``requirements.txt``中。
+同样，为了实现这部分功能，我们仍然可以使用其他框架来帮助我们完成基础功能。这里我们就用到了一个名为``djangorestframework-jwt``的库，从它的名字上我们就可以知道，它就是基于Django REST Framework之上的JWT实现。还是继续使用pip来安装这个库，记得把它添加到``requirements.txt``中。
 
 ```
 pip install djangorestframework-jwt
@@ -529,7 +529,7 @@ urlpatterns = patterns(
 curl -H "Content-Type: application/json" -X POST -d '{"username":"admin","password":"root"}' http://localhost:8000/api-token-auth
 ``` 
 
-然后服务端后我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：
+然后服务端给我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：
 
 ```
 {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhAcGhvZGFsLmNvbSIsInVzZXJfaWQiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE0NjQ4NzQ1MDZ9.B5LEeIlGDTGggD6dh9akGRKx0Hk09wjylQRLas6kjGM"}
@@ -588,7 +588,7 @@ authSuccess(token) {
 
 在我们成功的获取到Token的时候，保存这个Token，并调用jwtHelper来解码Token，并从中获取我们的username。
 
-同时，对于我们来说要登出就是一件容易的，删除这个token，将清空用户名。
+同时，对于我们来说要登出就是一件容易的，删除这个token，将用户名清空。
 ```
 logout() {
   this.local.remove('id_token');

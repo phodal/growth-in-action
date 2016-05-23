@@ -40,7 +40,7 @@ $ django-admin startapp blogpost
 
 ### 创建Model
 
-现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：
+现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下面的几部分内容：
 
  - 标题
  - 作者
@@ -93,7 +93,7 @@ admin.site.register(Blogpost, BlogpostAdmin)
 
 ![Django添加博客](images/admin-blog.png)
 
-实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
+实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容交给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 
 现在，我们可以执行一次新的代码提交——因为现在的代码可以正常工作。这样出现问题时，我们就可以即时的返回上一版本的代码。
 
@@ -129,7 +129,7 @@ urlpatterns = patterns('',
  - 指向首页，其view是index
  - 指向博客详情页，其view是view_post
 
-指向博客详情页的URL正规``r'^blog/(?P<slug>[^\.]+).html``，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。
+指向博客详情页的URL正则``r'^blog/(?P<slug>[^\.]+).html``，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。
 
 接着，我们就可以创建两个view。 
 
@@ -200,7 +200,7 @@ def view_post(request, slug):
 测试
 ---
 
-TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。
+TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常少，那么我们就可以从写测试开始。
 
 在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。
 

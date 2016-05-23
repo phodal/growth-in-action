@@ -112,7 +112,7 @@ var responseStream = function (blogId) {
 };
 ```
 
-当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用``'/api/blogpost/' + blogId + '?format=json'``作为URL。接着我们创建了创建自己定制的事件流——使用jQuery去获取API：
+当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用``'/api/blogpost/' + blogId + '?format=json'``作为URL。接着我们创建了自己定制的事件流——使用jQuery去获取API：
 
  - 成功的时候(done)，我们将用onNext()来通知观察者
  - 失败的时候(fail)，我们就调用onError()来通知观察者
@@ -209,7 +209,7 @@ click(event)
 
 ### 博客详情页
 
-在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正规表达式``blogDetail/*``来获取博客的id:
+在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正则表达式``blogDetail/*``来获取博客的id:
 
 ```
 riot.route.base('#');

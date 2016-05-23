@@ -55,7 +55,7 @@ INSTALLED_APPS = (
 
 接着，还添加对应的中间件``django.contrib.flatpages.middleware.FlatpageFallbackMiddleware``到``settings.py``文件的``MIDDLEWARE_CLASSES``中。
 
-然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么的URL会变成 http://localhost/pages/about/。
+然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么对应的URL会变成 http://localhost/pages/about/。
 
 ```python
 url(r'^pages/', include('django.contrib.flatpages.urls')),
@@ -110,7 +110,7 @@ Running migrations:
 
 ![flatpage高级选项](images/flatpages-advance-option.png)
 
-最后，还要所个链接加到首页的导航中：
+最后，还要有个链接加到首页的导航中：
 
 ```html
 <li>
@@ -350,7 +350,7 @@ urlpatterns = patterns('',
 
 ### 创建静态页面的Sitemap
 
-相似的，我们也需要从items访法中，定义出我们所要创建页面的对象。
+相似的，我们也需要从items方法中，定义出我们所要创建页面的对象。
 
 ```python
 from django.contrib.sitemaps import Sitemap
@@ -366,9 +366,9 @@ class FlatPageSitemap(Sitemap):
         return current_site.flatpage_set.filter(registration_required=False)
 ```
 
-只不过这个方法可能会稍微麻烦一些，我们需要从数据库中取中当前的站点。再取出当前站点中的flatpage集合，对过滤出那些不需要注册的页面，即代码中的``registration_required=False``。
+只不过这个方法可能会稍微麻烦一些，我们需要从数据库中取出当前的站点。再取出当前站点中的flatpage集合，对过滤那些不需要注册的页面，即代码中的``registration_required=False``。
 
-最近再将这个对象放入sitemaps即可：
+最后再将这个对象放入sitemaps即可：
 
 ```
 from sitemap.sitemaps import PageSitemap, FlatPageSitemap
@@ -428,7 +428,7 @@ class BlogSitemap(Sitemap):
 
 ![添加网站](images/add-property.png)
 
-这时候Google需要确认这个网站是你的，所以它提供几点方法来验证，除了下面的推荐方法：
+这时候Google需要确认这个网站是你的，所以它提供几种方法来验证，除了下面的推荐方法：
 
 ![推荐的验证方式](images/google-add-website.png)
 
