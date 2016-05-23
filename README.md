@@ -16,7 +16,7 @@
 
 ![QRCode](https://raw.githubusercontent.com/phodal/growth/master/www/img/wechat.jpg)
 
-Web应用代码: [https://github.com/phodal/growth-in-action-django-code](https://github.com/phodal/growth-in-action-django-code)
+Web应用代码: [https://github.com/phodal/growth-in-action-python-code](https://github.com/phodal/growth-in-action-django-code)
 
 APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.com/phodal/growth-in-action-hybird)
 
