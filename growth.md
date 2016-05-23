@@ -520,7 +520,13 @@ class BlogpostAdmin(admin.ModelAdmin):
 admin.site.register(Blogpost, BlogpostAdmin)
 ```
 
-接着进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。
+接着我们需要做数据库迁移：
+
+```python
+python manage.py migrate
+```
+
+进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。
 
 ![Django后台界面](images/django-admin-ui.png)
 
