@@ -190,7 +190,7 @@ Collecting django
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
 
-等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。
+等下载完后，就会开始安装Django。安装完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。
 
 通过这个命令，我们不仅仅可以用它来创建项目、创建app、运行服务、数据库迁移，还可以执行各种SQL工具等等。django-admin用法如下：
 
@@ -389,7 +389,7 @@ Initialized empty Git repository in /Users/fdhuang/test/helloworld/.git/
 git add .
 ```
 
-需要注意的是上在的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：
+需要注意的是上面的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：
 
 ```bash
 git reset db.sqlite3
@@ -399,7 +399,7 @@ git reset db.sqlite3
 
 ![第一次提交前的reset](images/first-commit.png)
 
-上面的绿色文件代码这几个文件都被添加了进行，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
+上面的绿色文件代码这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名加入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
 
 ```
 *.pyc
@@ -407,7 +407,7 @@ git reset db.sqlite3
 *.sqlite3
 ```
 
-当我们添加完这个文件完，git就会识别到这个文件，并忽略原来的那些文件，如下图所示：
+当我们添加完这个文件，git就会识别这个文件，并忽略原来的那些文件，如下图所示：
 
 ![添加完gitignore文件后的效果](images/git-ignore.png)  
 
@@ -475,7 +475,7 @@ $ django-admin startapp blogpost
 
 ### 创建Model
 
-现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：
+现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下面的几部分内容：
 
  - 标题
  - 作者
@@ -534,7 +534,7 @@ python manage.py migrate
 
 ![Django添加博客](images/admin-blog.png)
 
-实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
+实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容交给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 
 现在，我们可以执行一次新的代码提交——因为现在的代码可以正常工作。这样出现问题时，我们就可以即时的返回上一版本的代码。
 
@@ -570,7 +570,7 @@ urlpatterns = patterns('',
  - 指向首页，其view是index
  - 指向博客详情页，其view是view_post
 
-指向博客详情页的URL正规``r'^blog/(?P<slug>[^\.]+).html``，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。
+指向博客详情页的URL正则``r'^blog/(?P<slug>[^\.]+).html``，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。
 
 接着，我们就可以创建两个view。 
 
@@ -641,7 +641,7 @@ def view_post(request, slug):
 测试
 ---
 
-TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。
+TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常少，那么我们就可以从写测试开始。
 
 在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。
 
@@ -771,7 +771,7 @@ class HomepageTestCase(LiveServerTestCase):
         self.assertIn("Welcome to my blog", self.selenium.title)
 ```
 
-在setUp——即开始的时候，我们会用selenium起一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在``test_visit_homepage``这个方法里，我们在里面访问首页，并判断标题是不是``Welcome to my blog``。
+在setUp——即开始的时候，我们会用selenium启动一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在``test_visit_homepage``这个方法里，我们在里面访问首页，并判断标题是不是``Welcome to my blog``。
 
 运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：
 
@@ -853,7 +853,7 @@ class BlogpostFromHomepageCase(LiveServerTestCase):
 搭建持续集成
 ---
 
-这里我们将使用Jenkins来完成这部分的工具，它是一个用Java编写的开源的持续集成工具。
+这里我们将使用Jenkins来完成这部分的工作，它是一个用Java编写的开源的持续集成工具。
 
 > 它提供了软件开发的持续集成服务。它运行在Servlet容器中（例如Apache Tomcat）。它支持软件配置管理（SCM）工具（包括AccuRev SCM、CVS、Subversion、Git、Perforce、Clearcase和和RTC），可以执行基于Apache Ant和Apache Maven的项目，以及任意的Shell脚本和Windows批处理命令。
 
@@ -1019,7 +1019,7 @@ INSTALLED_APPS = (
 
 接着，还添加对应的中间件``django.contrib.flatpages.middleware.FlatpageFallbackMiddleware``到``settings.py``文件的``MIDDLEWARE_CLASSES``中。
 
-然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么的URL会变成 http://localhost/pages/about/。
+然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么对应的URL会变成 http://localhost/pages/about/。
 
 ```python
 url(r'^pages/', include('django.contrib.flatpages.urls')),
@@ -1074,7 +1074,7 @@ Running migrations:
 
 ![flatpage高级选项](images/flatpages-advance-option.png)
 
-最后，还要所个链接加到首页的导航中：
+最后，还要有个链接加到首页的导航中：
 
 ```html
 <li>
@@ -1314,7 +1314,7 @@ urlpatterns = patterns('',
 
 ### 创建静态页面的Sitemap
 
-相似的，我们也需要从items访法中，定义出我们所要创建页面的对象。
+相似的，我们也需要从items方法中，定义出我们所要创建页面的对象。
 
 ```python
 from django.contrib.sitemaps import Sitemap
@@ -1330,9 +1330,9 @@ class FlatPageSitemap(Sitemap):
         return current_site.flatpage_set.filter(registration_required=False)
 ```
 
-只不过这个方法可能会稍微麻烦一些，我们需要从数据库中取中当前的站点。再取出当前站点中的flatpage集合，对过滤出那些不需要注册的页面，即代码中的``registration_required=False``。
+只不过这个方法可能会稍微麻烦一些，我们需要从数据库中取出当前的站点。再取出当前站点中的flatpage集合，对过滤那些不需要注册的页面，即代码中的``registration_required=False``。
 
-最近再将这个对象放入sitemaps即可：
+最后再将这个对象放入sitemaps即可：
 
 ```
 from sitemap.sitemaps import PageSitemap, FlatPageSitemap
@@ -1392,7 +1392,7 @@ class BlogSitemap(Sitemap):
 
 ![添加网站](images/add-property.png)
 
-这时候Google需要确认这个网站是你的，所以它提供几点方法来验证，除了下面的推荐方法：
+这时候Google需要确认这个网站是你的，所以它提供几种方法来验证，除了下面的推荐方法：
 
 ![推荐的验证方式](images/google-add-website.png)
 
@@ -1424,7 +1424,7 @@ class BlogSitemap(Sitemap):
 
 ![响应式设计](images/responsive-design.png)
 
-我们在不同的设计上看到的是不是同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。
+我们在不同的设计上看到的是不同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。
 
 ### 引入前端框架
 
@@ -1876,7 +1876,7 @@ $(document).ready()方法可以是在DOM完成加载后，运行其中的函数�
 
 ### 添加跨域支持
 
-有一个名为``django-cors-headers``的插件用于实现对跨域请求的支持，我们只使用安装它，并进行一些简单的配置即可。
+有一个名为``django-cors-headers``的插件用于实现对跨域请求的支持，我们只需要安装它，并进行一些简单的配置即可。
 
 ```bash
 pip install django-cors-headers
@@ -1927,12 +1927,12 @@ CORS_ALLOW_CREDENTIALS = True
 移动应用
 ===
 
-依照国庆惯例，我们还将用Ionic 2继续创建hello,world。
+依照国际惯例，我们还将用Ionic 2继续创建hello,world。
 
 hello,world
 ---
 
-开始之前我们需要先安装Ionic的命令行工具，后来我们需要用这个工具来创建工程。
+开始之前我们需要先安装Ionic的命令行工具，后面我们需要用这个工具来创建工程。
 
 ```bash
 npm install -g ionic@beta
@@ -2059,7 +2059,7 @@ ionic start growth-blog-app --v2 --ts
 
 ``--ts``表示使用的是``typescript``来创建项目，安装的过程是一样的，不一样的是后面写的代码。
 
-执行相应的起serve命令，我们就可以开始我们的项目了：
+执行相应的启动serve命令，我们就可以开始我们的项目了：
 
 ```bash
 ionic serve
@@ -2137,7 +2137,7 @@ Android project created with cordova-android@5.1.1
 Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app
 ```
 
-最近，再执行``run``就可以在对应的平台上运行，如:
+最后，再执行``run``就可以在对应的平台上运行，如:
 
 ```
 ionic run android
@@ -2177,7 +2177,7 @@ ionic run android
 
  - <ion-navbar> 显示在导航栏中的内容
  - <ion-content> 显示APP的内容
- - <ion-item> 即将博客成每一项
+ - <ion-item> 即将博客展示成每一项
 
 而从上面的内容中，我们可以看到：我们在ngFor中遍历了blogposts，然后显示每篇文章的标题和内容。对应的代码也就比较简单了:
 
@@ -2197,7 +2197,7 @@ export class BlogList {
 }
 ```
 
-但是我们要去哪里获取博客的值呢，先我们我们看完改造后听BlogList的Controller：
+但是我们要去哪里获取博客的值呢，我们先看看改造后的BlogList的Controller：
 
 
 ```javascript
@@ -2428,7 +2428,7 @@ Profile
 
 ###Json Web Tokens
 
-同样，为了实现这部分功能，我们仍然可以使用其他框架来帮助我们完成基础功能。这里我们就用到了一个名为``djangorestframework-jwt``的库，从它的名字上我们就可以知道，它就是基于Django REST Framework之上的JWT实现。还 是继续使用pip来安装这个库，记得把它添加到``requirements.txt``中。
+同样，为了实现这部分功能，我们仍然可以使用其他框架来帮助我们完成基础功能。这里我们就用到了一个名为``djangorestframework-jwt``的库，从它的名字上我们就可以知道，它就是基于Django REST Framework之上的JWT实现。还是继续使用pip来安装这个库，记得把它添加到``requirements.txt``中。
 
 ```
 pip install djangorestframework-jwt
@@ -2455,7 +2455,7 @@ urlpatterns = patterns(
 curl -H "Content-Type: application/json" -X POST -d '{"username":"admin","password":"root"}' http://localhost:8000/api-token-auth
 ``` 
 
-然后服务端后我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：
+然后服务端给我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：
 
 ```
 {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhAcGhvZGFsLmNvbSIsInVzZXJfaWQiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE0NjQ4NzQ1MDZ9.B5LEeIlGDTGggD6dh9akGRKx0Hk09wjylQRLas6kjGM"}
@@ -2514,7 +2514,7 @@ authSuccess(token) {
 
 在我们成功的获取到Token的时候，保存这个Token，并调用jwtHelper来解码Token，并从中获取我们的username。
 
-同时，对于我们来说要登出就是一件容易的，删除这个token，将清空用户名。
+同时，对于我们来说要登出就是一件容易的，删除这个token，将用户名清空。
 ```
 logout() {
   this.local.remove('id_token');
@@ -2840,7 +2840,7 @@ var responseStream = function (blogId) {
 };
 ```
 
-当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用``'/api/blogpost/' + blogId + '?format=json'``作为URL。接着我们创建了创建自己定制的事件流——使用jQuery去获取API：
+当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用``'/api/blogpost/' + blogId + '?format=json'``作为URL。接着我们创建了自己定制的事件流——使用jQuery去获取API：
 
  - 成功的时候(done)，我们将用onNext()来通知观察者
  - 失败的时候(fail)，我们就调用onError()来通知观察者
@@ -2937,7 +2937,7 @@ click(event)
 
 ### 博客详情页
 
-在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正规表达式``blogDetail/*``来获取博客的id:
+在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正则表达式``blogDetail/*``来获取博客的id:
 
 ```
 riot.route.base('#');
@@ -3071,4 +3071,4 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 ```
 
-接着，我们只需要在我们的主``settiings.py``中引用即可:
+接着，我们只需要在我们的主``settiings.py``中引用即可。

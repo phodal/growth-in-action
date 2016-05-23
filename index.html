@@ -55,7 +55,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </p>
 
 <p>GitHub: <a href="https://github.com/phodal/growth-in-action-django">全栈增长工程师实战</a></p>
-
+<p>PDF、Mobi、Epub版本下载地址：<a href="https://github.com/phodal/growth-in-action/releases">https://github.com/phodal/growth-in-action/releases</a></p>
 <p>微信公众号</p>
 <p><img src="https://raw.githubusercontent.com/phodal/growth/master/www/img/wechat.jpg" alt=""/></p>
 
@@ -306,7 +306,7 @@ $ source activate</code></pre>
 <pre><code>Collecting django
   Downloading Django-1.9.4-py2.py3-none-any.whl (6.6MB)
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02</code></pre>
-<p>等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。</p>
+<p>等下载完后，就会开始安装Django。安装完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。</p>
 <p>通过这个命令，我们不仅仅可以用它来创建项目、创建app、运行服务、数据库迁移，还可以执行各种SQL工具等等。django-admin用法如下：</p>
 <pre><code>$ django-admin &lt;command&gt; [options]</code></pre>
 <p>下面是django-admin自带的一些命令：</p>
@@ -445,17 +445,17 @@ Superuser created successfully.</code></pre>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Initialized</span> empty Git repository in /Users/fdhuang/test/helloworld/.git/</code></pre></div>
 <p>即初始化了一个空的Git项目，然后我们就可以执行<code>add</code>来添加上面的内容：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .</code></pre></div>
-<p>需要注意的是上在的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：</p>
+<p>需要注意的是上面的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> reset db.sqlite3</code></pre></div>
 <p>这时我们会将其变成下面的状态：</p>
 <figure>
 <img src="images/first-commit.png" alt="第一次提交前的reset" /><figcaption>第一次提交前的reset</figcaption>
 </figure>
-<p>上面的绿色文件代码这几个文件都被添加了进行，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为<code>.gitignore</code>文件用于将一些文件名入忽略名单，如下是常用的python项目的<code>.gitignore</code>文件中的内容：</p>
+<p>上面的绿色文件代码这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为<code>.gitignore</code>文件用于将一些文件名加入忽略名单，如下是常用的python项目的<code>.gitignore</code>文件中的内容：</p>
 <pre><code>*.pyc
 *.db
 *.sqlite3</code></pre>
-<p>当我们添加完这个文件完，git就会识别到这个文件，并忽略原来的那些文件，如下图所示：</p>
+<p>当我们添加完这个文件，git就会识别这个文件，并忽略原来的那些文件，如下图所示：</p>
 <figure>
 <img src="images/git-ignore.png" alt="添加完gitignore文件后的效果" /><figcaption>添加完gitignore文件后的效果</figcaption>
 </figure>
@@ -493,7 +493,7 @@ Superuser created successfully.</code></pre>
 ├── tests.py
 └── views.py</code></pre>
 <h3 id="创建model">创建Model</h3>
-<p>现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下在面的几部分内容：</p>
+<p>现在，我们需要来创建博客的Model即可。对于一篇基本的博客来说，它会包含下面的几部分内容：</p>
 <ul>
 <li>标题</li>
 <li>作者</li>
@@ -539,7 +539,7 @@ admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
 <figure>
 <img src="images/admin-blog.png" alt="Django添加博客" /><figcaption>Django添加博客</figcaption>
 </figure>
-<p>实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容将给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。</p>
+<p>实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容交给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。</p>
 <p>现在，我们可以执行一次新的代码提交——因为现在的代码可以正常工作。这样出现问题时，我们就可以即时的返回上一版本的代码。</p>
 <pre><code>git add .
 git commit -m &quot;create blogpost model&quot;</code></pre>
@@ -564,7 +564,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <li>指向首页，其view是index</li>
 <li>指向博客详情页，其view是view_post</li>
 </ul>
-<p>指向博客详情页的URL正规<code>r'^blog/(?P&lt;slug&gt;[^\.]+).html</code>，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。</p>
+<p>指向博客详情页的URL正则<code>r'^blog/(?P&lt;slug&gt;[^\.]+).html</code>，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。</p>
 <p>接着，我们就可以创建两个view。</p>
 <h2 id="创建view">创建View</h2>
 <h3 id="创建博客列表页">创建博客列表页</h3>
@@ -608,7 +608,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 {% endblock %}</code></pre></div>
 <p>随后，我们就可以再提交一次代码了。</p>
 <h2 id="测试">测试</h2>
-<p>TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常小，那么我们就可以从写测试开始。</p>
+<p>TDD虽然是一个非常好的实践，但是那是对于那些已经习惯写测试的人来说。如果你写测试的经历非常少，那么我们就可以从写测试开始。</p>
 <p>在这里我们使用的是Django这个第三方框架来完成我们的工作，所以我们并不对这个框架的功能进行测试。虽然有些时候正是因为这些第三方框架的问题而导致的Bug，但是我们仅仅只是使用一些基础的功能。这些基础的功能也已经在他们的框架中测试过了。</p>
 <h3 id="测试首页">测试首页</h3>
 <p>先来做一个简单的测试，即测试我们访问首页的时候，调用的函数是上面的index函数</p>
@@ -688,7 +688,7 @@ Destroying test database for alias &#39;default&#39;...
         )
 
         <span class="va">self</span>.assertIn(<span class="st">&quot;Welcome to my blog&quot;</span>, <span class="va">self</span>.selenium.title)</code></pre></div>
-<p>在setUp——即开始的时候，我们会用selenium起一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在<code>test_visit_homepage</code>这个方法里，我们在里面访问首页，并判断标题是不是<code>Welcome to my blog</code>。</p>
+<p>在setUp——即开始的时候，我们会用selenium启动一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在<code>test_visit_homepage</code>这个方法里，我们在里面访问首页，并判断标题是不是<code>Welcome to my blog</code>。</p>
 <p>运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：</p>
 <figure>
 <img src="images/selenium-demo.jpg" alt="Selenium Demo" /><figcaption>Selenium Demo</figcaption>
@@ -754,7 +754,7 @@ Destroying test database for alias &#39;default&#39;...
 <p>需要注意的是，如果我们的单元测试如果可以测试到页面的内容——即没有使用JavaScript对页面的内容进行修改，那么我们应该使用单元测试即可。如测试金字塔所说，越底层的测试越快。</p>
 <p>在我们编写完这些测试后，我们就可以搭建好相应的持续集成来运行这些测试了。</p>
 <h2 id="搭建持续集成">搭建持续集成</h2>
-<p>这里我们将使用Jenkins来完成这部分的工具，它是一个用Java编写的开源的持续集成工具。</p>
+<p>这里我们将使用Jenkins来完成这部分的工作，它是一个用Java编写的开源的持续集成工具。</p>
 <blockquote>
 <p>它提供了软件开发的持续集成服务。它运行在Servlet容器中（例如Apache Tomcat）。它支持软件配置管理（SCM）工具（包括AccuRev SCM、CVS、Subversion、Git、Perforce、Clearcase和和RTC），可以执行基于Apache Ant和Apache Maven的项目，以及任意的Shell脚本和Windows批处理命令。</p>
 </blockquote>
@@ -876,7 +876,7 @@ INSTALLED_APPS = (
     &#39;blogpost&#39;
 )</code></pre>
 <p>接着，还添加对应的中间件<code>django.contrib.flatpages.middleware.FlatpageFallbackMiddleware</code>到<code>settings.py</code>文件的<code>MIDDLEWARE_CLASSES</code>中。</p>
-<p>然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么的URL会变成 http://localhost/pages/about/。</p>
+<p>然后，我们需要创建对应的URL来管理所有的静态页面。下面的代码是将静态页面都放在pages路径下，即如果我们有一个about的页面，那么对应的URL会变成 http://localhost/pages/about/。</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">url(<span class="vs">r&#39;^pages/&#39;</span>, include(<span class="st">&#39;django.contrib.flatpages.urls&#39;</span>)),</code></pre></div>
 <p>当然我们也可以将其配置为类似于 http://localhost/about/ 这样的URL：</p>
 <pre><code>urlpatterns += [
@@ -914,7 +914,7 @@ Running migrations:
 <figure>
 <img src="images/flatpages-advance-option.png" alt="flatpage高级选项" /><figcaption>flatpage高级选项</figcaption>
 </figure>
-<p>最后，还要所个链接加到首页的导航中：</p>
+<p>最后，还要有个链接加到首页的导航中：</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;li&gt;</span>
     <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/pages/resume/&quot;</span><span class="kw">&gt;</span>简历<span class="kw">&lt;/a&gt;</span>
 <span class="kw">&lt;/li&gt;</span></code></pre></div>
@@ -1079,7 +1079,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 &lt;/urlset&gt;</code></pre>
 <p>下一步，我们仍可以直接创建出对应的静态页面的Sitemap。</p>
 <h3 id="创建静态页面的sitemap">创建静态页面的Sitemap</h3>
-<p>相似的，我们也需要从items访法中，定义出我们所要创建页面的对象。</p>
+<p>相似的，我们也需要从items方法中，定义出我们所要创建页面的对象。</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.contrib.sitemaps <span class="im">import</span> Sitemap
 <span class="im">from</span> django.core.urlresolvers <span class="im">import</span> reverse
 <span class="im">from</span> django.apps <span class="im">import</span> apps <span class="im">as</span> django_apps
@@ -1091,8 +1091,8 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
         Site <span class="op">=</span> django_apps.get_model(<span class="st">&#39;sites.Site&#39;</span>)
         current_site <span class="op">=</span> Site.objects.get_current()
         <span class="cf">return</span> current_site.flatpage_set.<span class="bu">filter</span>(registration_required<span class="op">=</span><span class="va">False</span>)</code></pre></div>
-<p>只不过这个方法可能会稍微麻烦一些，我们需要从数据库中取中当前的站点。再取出当前站点中的flatpage集合，对过滤出那些不需要注册的页面，即代码中的<code>registration_required=False</code>。</p>
-<p>最近再将这个对象放入sitemaps即可：</p>
+<p>只不过这个方法可能会稍微麻烦一些，我们需要从数据库中取出当前的站点。再取出当前站点中的flatpage集合，对过滤那些不需要注册的页面，即代码中的<code>registration_required=False</code>。</p>
+<p>最后再将这个对象放入sitemaps即可：</p>
 <pre><code>from sitemap.sitemaps import PageSitemap, FlatPageSitemap
 
 sitemaps =  {
@@ -1136,7 +1136,7 @@ sitemaps =  {
 <figure>
 <img src="images/add-property.png" alt="添加网站" /><figcaption>添加网站</figcaption>
 </figure>
-<p>这时候Google需要确认这个网站是你的，所以它提供几点方法来验证，除了下面的推荐方法：</p>
+<p>这时候Google需要确认这个网站是你的，所以它提供几种方法来验证，除了下面的推荐方法：</p>
 <figure>
 <img src="images/google-add-website.png" alt="推荐的验证方式" /><figcaption>推荐的验证方式</figcaption>
 </figure>
@@ -1161,7 +1161,7 @@ sitemaps =  {
 <figure>
 <img src="images/responsive-design.png" alt="响应式设计" /><figcaption>响应式设计</figcaption>
 </figure>
-<p>我们在不同的设计上看到的是不是同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。</p>
+<p>我们在不同的设计上看到的是不同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。</p>
 <h3 id="引入前端框架">引入前端框架</h3>
 <p>下好Bootstrap，将里面的内容复制到<code>static/</code>目录，如下所示：</p>
 <pre><code>.
@@ -1493,7 +1493,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <h2 id="跨域支持">跨域支持</h2>
 <p>当我们想为其他的网页提供我们的API时，可能会报错——原因是不支持跨域请求。为了方便我们下一章更好的展开，内容我们在这里对跨域进行支持。</p>
 <h3 id="添加跨域支持">添加跨域支持</h3>
-<p>有一个名为<code>django-cors-headers</code>的插件用于实现对跨域请求的支持，我们只使用安装它，并进行一些简单的配置即可。</p>
+<p>有一个名为<code>django-cors-headers</code>的插件用于实现对跨域请求的支持，我们只需要安装它，并进行一些简单的配置即可。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install django-cors-headers</code></pre></div>
 <p>安装过程如下：</p>
 <pre><code>Collecting django-cors-headers
@@ -1521,9 +1521,9 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
 <pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
 <p>现在，让我们进行下一步，开始APP吧！</p>
 <h1 id="移动应用">移动应用</h1>
-<p>依照国庆惯例，我们还将用Ionic 2继续创建hello,world。</p>
+<p>依照国际惯例，我们还将用Ionic 2继续创建hello,world。</p>
 <h2 id="helloworld">hello,world</h2>
-<p>开始之前我们需要先安装Ionic的命令行工具，后来我们需要用这个工具来创建工程。</p>
+<p>开始之前我们需要先安装Ionic的命令行工具，后面我们需要用这个工具来创建工程。</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install -g ionic@beta</code></pre></div>
 <p>如果没有意外，我们将安装成功，然后可以使用<code>ionic</code>命令:</p>
 <p>它自带了一系列的工具来加速我们的开发，这些工具可以在后面的章节中学习到。</p>
@@ -1623,7 +1623,7 @@ Installing npm packages...</code></pre>
 <p>由于Angular 2.0使用的是Typescript，所以在这里我们将用typescript进行展示，因此我们的执行命令变成~~：</p>
 <pre><code>ionic start growth-blog-app --v2 --ts</code></pre>
 <p><code>--ts</code>表示使用的是<code>typescript</code>来创建项目，安装的过程是一样的，不一样的是后面写的代码。</p>
-<p>执行相应的起serve命令，我们就可以开始我们的项目了：</p>
+<p>执行相应的启动serve命令，我们就可以开始我们的项目了：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> serve</code></pre></div>
 <p>这时候Ionic将做一些额外的事，才能启动我们的服务，如：</p>
 <ul>
@@ -1680,7 +1680,7 @@ Creating Cordova project for the Android platform:
     Android target: android-23
 Android project created with cordova-android@5.1.1
 Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/010_add_platform_class.js /Users/fdhuang/repractise/growth-blog-app</code></pre>
-<p>最近，再执行<code>run</code>就可以在对应的平台上运行，如:</p>
+<p>最后，再执行<code>run</code>就可以在对应的平台上运行，如:</p>
 <pre><code>ionic run android</code></pre>
 <h2 id="博客列表页">博客列表页</h2>
 <p>现在，让我们来结合我们的博客APP，做一个相应的展示博客的APP。在这一步我们所要做的事情比较简单：</p>
@@ -1709,7 +1709,7 @@ Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/0
 <ul>
 <li><ion-navbar> 显示在导航栏中的内容</li>
 <li><ion-content> 显示APP的内容</li>
-<li><ion-item> 即将博客成每一项</li>
+<li><ion-item> 即将博客展示成每一项</li>
 </ul>
 <p>而从上面的内容中，我们可以看到：我们在ngFor中遍历了blogposts，然后显示每篇文章的标题和内容。对应的代码也就比较简单了:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="im">import</span> <span class="op">{</span>Page<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ionic-angular&#39;</span><span class="op">;</span>
@@ -1725,7 +1725,7 @@ Running command: /Users/fdhuang/repractise/growth-blog-app/hooks/after_prepare/0
 
   <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
-<p>但是我们要去哪里获取博客的值呢，先我们我们看完改造后听BlogList的Controller：</p>
+<p>但是我们要去哪里获取博客的值呢，我们先看看改造后的BlogList的Controller：</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="im">import</span> <span class="op">{</span>Page<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ionic-angular&#39;</span><span class="op">;</span>
 <span class="im">import</span> <span class="op">{</span>BlogpostServices<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;../../../services/BlogpostServices&#39;</span><span class="op">;</span>
 
@@ -1896,7 +1896,7 @@ export class MyApp {
 <h2 id="profile">Profile</h2>
 <p>现在，我们要做一个更有意思的东西了。不过这个内容是为后面的创建文章提供一个技术基础。在用户授权这一部分，我们使用不同的技术来实现，如Cookies、HTTP基本认证等等。而在手机端继续Cookie来进行用户授权，不是一件简单的事。因此我们就需要JSON Web Tokens，这是一种基于token 的认证方案。</p>
 <h3 id="json-web-tokens">Json Web Tokens</h3>
-<p>同样，为了实现这部分功能，我们仍然可以使用其他框架来帮助我们完成基础功能。这里我们就用到了一个名为<code>djangorestframework-jwt</code>的库，从它的名字上我们就可以知道，它就是基于Django REST Framework之上的JWT实现。还 是继续使用pip来安装这个库，记得把它添加到<code>requirements.txt</code>中。</p>
+<p>同样，为了实现这部分功能，我们仍然可以使用其他框架来帮助我们完成基础功能。这里我们就用到了一个名为<code>djangorestframework-jwt</code>的库，从它的名字上我们就可以知道，它就是基于Django REST Framework之上的JWT实现。还是继续使用pip来安装这个库，记得把它添加到<code>requirements.txt</code>中。</p>
 <pre><code>pip install djangorestframework-jwt</code></pre>
 <p>接着，我们需要在我们的URL中配置用于获取token的API即可使用。</p>
 <pre><code>urlpatterns = patterns(
@@ -1911,7 +1911,7 @@ export class MyApp {
 </ul>
 <p>如下是<code>curl</code>创建的请求，在这其中我们发送了我们的用户和密码。</p>
 <pre><code>curl -H &quot;Content-Type: application/json&quot; -X POST -d &#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;root&quot;}&#39; http://localhost:8000/api-token-auth</code></pre>
-<p>然后服务端后我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：</p>
+<p>然后服务端给我们返回了对应的Token，它可以用于后面的创建文章、获取用户信息等等的功能。下面是一个Token的示例：</p>
 <pre><code>{&quot;token&quot;:&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhAcGhvZGFsLmNvbSIsInVzZXJfaWQiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE0NjQ4NzQ1MDZ9.B5LEeIlGDTGggD6dh9akGRKx0Hk09wjylQRLas6kjGM&quot;}</code></pre>
 <h3 id="登录表单">登录表单</h3>
 <p>现在，我们要先做的一件事就是，创建一个用于登录的表单。</p>
@@ -1956,7 +1956,7 @@ authSuccess(token) {
   this.user = this.jwtHelper.decodeToken(token).username;
 }</code></pre>
 <p>在我们成功的获取到Token的时候，保存这个Token，并调用jwtHelper来解码Token，并从中获取我们的username。</p>
-<p>同时，对于我们来说要登出就是一件容易的，删除这个token，将清空用户名。</p>
+<p>同时，对于我们来说要登出就是一件容易的，删除这个token，将用户名清空。</p>
 <pre><code>logout() {
   this.local.remove(&#39;id_token&#39;);
   this.user = null;
@@ -2188,7 +2188,7 @@ authSuccess(token) {
             });
     });
 };</code></pre>
-<p>当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用<code>'/api/blogpost/' + blogId + '?format=json'</code>作为URL。接着我们创建了创建自己定制的事件流——使用jQuery去获取API：</p>
+<p>当我们想访问特定博客的时候，我们就传博客ID进去——这时会使用<code>'/api/blogpost/' + blogId + '?format=json'</code>作为URL。接着我们创建了自己定制的事件流——使用jQuery去获取API：</p>
 <ul>
 <li>成功的时候(done)，我们将用onNext()来通知观察者</li>
 <li>失败的时候(fail)，我们就调用onError()来通知观察者</li>
@@ -2251,7 +2251,7 @@ authSuccess(token) {
 }</code></pre>
 <p>我们将卸载当前的tag，然后加载blogDetail的内容。</p>
 <h3 id="博客详情页">博客详情页</h3>
-<p>在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正规表达式<code>blogDetail/*</code>来获取博客的id:</p>
+<p>在我们加载之前，我们需要先配置好blogDetail。我们仍然使用正则表达式<code>blogDetail/*</code>来获取博客的id:</p>
 <pre><code>riot.route.base(&#39;#&#39;);
 
 riot.route(&#39;blog/*&#39;, function(id) {
@@ -2351,6 +2351,6 @@ REST_FRAMEWORK <span class="op">=</span> {
 }
 
 CORS_ORIGIN_ALLOW_ALL <span class="op">=</span> <span class="va">True</span></code></pre></div>
-<p>接着，我们只需要在我们的主<code>settiings.py</code>中引用即可:</p>
+<p>接着，我们只需要在我们的主<code>settiings.py</code>中引用即可。</p>
 </body>
 </html>
