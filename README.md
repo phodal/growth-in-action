@@ -12,13 +12,16 @@
  - 制作单页面应用
  - 可配置管理
 
+下载地址: [https://github.com/phodal/growth-in-action/releases](https://github.com/phodal/growth-in-action/releases)
+
+Web应用代码: [https://github.com/phodal/growth-in-action-python-code](https://github.com/phodal/growth-in-action-python-code)
+
+APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.com/phodal/growth-in-action-hybird)
+
 欢迎关注我的微信公众号(搜索Phodal)：
 
 ![QRCode](https://raw.githubusercontent.com/phodal/growth/master/www/img/wechat.jpg)
 
-Web应用代码: [https://github.com/phodal/growth-in-action-python-code](https://github.com/phodal/growth-in-action-django-code)
-
-APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.com/phodal/growth-in-action-hybird)
 
 目录
 ---
