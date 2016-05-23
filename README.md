@@ -14,11 +14,6 @@
 
 **阅读过程中遇到任何问题，请以issue的形式提出来，这样可以帮助其他读者来发现这个问题。**
 
-**阅读过程中遇到任何问题，请以issue的形式提出来，这样可以帮助其他读者来发现这个问题。**
-
-**阅读过程中遇到任何问题，请以issue的形式提出来，这样可以帮助其他读者来发现这个问题。**
-
-
 下载地址: [https://github.com/phodal/growth-in-action/releases](https://github.com/phodal/growth-in-action/releases)
 
 Web应用代码: [https://github.com/phodal/growth-in-action-python-code](https://github.com/phodal/growth-in-action-python-code)
