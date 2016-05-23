@@ -34,7 +34,7 @@ class HomepageTestCase(LiveServerTestCase):
         self.assertIn("Welcome to my blog", self.selenium.title)
 ```
 
-在setUp——即开始的时候，我们会用selenium起一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在``test_visit_homepage``这个方法里，我们在里面访问首页，并判断标题是不是``Welcome to my blog``。
+在setUp——即开始的时候，我们会用selenium启动一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在``test_visit_homepage``这个方法里，我们在里面访问首页，并判断标题是不是``Welcome to my blog``。
 
 运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：
 
@@ -116,7 +116,7 @@ class BlogpostFromHomepageCase(LiveServerTestCase):
 搭建持续集成
 ---
 
-这里我们将使用Jenkins来完成这部分的工具，它是一个用Java编写的开源的持续集成工具。
+这里我们将使用Jenkins来完成这部分的工作，它是一个用Java编写的开源的持续集成工具。
 
 > 它提供了软件开发的持续集成服务。它运行在Servlet容器中（例如Apache Tomcat）。它支持软件配置管理（SCM）工具（包括AccuRev SCM、CVS、Subversion、Git、Perforce、Clearcase和和RTC），可以执行基于Apache Ant和Apache Maven的项目，以及任意的Shell脚本和Windows批处理命令。
 

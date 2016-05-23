@@ -131,7 +131,7 @@ Collecting django
     94% |██████████████████████████████▎ | 6.2MB 251kB/s eta 0:00:02
 ```    
 
-等下载完后，就会开始安装Django。安装这完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。
+等下载完后，就会开始安装Django。安装完后，我们就可以使用Django自带的django-admin命令。django-admin是Django自带的一个管理任务的命令行工具。
 
 通过这个命令，我们不仅仅可以用它来创建项目、创建app、运行服务、数据库迁移，还可以执行各种SQL工具等等。django-admin用法如下：
 
@@ -330,7 +330,7 @@ Initialized empty Git repository in /Users/fdhuang/test/helloworld/.git/
 git add .
 ```
 
-需要注意的是上在的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：
+需要注意的是上面的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：
 
 ```bash
 git reset db.sqlite3
@@ -340,7 +340,7 @@ git reset db.sqlite3
 
 ![第一次提交前的reset](images/first-commit.png)
 
-上面的绿色文件代码这几个文件都被添加了进行，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
+上面的绿色文件代码这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名加入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
 
 ```
 *.pyc
@@ -348,7 +348,7 @@ git reset db.sqlite3
 *.sqlite3
 ```
 
-当我们添加完这个文件完，git就会识别到这个文件，并忽略原来的那些文件，如下图所示：
+当我们添加完这个文件，git就会识别这个文件，并忽略原来的那些文件，如下图所示：
 
 ![添加完gitignore文件后的效果](images/git-ignore.png)  
 

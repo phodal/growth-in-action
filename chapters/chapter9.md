@@ -42,4 +42,4 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 ```
 
-接着，我们只需要在我们的主``settiings.py``中引用即可:
+接着，我们只需要在我们的主``settiings.py``中引用即可。

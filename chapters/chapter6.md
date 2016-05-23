@@ -260,7 +260,7 @@ $(document).ready()方法可以是在DOM完成加载后，运行其中的函数�
 
 ### 添加跨域支持
 
-有一个名为``django-cors-headers``的插件用于实现对跨域请求的支持，我们只使用安装它，并进行一些简单的配置即可。
+有一个名为``django-cors-headers``的插件用于实现对跨域请求的支持，我们只需要安装它，并进行一些简单的配置即可。
 
 ```bash
 pip install django-cors-headers
