@@ -279,7 +279,21 @@ Sitemap译为站点地图，它用于告诉搜索引擎他们网站上有哪些�
 url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ```
 
-因此，我们需要创建几种不同类型的sitemap，如下是首页的Sitemap，它继承自Django的Sitemap类：
+由于，我们使用的视图处理方法是``django.contrib.sitemaps.views.sitemap``，代码如下所示:
+
+```
+
+@x_robots_tag
+def sitemap(request, sitemaps, section=None,
+            template_name='sitemap.xml', content_type='application/xml'):
+
+    req_protocol = request.scheme
+    req_site = get_current_site(request)
+```
+
+在这个方法里，它指定了默认模板的位置，即在``template``目录中。
+
+现在，我们需要创建几种不同类型的sitemap，如下是首页的Sitemap，它继承自Django的Sitemap类：
 
 ```python
 class PageSitemap(Sitemap):

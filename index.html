@@ -1029,7 +1029,16 @@ Running migrations:
 <p>与上面创建静态页面时一样，我们也需要添加<code>django.contrib.sitemaps</code>到<code>INSTALLED_APPS</code>中。</p>
 <p>然后，我们需要指定一个URL规则。通常来说，这个URL是叫sitemap.xml——一个约定俗成的标准。我们需要创建一个sitemaps对象来存储所有的sitemaps:</p>
 <pre><code>url(r&#39;^sitemap\.xml$&#39;, sitemap, {&#39;sitemaps&#39;: sitemaps}, name=&#39;django.contrib.sitemaps.views.sitemap&#39;)</code></pre>
-<p>因此，我们需要创建几种不同类型的sitemap，如下是首页的Sitemap，它继承自Django的Sitemap类：</p>
+<p>由于，我们使用的视图处理方法是<code>django.contrib.sitemaps.views.sitemap</code>，代码如下所示:</p>
+<pre><code>
+@x_robots_tag
+def sitemap(request, sitemaps, section=None,
+            template_name=&#39;sitemap.xml&#39;, content_type=&#39;application/xml&#39;):
+
+    req_protocol = request.scheme
+    req_site = get_current_site(request)</code></pre>
+<p>在这个方法里，它指定了默认模板的位置，即在<code>template</code>目录中。</p>
+<p>现在，我们需要创建几种不同类型的sitemap，如下是首页的Sitemap，它继承自Django的Sitemap类：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> PageSitemap(Sitemap):
     priority <span class="op">=</span> <span class="fl">1.0</span>
     changefreq <span class="op">=</span> <span class="st">&#39;daily&#39;</span>
