@@ -530,7 +530,7 @@ Superuser created successfully.</code></pre>
     prepopulated_fields <span class="op">=</span> {<span class="st">&#39;slug&#39;</span>: (<span class="st">&#39;title&#39;</span>,)}
 
 admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
-<p>接着我们需要做数据库迁移：</p>
+<p>接着我们需要先将<code>blogpost</code>这个APP添加到<code>setting.py</code>中的<code>INSTALLED_APPS</code>字段中。然后做数据库迁移：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">python manage.py migrate</code></pre></div>
 <p>进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。</p>
 <figure>

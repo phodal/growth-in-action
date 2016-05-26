@@ -85,7 +85,7 @@ class BlogpostAdmin(admin.ModelAdmin):
 admin.site.register(Blogpost, BlogpostAdmin)
 ```
 
-接着我们需要做数据库迁移：
+接着我们需要先将``blogpost``这个APP添加到``setting.py``中的``INSTALLED_APPS``字段中。然后做数据库迁移：
 
 ```python
 python manage.py migrate
