@@ -361,7 +361,7 @@ $ source activate</code></pre>
 <li>settings.py包含了这个项目的相关配置。如数据库环境、启用的插件等等。</li>
 <li>urls.py即URL Dispatcher的配置，指明了某个URL应该指向某个函数来处理。</li>
 <li>wsgi.py用于部署。WSGI（Python Web Server Gateway Interface，Web服务器网关接口）是为Python语言定义的Web服务器和Web应用程序或框架之间的一种简单而通用的接口。</li>
-<li><strong>init</strong>.py指明了这是一个Python模块。</li>
+<li><strong>__init__</strong>.py指明了这是一个Python模块。</li>
 </ol>
 <p>manage.py 会在每个Django项目中自动生成，它可以和django-admin做类似的事。如我们可以用manage.py来启动测试环境的服务器：</p>
 <p>$ python manage.py runserver</p>
