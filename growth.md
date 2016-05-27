@@ -261,7 +261,7 @@ blog目录对应的就是blog这个项目，将会放置这个项目的一些相
 1. settings.py包含了这个项目的相关配置。如数据库环境、启用的插件等等。
 2. urls.py即URL Dispatcher的配置，指明了某个URL应该指向某个函数来处理。
 3. wsgi.py用于部署。WSGI（Python Web Server Gateway Interface，Web服务器网关接口）是为Python语言定义的Web服务器和Web应用程序或框架之间的一种简单而通用的接口。
-4. __init__.py指明了这是一个Python模块。
+4. \_\_init\_\_.py指明了这是一个Python模块。
 
 manage.py 会在每个Django项目中自动生成，它可以和django-admin做类似的事。如我们可以用manage.py来启动测试环境的服务器：
 
