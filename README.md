@@ -12,7 +12,9 @@
  - 制作单页面应用
  - 可配置管理
 
-**阅读过程中遇到任何问题，请以issue的形式提出来，这样可以帮助其他读者来发现这个问题。**
+**阅读过程中遇到任何问题，请以issue的形式提出来，这样可以帮助其他读者来发现、解决这个问题。**
+
+在线阅读：[http://growth-in-action.phodal.com/](http://growth-in-action.phodal.com/)
 
 下载地址: [https://github.com/phodal/growth-in-action/releases](https://github.com/phodal/growth-in-action/releases)
 
@@ -109,7 +111,7 @@ APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.co
         *   [添加导航](http://growth-in-action.phodal.com/#添加导航-1)
 *   [配置管理](http://growth-in-action.phodal.com/#配置管理)
     *   [local settings](http://growth-in-action.phodal.com/#local-settings)
-    
+
 License
 ---
 
