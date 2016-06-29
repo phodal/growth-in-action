@@ -447,7 +447,7 @@ Tasking
  - 创建程序的Template，用于显示数据。
  - 编写测试来保证功能。
 
-对于其他应用来说也是差不多的。 
+对于其他应用来说也是差不多的。
 
 创建BlogpostAPP
 ---
@@ -522,8 +522,25 @@ admin.site.register(Blogpost, BlogpostAdmin)
 
 接着我们需要先将``blogpost``这个APP添加到``setting.py``中的``INSTALLED_APPS``字段中。然后做数据库迁移：
 
-```python
+```shelln
 python manage.py migrate
+```
+
+这时会提示:
+
+```shell
+Operations to perform:
+  Apply all migrations: admin, contenttypes, auth, sessions
+Running migrations:
+  No migrations to apply.
+  Your models have changes that are not yet reflected in a migration, and so won't be applied.
+  Run 'manage.py makemigrations' to make new migrations, and then re-run 'manage.py migrate' to apply them.
+```
+
+是因为我们忘记了先运行
+
+``` shell
+python manage.py makemigrations
 ```
 
 进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。
@@ -555,14 +572,12 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
-apiRouter = routers.DefaultRouter()
-apiRouter.register(r'blogpost', BlogpostSet)
 
 urlpatterns = patterns('',
     (r'^$', 'blogpost.views.index'),
     url(r'^blog/(?P<slug>[^\.]+).html', 'blogpost.views.view_post', name='view_blog_post'),
     url(r'^admin/', include(admin.site.urls))
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+)
 ```
 
 在上面的代码里，我们创建了两个route：
@@ -572,7 +587,7 @@ urlpatterns = patterns('',
 
 指向博客详情页的URL正则``r'^blog/(?P<slug>[^\.]+).html``，会将形如blog/hello-world.html中的hello-world提取出来作为参数传给view_post方法。
 
-接着，我们就可以创建两个view。 
+接着，我们就可以创建两个view。
 
 创建View
 ---
@@ -707,7 +722,7 @@ class BlogpostTest(TestCase):
 
 与上面测试首页不一样的是，在我们的Blogpost测试中，我们需要创建数据，以确保这个流程是没有问题的。因此我们需要用``Blogpost.objects.create``方法来创建一个数据，然后访问相应的页面来看是否正确。
 
-```python  
+```python
 def test_blogpost_create_with_view(self):
     Blogpost.objects.create(title='hello', author='admin', slug='this_is_a_test', body='This is a blog',
                             posted=datetime.now)

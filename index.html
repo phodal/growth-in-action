@@ -361,7 +361,7 @@ $ source activate</code></pre>
 <li>settings.py包含了这个项目的相关配置。如数据库环境、启用的插件等等。</li>
 <li>urls.py即URL Dispatcher的配置，指明了某个URL应该指向某个函数来处理。</li>
 <li>wsgi.py用于部署。WSGI（Python Web Server Gateway Interface，Web服务器网关接口）是为Python语言定义的Web服务器和Web应用程序或框架之间的一种简单而通用的接口。</li>
-<li><strong>__init__</strong>.py指明了这是一个Python模块。</li>
+<li>__init__.py指明了这是一个Python模块。</li>
 </ol>
 <p>manage.py 会在每个Django项目中自动生成，它可以和django-admin做类似的事。如我们可以用manage.py来启动测试环境的服务器：</p>
 <p>$ python manage.py runserver</p>
@@ -531,7 +531,16 @@ Superuser created successfully.</code></pre>
 
 admin.site.register(Blogpost, BlogpostAdmin)</code></pre></div>
 <p>接着我们需要先将<code>blogpost</code>这个APP添加到<code>setting.py</code>中的<code>INSTALLED_APPS</code>字段中。然后做数据库迁移：</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">python manage.py migrate</code></pre></div>
+<pre class="shelln"><code>python manage.py migrate</code></pre>
+<p>这时会提示:</p>
+<pre class="shell"><code>Operations to perform:
+  Apply all migrations: admin, contenttypes, auth, sessions
+Running migrations:
+  No migrations to apply.
+  Your models have changes that are not yet reflected in a migration, and so won&#39;t be applied.
+  Run &#39;manage.py makemigrations&#39; to make new migrations, and then re-run &#39;manage.py migrate&#39; to apply them.</code></pre>
+<p>是因为我们忘记了先运行</p>
+<pre class="shell"><code>python manage.py makemigrations</code></pre>
 <p>进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。</p>
 <figure>
 <img src="images/django-admin-ui.png" alt="Django后台界面" /><figcaption>Django后台界面</figcaption>
@@ -552,14 +561,12 @@ git commit -m &quot;create blogpost model&quot;</code></pre>
 <span class="im">from</span> django.conf.urls.static <span class="im">import</span> static
 <span class="im">from</span> django.contrib <span class="im">import</span> admin
 
-apiRouter <span class="op">=</span> routers.DefaultRouter()
-apiRouter.register(<span class="vs">r&#39;blogpost&#39;</span>, BlogpostSet)
 
 urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span>,
     (<span class="vs">r&#39;^$&#39;</span>, <span class="st">&#39;blogpost.views.index&#39;</span>),
     url(<span class="vs">r&#39;^blog/(?P&lt;slug&gt;[^\.]+).html&#39;</span>, <span class="st">&#39;blogpost.views.view_post&#39;</span>, name<span class="op">=</span><span class="st">&#39;view_blog_post&#39;</span>),
     url(<span class="vs">r&#39;^admin/&#39;</span>, include(admin.site.urls))
-) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
+)</code></pre></div>
 <p>在上面的代码里，我们创建了两个route：</p>
 <ul>
 <li>指向首页，其view是index</li>
