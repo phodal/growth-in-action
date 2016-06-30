@@ -585,7 +585,97 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
         <span class="st">&#39;posts&#39;</span>: Blogpost.objects.<span class="bu">all</span>()[:<span class="dv">5</span>]
     })</code></pre></div>
 <p>Django的render_to_response方法可以根据一个给定的上下文字典渲染一个给定的目标，并返回渲染后的HttpResponse。即将相应的值，如这里的Blogpost.objects.all()[:5]，填入相应的index.html中，再返回最后的结果。</p>
-<p>因此，在我们的index.html中，我们就可以拿到前五篇博客。我们只需要遍历出posts，拿出每个post相应的值，就可以完成列表页。</p>
+<p>首先，我们需要创建一个templates文件夹，然后在setting.py的TEMPLATES字段将该目录指定为默认目录</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"> TEMPLATES <span class="op">=</span> [
+      {
+          <span class="st">&#39;BACKEND&#39;</span>: <span class="st">&#39;django.template.backends.django.DjangoTemplates&#39;</span>,
+          <span class="co">&#39;DIRS&#39;</span>: [<span class="st">&#39;templates/&#39;</span>],
+          <span class="co">&#39;APP_DIRS&#39;</span>: <span class="va">True</span>,
+          <span class="co">&#39;OPTIONS&#39;</span>: {
+              <span class="st">&#39;context_processors&#39;</span>: [
+                  <span class="st">&#39;django.template.context_processors.debug&#39;</span>,
+                  <span class="co">&#39;django.template.context_processors.request&#39;</span>,
+                 <span class="co">&#39;django.contrib.auth.context_processors.auth&#39;</span>,
+                 <span class="co">&#39;django.contrib.messages.context_processors.messages&#39;</span>,
+             ],
+         },
+     },
+ ]</code></pre></div>
+<p>另外，在templates目录下我们需要新建base.html, index.html和blogpost_detail.html三个模板。</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% load staticfiles %}
+<span class="kw">&lt;html&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> http-equiv=</span><span class="st">&quot;X-UA-Compatible&quot;</span><span class="ot"> content=</span><span class="st">&quot;IE=edge&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content=</span><span class="st">&quot;width=device-width, initial-scale=1&quot;</span><span class="kw">&gt;</span>
+
+    <span class="kw">&lt;title&gt;</span>{% block head_title %}Welcome to my blog{% endblock %}<span class="kw">&lt;/title&gt;</span>
+    <span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="ot"> href=</span><span class="st">&quot;{% static &#39;css/bootstrap.min.css&#39; %}&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="ot"> href=</span><span class="st">&quot;{% static &#39;css/styles.css&#39; %}&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body</span><span class="ot"> data-twttr-rendered=</span><span class="st">&quot;true&quot;</span><span class="ot"> class=</span><span class="st">&quot;bs-docs-home&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;header</span><span class="ot"> class=</span><span class="st">&quot;navbar navbar-static-top bs-docs-nav&quot;</span><span class="ot"> id=</span><span class="st">&quot;top&quot;</span><span class="ot"> role=</span><span class="st">&quot;banner&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;navbar-header&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;navbar-toggle collapsed&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> data-toggle=</span><span class="st">&quot;collapse&quot;</span>
+<span class="ot">                    data-target=</span><span class="st">&quot;.bs-navbar-collapse&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;sr-only&quot;</span><span class="kw">&gt;</span>切换视图<span class="kw">&lt;/span&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+                <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+            <span class="kw">&lt;/button&gt;</span>
+            <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/&quot;</span><span class="ot"> class=</span><span class="st">&quot;navbar-brand&quot;</span><span class="kw">&gt;</span>Growth博客<span class="kw">&lt;/a&gt;</span>
+        <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;collapse navbar-collapse bs-navbar-collapse&quot;</span><span class="ot"> role=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;nav navbar-nav&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;li&gt;</span>
+                    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/pages/about/&quot;</span><span class="kw">&gt;</span>关于我<span class="kw">&lt;/a&gt;</span>
+                <span class="kw">&lt;/li&gt;</span>
+                <span class="kw">&lt;li&gt;</span>
+                    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/pages/resume/&quot;</span><span class="kw">&gt;</span>简历<span class="kw">&lt;/a&gt;</span>
+                <span class="kw">&lt;/li&gt;</span>
+            <span class="kw">&lt;/ul&gt;</span>
+            <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;nav navbar-nav navbar-right&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/admin&quot;</span><span class="ot"> id=</span><span class="st">&quot;loginLink&quot;</span><span class="kw">&gt;</span>登入<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;/ul&gt;</span>
+            <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;col-sm-3 col-md-3 pull-right&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;form</span><span class="ot"> class=</span><span class="st">&quot;navbar-form&quot;</span><span class="ot"> role=</span><span class="st">&quot;search&quot;</span><span class="kw">&gt;</span>
+                    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;input-group&quot;</span><span class="kw">&gt;</span>
+                        <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;typeahead-input&quot;</span><span class="ot"> class=</span><span class="st">&quot;form-control&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Search&quot;</span><span class="ot"> name=</span><span class="st">&quot;search&quot;</span><span class="ot"> data-provide=</span><span class="st">&quot;typeahead&quot;</span><span class="kw">&gt;</span>
+                        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;input-group-btn&quot;</span><span class="kw">&gt;</span>
+                            <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn btn-default search-button&quot;</span><span class="ot"> type=</span><span class="st">&quot;submit&quot;</span><span class="kw">&gt;&lt;i</span><span class="ot"> class=</span><span class="st">&quot;glyphicon glyphicon-search&quot;</span><span class="kw">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+                        <span class="kw">&lt;/div&gt;</span>
+                    <span class="kw">&lt;/div&gt;</span>
+                <span class="kw">&lt;/form&gt;</span>
+            <span class="kw">&lt;/div&gt;</span>
+        <span class="kw">&lt;/nav&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/header&gt;</span>
+<span class="kw">&lt;main</span><span class="ot"> class=</span><span class="st">&quot;bs-docs-masthead&quot;</span><span class="ot"> id=</span><span class="st">&quot;content&quot;</span><span class="ot"> role=</span><span class="st">&quot;main&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;carbonads-container&quot;</span><span class="kw">&gt;</span>
+            THE ONLY FAIR IS NOT FAIR <span class="kw">&lt;br&gt;</span>
+            ENJOY CREATE <span class="er">&amp;</span> SHARE
+        <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/main&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="ot"> id=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+    {% block content %}
+
+    {% endblock %}
+<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;footer</span><span class="ot"> class=</span><span class="st">&quot;footer&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;text-muted&quot;</span><span class="kw">&gt;</span>@Copyright Phodal.com<span class="kw">&lt;/p&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/footer&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;{% static &#39;js/jquery.min.js&#39; %}&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;{% static &#39;js/bootstrap.min.js&#39; %}&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;{% static &#39;js/bootstrap3-typeahead.min.js&#39; %}&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;{% static &#39;js/main.js&#39; %}&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></div>
+<p>在我们的index.html中，我们就可以拿到前五篇博客。我们只需要遍历出posts，拿出每个post相应的值，就可以完成列表页。</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">{% extends &#39;base.html&#39; %}
 {% block title %}Welcome to my blog{% endblock %}
 
