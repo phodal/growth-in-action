@@ -173,7 +173,103 @@ def index(request):
 
 Django的render_to_response方法可以根据一个给定的上下文字典渲染一个给定的目标，并返回渲染后的HttpResponse。即将相应的值，如这里的Blogpost.objects.all()[:5]，填入相应的index.html中，再返回最后的结果。
 
-因此，在我们的index.html中，我们就可以拿到前五篇博客。我们只需要遍历出posts，拿出每个post相应的值，就可以完成列表页。
+首先，我们需要创建一个templates文件夹，然后在setting.py的TEMPLATES字段将该目录指定为默认目录
+```python
+ TEMPLATES = [
+      {
+          'BACKEND': 'django.template.backends.django.DjangoTemplates',
+          'DIRS': ['templates/'],
+          'APP_DIRS': True,
+          'OPTIONS': {
+              'context_processors': [
+                  'django.template.context_processors.debug',
+                  'django.template.context_processors.request',
+                 'django.contrib.auth.context_processors.auth',
+                 'django.contrib.messages.context_processors.messages',
+             ],
+         },
+     },
+ ]
+```
+另外，在templates目录下我们需要新建base.html, index.html和blogpost_detail.html三个模板。
+
+```html
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block head_title %}Welcome to my blog{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body data-twttr-rendered="true" class="bs-docs-home">
+<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                    data-target=".bs-navbar-collapse">
+                <span class="sr-only">切换视图</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Growth博客</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/pages/about/">关于我</a>
+                </li>
+                <li>
+                    <a href="/pages/resume/">简历</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/admin" id="loginLink">登入</a></li>
+            </ul>
+            <div class="col-sm-3 col-md-3 pull-right">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" id="typeahead-input" class="form-control" placeholder="Search" name="search" data-provide="typeahead">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>
+<main class="bs-docs-masthead" id="content" role="main">
+    <div class="container">
+        <div id="carbonads-container">
+            THE ONLY FAIR IS NOT FAIR <br>
+            ENJOY CREATE & SHARE
+        </div>
+    </div>
+</main>
+<div class="container" id="container">
+    {% block content %}
+
+    {% endblock %}
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">@Copyright Phodal.com</p>
+    </div>
+</footer>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap3-typeahead.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+```
+
+在我们的index.html中，我们就可以拿到前五篇博客。我们只需要遍历出posts，拿出每个post相应的值，就可以完成列表页。
 
 ```html
 {% extends 'base.html' %}
