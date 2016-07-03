@@ -114,7 +114,7 @@ Running migrations:
 
 ```html
 <li>
-    <a href="/pages/resume/">简历</a>
+    <a href="/pages/about/">关于我</a>
 </li>
 ```                
 
