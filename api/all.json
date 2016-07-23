@@ -1,0 +1,45 @@
+{
+    "content": [
+        {
+        	"title": "序：如何成为全栈增长工程师？",
+        	"path": "chapters/chapter-1.md"
+        },
+        {
+        	"title": "深入浅出Django",
+        	"path": "chapters/chapter1.md"
+        },
+        {
+        	"title": "Django创建博客应用",
+        	"path": "chapters/chapter2.md"
+        },
+        {
+        	"title": "功能测试与持续集成",
+        	"path": "chapters/chapter3.md"
+        },
+        {
+        	"title": "更多功能",
+        	"path": "chapters/chapter4.md"
+        },
+        {
+        	"title": "前端框架",
+        	"path": "chapters/chapter5.md"
+        },
+        {
+        	"title": "API",
+        	"path": "chapters/chapter6.md"
+        },
+        {
+            "title": "移动应用",
+            "path": "chapters/chapter7.md"
+        },
+        {
+        	"title": "Mobile Web",
+        	"path": "chapters/chapter8.md"
+        },
+        {
+        	"title": "配置管理",
+        	"path": "chapters/chapter9.md"
+        }
+    ],
+    "source": "http://growth-in-action.phodal.com/"
+}
