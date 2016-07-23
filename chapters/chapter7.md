@@ -181,7 +181,7 @@ ionic serve
 
 接着，就可以打开相应的Web页面，如下图所示：
 
-![Ionic Web预览界面](./images/ionic-web-view.jpg)
+![Ionic Web预览界面](http://growth-in-action.phodal.com/images/ionic-web-view.jpg)
 
 ### 构建应用
 
