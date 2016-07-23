@@ -223,7 +223,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Django是一个高级的Python Web开发框架，它的目标是使得开发复杂的、数据库驱动的网站变得更加简单。</p>
 <p>由于Django最初是被开发来用于管理劳伦斯出版集团旗下的一些以新闻内容为主的网站的。所以，我们可以发现在使用Django的很多网站里，都是用于作为CMS（内容管理系统）来使用的。使用Django的一些比较知名的网站如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/who-use-django.jpg" alt="使用Django的网站" /><figcaption>使用Django的网站</figcaption>
+<img src="http://growth-in-action.phodal.com/images/who-use-django.jpg" alt="使用Django的网站" /><figcaption>使用Django的网站</figcaption>
 </figure>
 <p>Django是一个MTV框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：</p>
 <table>
@@ -271,7 +271,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3 id="django应用架构">Django应用架构</h3>
 <p>Django的每一个模块在内部都称之为APP，在每个APP里都有自己的三层结构。如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/django_app_arch.jpg" alt="Django 应用架构" /><figcaption>Django 应用架构</figcaption>
+<img src="http://growth-in-action.phodal.com/images/django_app_arch.jpg" alt="Django 应用架构" /><figcaption>Django 应用架构</figcaption>
 </figure>
 <p>这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。</p>
 <p>说了这么多，还不如从一个hello,world开始。</p>
@@ -437,7 +437,7 @@ Password (again):
 Superuser created successfully.</code></pre>
 <p>输入相应的用户名和密码，即可完成创建。然后访问 <a href="http://127.0.0.1:8000/admin" class="uri">http://127.0.0.1:8000/admin</a>，输入上面的用户名和密码就可以来到后台：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/django-backend.jpg" alt="Django后台" /><figcaption>Django后台</figcaption>
+<img src="http://growth-in-action.phodal.com/images/django-backend.jpg" alt="Django后台" /><figcaption>Django后台</figcaption>
 </figure>
 <h3 id="第一次提交">第一次提交</h3>
 <p>在创建完应用后，我们就可以进行第一次提交，通常这样的提交的提交信息(commit message)是<code>init project</code>。如果在那之前，你没有执行<code>git init</code>来初始化git的话，那么我们就需要去执行这个命令。</p>
@@ -450,7 +450,7 @@ Superuser created successfully.</code></pre>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> reset db.sqlite3</code></pre></div>
 <p>这时我们会将其变成下面的状态：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/first-commit.png" alt="第一次提交前的reset" /><figcaption>第一次提交前的reset</figcaption>
+<img src="http://growth-in-action.phodal.com/images/first-commit.png" alt="第一次提交前的reset" /><figcaption>第一次提交前的reset</figcaption>
 </figure>
 <p>上面的绿色文件代码这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为<code>.gitignore</code>文件用于将一些文件名加入忽略名单，如下是常用的python项目的<code>.gitignore</code>文件中的内容：</p>
 <pre><code>*.pyc
@@ -458,7 +458,7 @@ Superuser created successfully.</code></pre>
 *.sqlite3</code></pre>
 <p>当我们添加完这个文件，git就会识别这个文件，并忽略原来的那些文件，如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/git-ignore.png" alt="添加完gitignore文件后的效果" /><figcaption>添加完gitignore文件后的效果</figcaption>
+<img src="http://growth-in-action.phodal.com/images/git-ignore.png" alt="添加完gitignore文件后的效果" /><figcaption>添加完gitignore文件后的效果</figcaption>
 </figure>
 <p>我们只需要添加这个文件即可：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .gitignore</code></pre></div>
@@ -543,11 +543,11 @@ Running migrations:
 <pre class="shell"><code>python manage.py makemigrations</code></pre>
 <p>进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/django-admin-ui.png" alt="Django后台界面" /><figcaption>Django后台界面</figcaption>
+<img src="http://growth-in-action.phodal.com/images/django-admin-ui.png" alt="Django后台界面" /><figcaption>Django后台界面</figcaption>
 </figure>
 <p>点击Blogpost的Add后，我们就会进入如下的添加博客界面：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/admin-blog.png" alt="Django添加博客" /><figcaption>Django添加博客</figcaption>
+<img src="http://growth-in-action.phodal.com/images/admin-blog.png" alt="Django添加博客" /><figcaption>Django添加博客</figcaption>
 </figure>
 <p>实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容交给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。</p>
 <p>现在，我们可以执行一次新的代码提交——因为现在的代码可以正常工作。这样出现问题时，我们就可以即时的返回上一版本的代码。</p>
@@ -789,11 +789,11 @@ Destroying test database for alias &#39;default&#39;...
 <p>在setUp——即开始的时候，我们会用selenium启动一个Firefox浏览器的进程，并执行maximize_window来将窗口最大化。在tearDown——即结束的时候，我们就会关闭这个浏览器的进程。我们的主要测试代码就在<code>test_visit_homepage</code>这个方法里，我们在里面访问首页，并判断标题是不是<code>Welcome to my blog</code>。</p>
 <p>运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/selenium-demo.jpg" alt="Selenium Demo" /><figcaption>Selenium Demo</figcaption>
+<img src="http://growth-in-action.phodal.com/images/selenium-demo.jpg" alt="Selenium Demo" /><figcaption>Selenium Demo</figcaption>
 </figure>
 <p>这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？两者从测试看是差不多的，但是从流程上看来说并不是如些。下图是页面渲染的时间线：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/page-timing-overview.png" alt="页面渲染时间线" /><figcaption>页面渲染时间线</figcaption>
+<img src="http://growth-in-action.phodal.com/images/page-timing-overview.png" alt="页面渲染时间线" /><figcaption>页面渲染时间线</figcaption>
 </figure>
 <p>请求从浏览器传到服务器要有一系列的过程，如重定向、缓存、DNS等等，最后直至返回对应的Response。我们用Django的测试框架只能实现到这一步，随后页面请请求对应的静态资料，再对页面进行渲染，在这个过程中页面的内容会发生一些变化。</p>
 <p>为了避免页面的内容被替换掉，那么我们就需要对这部分内容进行测试。</p>
@@ -878,11 +878,11 @@ Destroying test database for alias &#39;default&#39;...
 <span class="kw">INFO</span>: Started ServerConnector@733a9ac6<span class="dt">{HTTP/1.1}{0.0.0.0:8080}</span></code></pre></div>
 <p>接着，打开<a href="http://0.0.0.0:8080/" class="uri">http://0.0.0.0:8080/</a>就可以进行后续的安装，如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/jenkins-install.jpg" alt="Jenkins安装过程" /><figcaption>Jenkins安装过程</figcaption>
+<img src="http://growth-in-action.phodal.com/images/jenkins-install.jpg" alt="Jenkins安装过程" /><figcaption>Jenkins安装过程</figcaption>
 </figure>
 <p>慢慢等其安装完成：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/jenkins-getting-started.jpg" alt="Jenkins安装完成" /><figcaption>Jenkins安装完成</figcaption>
+<img src="http://growth-in-action.phodal.com/images/jenkins-getting-started.jpg" alt="Jenkins安装完成" /><figcaption>Jenkins安装完成</figcaption>
 </figure>
 <p>等安装完成后，我们就可以开始使用Jenkins来创建我们的任务了。</p>
 <h3 id="jenkins创建任务">Jenkins创建任务</h3>
@@ -891,7 +891,7 @@ Destroying test database for alias &#39;default&#39;...
 <pre><code>[https://github.com/phodal/growth-in-action-python-code](https://github.com/phodal/growth-in-action-python-code)</code></pre>
 <p>如下图所示:</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/jenkins-repo-setup.jpg" alt="Jenkins设计Repo" /><figcaption>Jenkins设计Repo</figcaption>
+<img src="http://growth-in-action.phodal.com/images/jenkins-repo-setup.jpg" alt="Jenkins设计Repo" /><figcaption>Jenkins设计Repo</figcaption>
 </figure>
 <p>然后就是构建触发器，一共有五种类型的触发器，意思也很容易理解：</p>
 <ul>
@@ -914,11 +914,11 @@ Destroying test database for alias &#39;default&#39;...
 <span class="kw">pip</span> install -r requirements.txt</code></pre></div>
 <p>然后在保存后，我们可以尝试立即构建这个项目：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/build-console-ouput.jpg" alt="控制台输出" /><figcaption>控制台输出</figcaption>
+<img src="http://growth-in-action.phodal.com/images/build-console-ouput.jpg" alt="控制台输出" /><figcaption>控制台输出</figcaption>
 </figure>
 <p>在编写shell的过程中，我们要经过一些尝试，在这其中会经历一些失败的情形——即使是大部分有相关经验的程序员。如下图就是一次编写构建脚本引起的构建失败的例子：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/jenkins-failure-setup.jpg" alt="Jenkins失败的构建" /><figcaption>Jenkins失败的构建</figcaption>
+<img src="http://growth-in-action.phodal.com/images/jenkins-failure-setup.jpg" alt="Jenkins失败的构建" /><figcaption>Jenkins失败的构建</figcaption>
 </figure>
 <p>最后，我们就得到下面的一个shell脚本，我们就可以将其变成相应的运行CI的脚本。以便于它可以在其他环境中使用：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/usr/bin/env bash</span>
@@ -1006,11 +1006,11 @@ Running migrations:
 {% endblock %}</code></pre>
 <p>当我们完成模板后，我们就需要登录后台，并添加对应的静态页面的配置：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/admin-flatpages-create.jpg" alt="管理员界面创建flatpage" /><figcaption>管理员界面创建flatpage</figcaption>
+<img src="http://growth-in-action.phodal.com/images/admin-flatpages-create.jpg" alt="管理员界面创建flatpage" /><figcaption>管理员界面创建flatpage</figcaption>
 </figure>
 <p>然后从高级选项中填写我们的静态页面的路径，我们就可以完成静态页面的创建。如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/flatpages-advance-option.png" alt="flatpage高级选项" /><figcaption>flatpage高级选项</figcaption>
+<img src="http://growth-in-action.phodal.com/images/flatpages-advance-option.png" alt="flatpage高级选项" /><figcaption>flatpage高级选项</figcaption>
 </figure>
 <p>最后，还要有个链接加到首页的导航中：</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;li&gt;</span>
@@ -1081,13 +1081,13 @@ Running migrations:
 {% endblock %}</code></pre>
 <p>遗憾的是，当我们刷新页面的时候，页面报错了，原因如下所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/site_id_issue.jpg" alt="SITE_ID报错" /><figcaption>SITE_ID报错</figcaption>
+<img src="http://growth-in-action.phodal.com/images/site_id_issue.jpg" alt="SITE_ID报错" /><figcaption>SITE_ID报错</figcaption>
 </figure>
 <p>我们还需要定义一个<code>SITE_ID</code>，添加下面的代码到<code>settings.py</code>文件中即可：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">SITE_ID <span class="op">=</span> <span class="dv">1</span></code></pre></div>
 <p>然后，我们就可以从后台创建评论：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/create-comment-backend.jpg" alt="后台创建评论" /><figcaption>后台创建评论</figcaption>
+<img src="http://growth-in-action.phodal.com/images/create-comment-backend.jpg" alt="后台创建评论" /><figcaption>后台创建评论</figcaption>
 </figure>
 <h2 id="sitemap">Sitemap</h2>
 <p>我们在之前的文章中提到过SEO的重要性，这里只是简单地对Sitemap的内容进行展开。</p>
@@ -1241,23 +1241,23 @@ sitemaps =  {
 <p>这里我们以Google Webmaster为例简单的介绍一下如何使用各种站长工具来提交sitemap.xml。</p>
 <p>我们可以登录Google的Webmaster：<a href="https://www.google.com/webmasters/tools/home?hl=zh-cn" class="uri">https://www.google.com/webmasters/tools/home?hl=zh-cn</a>，然后点击添加属性来创建一个新的网站:</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/add-property.png" alt="添加网站" /><figcaption>添加网站</figcaption>
+<img src="http://growth-in-action.phodal.com/images/add-property.png" alt="添加网站" /><figcaption>添加网站</figcaption>
 </figure>
 <p>这时候Google需要确认这个网站是你的，所以它提供几种方法来验证，除了下面的推荐方法：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/google-add-website.png" alt="推荐的验证方式" /><figcaption>推荐的验证方式</figcaption>
+<img src="http://growth-in-action.phodal.com/images/google-add-website.png" alt="推荐的验证方式" /><figcaption>推荐的验证方式</figcaption>
 </figure>
 <p>我们可以使用下面的这一些方法：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/google-addition-method.png" alt="备选的难方法" /><figcaption>备选的难方法</figcaption>
+<img src="http://growth-in-action.phodal.com/images/google-addition-method.png" alt="备选的难方法" /><figcaption>备选的难方法</figcaption>
 </figure>
 <p>我个人比较喜欢用HTML Tag的方式来实现</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/html-tag.png" alt="HTML标签验证" /><figcaption>HTML标签验证</figcaption>
+<img src="http://growth-in-action.phodal.com/images/html-tag.png" alt="HTML标签验证" /><figcaption>HTML标签验证</figcaption>
 </figure>
 <p>在我们完成验证之后，我们就可以在后台手动提交Sitemap.xml了。</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/google-add-sitemap.png" alt="提交Sitemap.xml" /><figcaption>提交Sitemap.xml</figcaption>
+<img src="http://growth-in-action.phodal.com/images/google-add-sitemap.png" alt="提交Sitemap.xml" /><figcaption>提交Sitemap.xml</figcaption>
 </figure>
 <p>点击上方的<strong>添加/测试站点地图</strong>即可。</p>
 <h1 id="样式与ui美化">样式与UI美化</h1>
@@ -1266,7 +1266,7 @@ sitemaps =  {
 <p>考虑到易学程度，以其响应式设计的问题，我们决定用Bootstrap来作为这里的前端框架。Bootstrap是Twitter推出的一个用于前端开发的开源工具包，似乎也是当前“最受欢迎”的前端框架。它提供了全面、美观的文档。你能在这里找到关于 HTML 元素、HTML 和 CSS 组件、jQuery 插件方面的所有详细文档。并且我们能在 Bootstrap 的帮助下通过同一份代码快速、有效适配手机、平板、PC 设备。</p>
 <p>它是一个支持响应式设计的框架，即页面的设计与开发应当根据用户行为以及设备环境(系统平台、屏幕尺寸、屏幕定向等)进行相应的响应和调整。如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/responsive-design.png" alt="响应式设计" /><figcaption>响应式设计</figcaption>
+<img src="http://growth-in-action.phodal.com/images/responsive-design.png" alt="响应式设计" /><figcaption>响应式设计</figcaption>
 </figure>
 <p>我们在不同的设计上看到的是不同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。</p>
 <h3 id="引入前端框架">引入前端框架</h3>
@@ -1337,15 +1337,15 @@ sitemaps =  {
 <span class="kw">&lt;/header&gt;</span></code></pre></div>
 <p>它在桌面下的效果大致如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/bootstrap-nav-desktop.png" alt="桌面浏览器下的Bootstrap导航" /><figcaption>桌面浏览器下的Bootstrap导航</figcaption>
+<img src="http://growth-in-action.phodal.com/images/bootstrap-nav-desktop.png" alt="桌面浏览器下的Bootstrap导航" /><figcaption>桌面浏览器下的Bootstrap导航</figcaption>
 </figure>
 <p>而在移动浏览器下则是这样的效果：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/nav-in-mobile.png" alt="移动设备上的导航" /><figcaption>移动设备上的导航</figcaption>
+<img src="http://growth-in-action.phodal.com/images/nav-in-mobile.png" alt="移动设备上的导航" /><figcaption>移动设备上的导航</figcaption>
 </figure>
 <p>当我们点击右上角的菜单按钮时，会出现我们的菜单</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/nav-in-mobile-with-click.png" alt="点击导航后的结果" /><figcaption>点击导航后的结果</figcaption>
+<img src="http://growth-in-action.phodal.com/images/nav-in-mobile-with-click.png" alt="点击导航后的结果" /><figcaption>点击导航后的结果</figcaption>
 </figure>
 <h3 id="添加标语">添加标语</h3>
 <p>接着，我们可以快速的创建一个标语：</p>
@@ -1386,10 +1386,10 @@ sitemaps =  {
 {% endblock %}</code></pre>
 <p>它在桌面和自动设备上的效果如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/desktop-blogposts.png" alt="桌面设备效果" /><figcaption>桌面设备效果</figcaption>
+<img src="http://growth-in-action.phodal.com/images/desktop-blogposts.png" alt="桌面设备效果" /><figcaption>桌面设备效果</figcaption>
 </figure>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/mobile-blogposts.png" alt="移动设备效果" /><figcaption>移动设备效果</figcaption>
+<img src="http://growth-in-action.phodal.com/images/mobile-blogposts.png" alt="移动设备效果" /><figcaption>移动设备效果</figcaption>
 </figure>
 <h3 id="添加footer">添加footer</h3>
 <p>最后，我们可以在页面的最下方添加一个footer，来做一些版权声明：</p>
@@ -1484,31 +1484,31 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <h3 id="测试-api">测试 API</h3>
 <p>现在，我们可以访问<a href="http://127.0.0.1:8000/api/" class="uri">http://127.0.0.1:8000/api/</a>来访问我们现在的API。由于Django REST Framework提供了一个UI机制，所以我们可以在网页上直接看到我们所有的API：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/django-rest-framework-api-lists.png" alt="Django REST Framework列表" /><figcaption>Django REST Framework列表</figcaption>
+<img src="http://growth-in-action.phodal.com/images/django-rest-framework-api-lists.png" alt="Django REST Framework列表" /><figcaption>Django REST Framework列表</figcaption>
 </figure>
 <p>然后，点击页面中的<a href="http://127.0.0.1:8000/api/blogpost/" class="uri">http://127.0.0.1:8000/api/blogpost/</a>，我们就可以访问博客相关的API了，如下图所示:</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/drf-blogppost-set-list.png" alt="博客API" /><figcaption>博客API</figcaption>
+<img src="http://growth-in-action.phodal.com/images/drf-blogppost-set-list.png" alt="博客API" /><figcaption>博客API</figcaption>
 </figure>
 <p>在页面上显示了所有的博客内容，在页面的下面有一个表单可以先让我们来创建数据：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/api-post-form.png" alt="创建博客的表单" /><figcaption>创建博客的表单</figcaption>
+<img src="http://growth-in-action.phodal.com/images/api-post-form.png" alt="创建博客的表单" /><figcaption>创建博客的表单</figcaption>
 </figure>
 <p>直接在表单中添加数据，我们就可以完成数据创建了。</p>
 <p>当然，我们也可以直接用命令行工具来测试，执行：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -i  http://127.0.0.1:8000/api/blogpost/</code></pre></div>
 <p>即可返回相应的结果：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/curl-api.png" alt="CuRL API" /><figcaption>CuRL API</figcaption>
+<img src="http://growth-in-action.phodal.com/images/curl-api.png" alt="CuRL API" /><figcaption>CuRL API</figcaption>
 </figure>
 <h2 id="自动完成">自动完成</h2>
 <p>AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。以Google为例，Google在我们输入一些关键字的时候，会向我们推荐一些比较流行的词条可以让我们选择。</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/google-autocomplete.png" alt="Google AutoComplete" /><figcaption>Google AutoComplete</figcaption>
+<img src="http://growth-in-action.phodal.com/images/google-autocomplete.png" alt="Google AutoComplete" /><figcaption>Google AutoComplete</figcaption>
 </figure>
 <p>同样的，我们也可以实现一个同样的效果用于我们的博客搜索：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/autocomplete-example.png" alt="自动完成" /><figcaption>自动完成</figcaption>
+<img src="http://growth-in-action.phodal.com/images/autocomplete-example.png" alt="自动完成" /><figcaption>自动完成</figcaption>
 </figure>
 <p>当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。</p>
 <h3 id="搜索api">搜索API</h3>
@@ -1971,7 +1971,7 @@ export class MyApp {
 <span class="op">}</span></code></pre></div>
 <p>现在我们几乎已经完成了博客详情页的工作，我们可以直接通过URL来访问博客详情页：<a href="http://localhost:8100/#/app/blog/1" class="uri">http://localhost:8100/#/app/blog/1</a>。结果如下图所示：</p>
 <figure>
-<img src="http://growth-in-action.phodalcom/images/blog-detail-page.png" alt="访问博客详情页" /><figcaption>访问博客详情页</figcaption>
+<img src="http://growth-in-action.phodal.com/images/blog-detail-page.png" alt="访问博客详情页" /><figcaption>访问博客详情页</figcaption>
 </figure>
 <p>不过，这时候我们的列表页并没有和详情页关联到一起。我们还需要做一些额外的工作：</p>
 <ul>
