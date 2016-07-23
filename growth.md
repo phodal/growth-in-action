@@ -433,7 +433,7 @@ git commit -m "init project"
 
 如果你是将代码托管在GitHub上的话，那么你就可以执行``git push``来将代码提交到服务器上。
 
-Django创建博客应用
+三步创建博客应用
 ===
 
 Tasking
@@ -846,7 +846,7 @@ def test_blogpost_create_with_show_in_homepage(self):
 
 我们用同样的方法创建了一篇博客，然后在首页测试返回的内容中是否含有``This is a blog``。
 
-功能测试与持续集成
+自动化测试与持续集成
 ===
 
 在上一章最后，我们写的测试可以算得上是单元测试，接着我们可以写一些自动化测试。
@@ -1073,7 +1073,7 @@ chmod u+x ./scripts/ci.sh
 
 最后，我们就可以修改CI上相应的构建环境的配置。
 
-更多功能
+更完善的博客系统
 ===
 
 在Django框架中，内置了很多应用在它的"contrib"包中，这些包括：
@@ -1535,7 +1535,7 @@ class BlogSitemap(Sitemap):
 
 点击上方的**添加/测试站点地图**即可。
 
-前端框架
+样式与UI美化
 ===
 
 我们的前端样式实在是太丑了，让我们想办法来美化一下它们吧——这时候我们就需要一个前端框架来帮助我们做这件事。这里的前端框架并不是指那种MV*框架，而是UI框架。
@@ -1739,7 +1739,7 @@ class BlogSitemap(Sitemap):
 }
 ```
 
-API
+应用API
 ===
 
 在下一章开始之前，我们先来搭建一下API平台，不仅仅可以提供一些额外的功能，还可以为我们的APP提供API。
@@ -2049,7 +2049,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 现在，让我们进行下一步，开始APP吧！
 
-移动应用
+创建移动应用
 ===
 
 依照国际惯例，我们还将用Ionic 2继续创建hello,world。
@@ -2851,7 +2851,7 @@ class BlogpostSet(viewsets.ModelViewSet):
 
 
 
-Mobile Web
+移动单页面应用
 ===
 
 为了实现在移动设备上的访问，这里就以riot.js为例做一个简单的Demo。不过，首先我们需要在后台判断用户是来自于某种设备，再对其进行特殊的处理。

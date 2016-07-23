@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Growth 实战篇 Django版 - </title>
+  <title>Growth 实战篇 Django版 – </title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 div.sourceCode { overflow-x: auto; }
@@ -94,7 +94,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#第一次提交">第一次提交</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#django创建博客应用">Django创建博客应用</a><ul>
+<li><a href="#三步创建博客应用">三步创建博客应用</a><ul>
 <li><a href="#tasking">Tasking</a></li>
 <li><a href="#创建blogpostapp">创建BlogpostAPP</a><ul>
 <li><a href="#生成app">生成APP</a></li>
@@ -110,7 +110,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#测试详情页">测试详情页</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#功能测试与持续集成">功能测试与持续集成</a><ul>
+<li><a href="#自动化测试与持续集成">自动化测试与持续集成</a><ul>
 <li><a href="#编写自动化测试">编写自动化测试</a><ul>
 <li><a href="#selenium与第一个ui测试">Selenium与第一个UI测试</a></li>
 </ul></li>
@@ -119,7 +119,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#创建shell">创建shell</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#更多功能">更多功能</a><ul>
+<li><a href="#更完善的博客系统">更完善的博客系统</a><ul>
 <li><a href="#静态页面">静态页面</a><ul>
 <li><a href="#安装-flatpages">安装 flatpages</a></li>
 <li><a href="#创建模板">创建模板</a></li>
@@ -133,7 +133,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#提交到搜索引擎">提交到搜索引擎</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#前端框架">前端框架</a><ul>
+<li><a href="#样式与ui美化">样式与UI美化</a><ul>
 <li><a href="#响应式设计">响应式设计</a><ul>
 <li><a href="#引入前端框架">引入前端框架</a></li>
 </ul></li>
@@ -144,7 +144,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#添加footer">添加footer</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#api">API</a><ul>
+<li><a href="#应用api">应用API</a><ul>
 <li><a href="#博客列表">博客列表</a><ul>
 <li><a href="#django-rest-framework">Django REST Framework</a></li>
 <li><a href="#创建博客列表api">创建博客列表API</a></li>
@@ -158,7 +158,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#添加跨域支持">添加跨域支持</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#移动应用">移动应用</a><ul>
+<li><a href="#创建移动应用">创建移动应用</a><ul>
 <li><a href="#helloworld">hello,world</a><ul>
 <li><a href="#构建应用">构建应用</a></li>
 </ul></li>
@@ -173,7 +173,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#创建博客">创建博客</a></li>
 </ul></li>
-<li><a href="#mobile-web">Mobile Web</a><ul>
+<li><a href="#移动单页面应用">移动单页面应用</a><ul>
 <li><a href="#移动设备处理">移动设备处理</a></li>
 <li><a href="#前后端分离">前后端分离</a><ul>
 <li><a href="#riot.js">Riot.js</a></li>
@@ -229,26 +229,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: left;">传统的MVC架构</th>
-<th style="text-align: left;">Django 架构</th>
+<th>传统的MVC架构</th>
+<th>Django 架构</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Model</td>
-<td style="text-align: left;">Model(Data Access Logic)</td>
+<td>Model</td>
+<td>Model(Data Access Logic)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">View</td>
-<td style="text-align: left;">Template(Presentation Logic)</td>
+<td>View</td>
+<td>Template(Presentation Logic)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">View</td>
-<td style="text-align: left;">View(Business Logic)</td>
+<td>View</td>
+<td>View(Business Logic)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Controller</td>
-<td style="text-align: left;">Django itself</td>
+<td>Controller</td>
+<td>Django itself</td>
 </tr>
 </tbody>
 </table>
@@ -468,7 +468,7 @@ Superuser created successfully.</code></pre>
 <p>最后，我们就可以在本地提交我们的代码了:</p>
 <pre><code>git commit -m &quot;init project&quot;</code></pre>
 <p>如果你是将代码托管在GitHub上的话，那么你就可以执行<code>git push</code>来将代码提交到服务器上。</p>
-<h1 id="django创建博客应用">Django创建博客应用</h1>
+<h1 id="三步创建博客应用">三步创建博客应用</h1>
 <h2 id="tasking">Tasking</h2>
 <p>在我们不了解Django的时候，要对这样一个任务进行Tasking，有点困难。不过，我们还是可以简单地看看是应该如何去做：</p>
 <ul>
@@ -761,7 +761,7 @@ Destroying test database for alias &#39;default&#39;...
     response <span class="op">=</span> <span class="va">self</span>.client.get(<span class="st">&#39;/&#39;</span>)
     <span class="va">self</span>.assertIn(b<span class="st">&#39;This is a blog&#39;</span>, response.content)</code></pre></div>
 <p>我们用同样的方法创建了一篇博客，然后在首页测试返回的内容中是否含有<code>This is a blog</code>。</p>
-<h1 id="功能测试与持续集成">功能测试与持续集成</h1>
+<h1 id="自动化测试与持续集成">自动化测试与持续集成</h1>
 <p>在上一章最后，我们写的测试可以算得上是单元测试，接着我们可以写一些自动化测试。</p>
 <h2 id="编写自动化测试">编写自动化测试</h2>
 <p>接着我们就可以用Selenium来做自动化测试。这是ThoughtWorks出品的一个强大的基于浏览器的开源自动化测试工具，它通常用来编写Web 应用的自动化测试。</p>
@@ -930,7 +930,7 @@ Destroying test database for alias &#39;default&#39;...
 <p>记得给你的shell文件，加上执行的标志：</p>
 <pre><code>chmod u+x ./scripts/ci.sh</code></pre>
 <p>最后，我们就可以修改CI上相应的构建环境的配置。</p>
-<h1 id="更多功能">更多功能</h1>
+<h1 id="更完善的博客系统">更完善的博客系统</h1>
 <p>在Django框架中，内置了很多应用在它的“contrib”包中，这些包括：</p>
 <ul>
 <li>一个可扩展的认证系统</li>
@@ -1260,7 +1260,7 @@ sitemaps =  {
 <img src="images/google-add-sitemap.png" alt="提交Sitemap.xml" /><figcaption>提交Sitemap.xml</figcaption>
 </figure>
 <p>点击上方的<strong>添加/测试站点地图</strong>即可。</p>
-<h1 id="前端框架">前端框架</h1>
+<h1 id="样式与ui美化">样式与UI美化</h1>
 <p>我们的前端样式实在是太丑了，让我们想办法来美化一下它们吧——这时候我们就需要一个前端框架来帮助我们做这件事。这里的前端框架并不是指那种MV*框架，而是UI框架。</p>
 <h2 id="响应式设计">响应式设计</h2>
 <p>考虑到易学程度，以其响应式设计的问题，我们决定用Bootstrap来作为这里的前端框架。Bootstrap是Twitter推出的一个用于前端开发的开源工具包，似乎也是当前“最受欢迎”的前端框架。它提供了全面、美观的文档。你能在这里找到关于 HTML 元素、HTML 和 CSS 组件、jQuery 插件方面的所有详细文档。并且我们能在 Bootstrap 的帮助下通过同一份代码快速、有效适配手机、平板、PC 设备。</p>
@@ -1416,7 +1416,7 @@ sitemaps =  {
 <span class="fl">.footer</span> <span class="fl">.container</span> <span class="fl">.text-muted</span> <span class="kw">{</span>
   <span class="kw">margin:</span> <span class="dt">20px</span> <span class="dt">0</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></div>
-<h1 id="api">API</h1>
+<h1 id="应用api">应用API</h1>
 <p>在下一章开始之前，我们先来搭建一下API平台，不仅仅可以提供一些额外的功能，还可以为我们的APP提供API。</p>
 <h2 id="博客列表">博客列表</h2>
 <h3 id="django-rest-framework">Django REST Framework</h3>
@@ -1627,7 +1627,7 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
 <p>同时还有对应的配置：</p>
 <pre><code>CORS_ALLOW_CREDENTIALS = True</code></pre>
 <p>现在，让我们进行下一步，开始APP吧！</p>
-<h1 id="移动应用">移动应用</h1>
+<h1 id="创建移动应用">创建移动应用</h1>
 <p>依照国际惯例，我们还将用Ionic 2继续创建hello,world。</p>
 <h2 id="helloworld">hello,world</h2>
 <p>开始之前我们需要先安装Ionic的命令行工具，后面我们需要用这个工具来创建工程。</p>
@@ -2215,7 +2215,7 @@ authSuccess(token) {
     let modal = Modal.create(CreateBlogModal);
     this.nav.present(modal)
   }</code></pre>
-<h1 id="mobile-web">Mobile Web</h1>
+<h1 id="移动单页面应用">移动单页面应用</h1>
 <p>为了实现在移动设备上的访问，这里就以riot.js为例做一个简单的Demo。不过，首先我们需要在后台判断用户是来自于某种设备，再对其进行特殊的处理。</p>
 <h2 id="移动设备处理">移动设备处理</h2>
 <p>幸运的是我们又找到了一个库名为<code>django_mobile</code>，可以根据用户的User-Agent来区别设备，并为其分配一个移动设备专用的模板。因此，我们需要安装这个库：</p>
