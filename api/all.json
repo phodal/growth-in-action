@@ -5,39 +5,39 @@
         	"path": "chapters/0prelude.md"
         },
         {
-        	"title": "深入浅出Django",
+        	"title": "第一章：深入浅出Django",
         	"path": "chapters/chapter1.md"
         },
         {
-        	"title": "三步创建博客应用",
+        	"title": "第二章：三步创建博客应用",
         	"path": "chapters/chapter2.md"
         },
         {
-        	"title": "自动化测试与持续集成",
+        	"title": "第三章：自动化测试与持续集成",
         	"path": "chapters/chapter3.md"
         },
         {
-        	"title": "更完善的博客系统",
+        	"title": "第四章：更完善的博客系统",
         	"path": "chapters/chapter4.md"
         },
         {
-        	"title": "样式与UI美化",
+        	"title": "第五章：样式与UI美化",
         	"path": "chapters/chapter5.md"
         },
         {
-        	"title": "应用API",
+        	"title": "第六章：应用API",
         	"path": "chapters/chapter6.md"
         },
         {
-            "title": "创建移动应用",
+            "title": "第七章：创建移动应用",
             "path": "chapters/chapter7.md"
         },
         {
-        	"title": "移动单页面应用",
+        	"title": "第八单：移动单页面应用",
         	"path": "chapters/chapter8.md"
         },
         {
-        	"title": "配置管理",
+        	"title": "第九单：配置管理",
         	"path": "chapters/chapter9.md"
         }
     ],
