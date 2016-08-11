@@ -24,7 +24,7 @@ APP代码: [https://github.com/phodal/growth-in-action-hybird](https://github.co
 
 欢迎关注我的微信公众号(搜索Phodal)：
 
-![QRCode](https://raw.githubusercontent.com/phodal/growth/master/www/img/wechat.jpg)
+![QRCode](http://articles.phodal.com/qrcode.jpg)
 
 
 目录
