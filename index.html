@@ -441,13 +441,13 @@ Superuser created successfully.</code></pre>
 </figure>
 <h3 id="第一次提交">第一次提交</h3>
 <p>在创建完应用后，我们就可以进行第一次提交，通常这样的提交的提交信息(commit message)是<code>init project</code>。如果在那之前，你没有执行<code>git init</code>来初始化git的话，那么我们就需要去执行这个命令。</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> init</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">git</span> init</code></pre></div>
 <p>它将返回类似于下面的结果</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Initialized</span> empty Git repository in /Users/fdhuang/test/helloworld/.git/</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Initialized</span> empty Git repository in /Users/fdhuang/test/helloworld/.git/</code></pre></div>
 <p>即初始化了一个空的Git项目，然后我们就可以执行<code>add</code>来添加上面的内容：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">git</span> add .</code></pre></div>
 <p>需要注意的是上面的数据库文件不应该添加到项目里，所以我们应该执行reset命令来重置这个状态：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> reset db.sqlite3</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">git</span> reset db.sqlite3</code></pre></div>
 <p>这时我们会将其变成下面的状态：</p>
 <figure>
 <img src="http://growth-in-action.phodal.com/images/first-commit.png" alt="第一次提交前的reset" /><figcaption>第一次提交前的reset</figcaption>
@@ -461,9 +461,9 @@ Superuser created successfully.</code></pre>
 <img src="http://growth-in-action.phodal.com/images/git-ignore.png" alt="添加完gitignore文件后的效果" /><figcaption>添加完gitignore文件后的效果</figcaption>
 </figure>
 <p>我们只需要添加这个文件即可：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> add .gitignore</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">git</span> add .gitignore</code></pre></div>
 <p>如果你之前已经不小心添加了一些不应该添加的文件，那么可以执行下面的命令来重置其状态：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> reset .</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">git</span> reset .</code></pre></div>
 <p>然后再执行添加命令。</p>
 <p>最后，我们就可以在本地提交我们的代码了:</p>
 <pre><code>git commit -m &quot;init project&quot;</code></pre>
@@ -557,16 +557,16 @@ git commit -m &quot;create blogpost model&quot;</code></pre>
 <h3 id="配置url">配置URL</h3>
 <p>现在，我们就可以在我们的<code>urls.py</code>里添加相应的route来访问页面，代码如下所示：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> django.conf <span class="im">import</span> settings
-<span class="im">from</span> django.conf.urls <span class="im">import</span> patterns, include, url
+<span class="im">from</span> django.conf.urls <span class="im">import</span> include, url
 <span class="im">from</span> django.conf.urls.static <span class="im">import</span> static
 <span class="im">from</span> django.contrib <span class="im">import</span> admin
 
 
-urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span>,
+urlpatterns <span class="op">=</span> [
     (<span class="vs">r&#39;^$&#39;</span>, <span class="st">&#39;blogpost.views.index&#39;</span>),
     url(<span class="vs">r&#39;^blog/(?P&lt;slug&gt;[^\.]+).html&#39;</span>, <span class="st">&#39;blogpost.views.view_post&#39;</span>, name<span class="op">=</span><span class="st">&#39;view_blog_post&#39;</span>),
     url(<span class="vs">r&#39;^admin/&#39;</span>, include(admin.site.urls))
-)</code></pre></div>
+]</code></pre></div>
 <p>在上面的代码里，我们创建了两个route：</p>
 <ul>
 <li>指向首页，其view是index</li>
@@ -722,7 +722,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
         found <span class="op">=</span> resolve(<span class="st">&#39;/&#39;</span>)
         <span class="va">self</span>.assertEqual(found.func, index)</code></pre></div>
 <p>但是这样的测试看上去没有多大意义，不过它可以保证我们的route可以和我们的URL对应上。在编写完测试后，我们就可以命令提示行中运行:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">python</span> manage.py test</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">python</span> manage.py test</code></pre></div>
 <p>来查看测试的结果：</p>
 <pre><code>Creating test database for alias &#39;default&#39;...
 
@@ -857,25 +857,25 @@ Destroying test database for alias &#39;default&#39;...
 <p>它提供了软件开发的持续集成服务。它运行在Servlet容器中（例如Apache Tomcat）。它支持软件配置管理（SCM）工具（包括AccuRev SCM、CVS、Subversion、Git、Perforce、Clearcase和和RTC），可以执行基于Apache Ant和Apache Maven的项目，以及任意的Shell脚本和Windows批处理命令。</p>
 </blockquote>
 <p>要使用Jenkins，只需要从Jenkins的主页上(<a href="https://jenkins.io/" class="uri">https://jenkins.io/</a>)下载最新的 jenkins.war文件。然后运行</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">java</span> -jar jenkins.war</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">java</span> -jar jenkins.war</code></pre></div>
 <p>便可以启动:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Running</span> from: /Users/fdhuang/repractise/growth-ci/jenkins.war
-<span class="kw">webroot</span>: <span class="ot">$user</span>.home/.jenkins
-<span class="kw">May</span> 12, 2016 10:55:18 PM org.eclipse.jetty.util.log.JavaUtilLog info
-<span class="kw">INFO</span>: Logging initialized @489ms
-<span class="kw">May</span> 12, 2016 10:55:18 PM winstone.Logger logInternal
-<span class="kw">INFO</span>: Beginning extraction from war file
-<span class="kw">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog warn
-<span class="kw">WARNING</span>: Empty contextPath
-<span class="kw">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
-<span class="kw">INFO</span>: jetty-9.2.z-SNAPSHOT
-<span class="kw">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
-<span class="kw">INFO</span>: NO JSP Support for /, did not find org.eclipse.jetty.jsp.JettyJspServlet
-<span class="kw">Jenkins</span> home directory: /Users/fdhuang/.jenkins found at: <span class="ot">$user</span>.home/.jenkins
-<span class="kw">May</span> 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
-<span class="kw">INFO</span>: Started w.@68c34b0<span class="dt">{/,file:/Users/fdhuang/.jenkins/war/,AVAILABLE}{/Users/fdhuang/.jenkins/war}</span>
-<span class="kw">May</span> 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
-<span class="kw">INFO</span>: Started ServerConnector@733a9ac6<span class="dt">{HTTP/1.1}{0.0.0.0:8080}</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Running</span> from: /Users/fdhuang/repractise/growth-ci/jenkins.war
+<span class="ex">webroot</span>: <span class="va">$user</span>.home/.jenkins
+<span class="ex">May</span> 12, 2016 10:55:18 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="ex">INFO</span>: Logging initialized @489ms
+<span class="ex">May</span> 12, 2016 10:55:18 PM winstone.Logger logInternal
+<span class="ex">INFO</span>: Beginning extraction from war file
+<span class="ex">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog warn
+<span class="ex">WARNING</span>: Empty contextPath
+<span class="ex">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="ex">INFO</span>: jetty-9.2.z-SNAPSHOT
+<span class="ex">May</span> 12, 2016 10:55:20 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="ex">INFO</span>: NO JSP Support for /, did not find org.eclipse.jetty.jsp.JettyJspServlet
+<span class="ex">Jenkins</span> home directory: /Users/fdhuang/.jenkins found at: <span class="va">$user</span>.home/.jenkins
+<span class="ex">May</span> 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="ex">INFO</span>: Started w.@68c34b0<span class="dt">{/,file:/Users/fdhuang/.jenkins/war/,AVAILABLE}{/Users/fdhuang/.jenkins/war}</span>
+<span class="ex">May</span> 12, 2016 10:55:21 PM org.eclipse.jetty.util.log.JavaUtilLog info
+<span class="ex">INFO</span>: Started ServerConnector@733a9ac6<span class="dt">{HTTP/1.1}{0.0.0.0:8080}</span></code></pre></div>
 <p>接着，打开<a href="http://0.0.0.0:8080/" class="uri">http://0.0.0.0:8080/</a>就可以进行后续的安装，如下图所示：</p>
 <figure>
 <img src="http://growth-in-action.phodal.com/images/jenkins-install.jpg" alt="Jenkins安装过程" /><figcaption>Jenkins安装过程</figcaption>
@@ -909,9 +909,9 @@ Destroying test database for alias &#39;default&#39;...
 <p>由于，我们暂时不需要一些特殊的<code>构建环境</code>配置，我们就可以将这个放空。接着，我们就可以配置<code>构建</code>了。</p>
 <h3 id="创建shell">创建shell</h3>
 <p>在这里我们需要添加的构建步骤是：<code>execute shell</code>，先让我们写一个简单的安装依赖的shell</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">virtualenv</span> --distribute -p /usr/local/bin/python3.5 growth-django
-<span class="kw">source</span> growth-django/bin/activate
-<span class="kw">pip</span> install -r requirements.txt</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">virtualenv</span> --distribute -p /usr/local/bin/python3.5 growth-django
+<span class="bu">source</span> growth-django/bin/activate
+<span class="ex">pip</span> install -r requirements.txt</code></pre></div>
 <p>然后在保存后，我们可以尝试立即构建这个项目：</p>
 <figure>
 <img src="http://growth-in-action.phodal.com/images/build-console-ouput.jpg" alt="控制台输出" /><figcaption>控制台输出</figcaption>
@@ -922,11 +922,11 @@ Destroying test database for alias &#39;default&#39;...
 </figure>
 <p>最后，我们就得到下面的一个shell脚本，我们就可以将其变成相应的运行CI的脚本。以便于它可以在其他环境中使用：</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/usr/bin/env bash</span>
-<span class="kw">virtualenv</span> --distribute -p /usr/local/bin/python3.5 growth-django
-<span class="kw">source</span> growth-django/bin/activate
-<span class="kw">pip</span> install -r requirements.txt
-<span class="kw">python</span> manage.py test
-<span class="kw">python</span> manage.py test test</code></pre></div>
+<span class="ex">virtualenv</span> --distribute -p /usr/local/bin/python3.5 growth-django
+<span class="bu">source</span> growth-django/bin/activate
+<span class="ex">pip</span> install -r requirements.txt
+<span class="ex">python</span> manage.py test
+<span class="ex">python</span> manage.py test test</code></pre></div>
 <p>记得给你的shell文件，加上执行的标志：</p>
 <pre><code>chmod u+x ./scripts/ci.sh</code></pre>
 <p>最后，我们就可以修改CI上相应的构建环境的配置。</p>
@@ -1475,10 +1475,10 @@ class BlogpostSet(viewsets.ModelViewSet):
 apiRouter <span class="op">=</span> routers.DefaultRouter()
 apiRouter.register(<span class="vs">r&#39;blogpost&#39;</span>, BlogpostSet)
 
-urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span>,
+urlpatterns <span class="op">=</span> [,
     ...
     url(<span class="vs">r&#39;^api/&#39;</span>, include(apiRouter.urls)),
-) <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
+] <span class="op">+</span> static(settings.STATIC_URL, document_root<span class="op">=</span>settings.STATIC_ROOT)</code></pre></div>
 <p>我们使用默认的Router来配置我们的URL，即DefaultRouter，它提供了一个非常简单的机制来自动检测URL规则。因此，我们只需要注册好我们的url——<code>blogpost</code>以及它值<code>BlogpostSet</code>即可。随后，我们再为其定义一个根URL即可:</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">url(<span class="vs">r&#39;^api/&#39;</span>, include(apiRouter.urls))</code></pre></div>
 <h3 id="测试-api">测试 API</h3>
@@ -1496,7 +1496,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 </figure>
 <p>直接在表单中添加数据，我们就可以完成数据创建了。</p>
 <p>当然，我们也可以直接用命令行工具来测试，执行：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -i  http://127.0.0.1:8000/api/blogpost/</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">curl</span> -i  http://127.0.0.1:8000/api/blogpost/</code></pre></div>
 <p>即可返回相应的结果：</p>
 <figure>
 <img src="http://growth-in-action.phodal.com/images/curl-api.png" alt="CuRL API" /><figcaption>CuRL API</figcaption>
@@ -1522,7 +1522,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
         queryset <span class="op">=</span> Blogpost.objects.<span class="bu">all</span>()
 
         search_param <span class="op">=</span> <span class="va">self</span>.request.query_params.get(<span class="st">&#39;title&#39;</span>, <span class="va">None</span>)
-        <span class="cf">if</span> search_param <span class="op">is</span> <span class="op">not</span> <span class="va">None</span>:
+        <span class="cf">if</span> search_param <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:
             queryset <span class="op">=</span> Blogpost.objects.<span class="bu">filter</span>(title__contains<span class="op">=</span>search_param)
 
         serializer <span class="op">=</span> BlogpsotSerializer(queryset, many<span class="op">=</span><span class="va">True</span>)
@@ -1601,7 +1601,7 @@ urlpatterns <span class="op">=</span> patterns(<span class="st">&#39;&#39;</span
 <p>当我们想为其他的网页提供我们的API时，可能会报错——原因是不支持跨域请求。为了方便我们下一章更好的展开，内容我们在这里对跨域进行支持。</p>
 <h3 id="添加跨域支持">添加跨域支持</h3>
 <p>有一个名为<code>django-cors-headers</code>的插件用于实现对跨域请求的支持，我们只需要安装它，并进行一些简单的配置即可。</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install django-cors-headers</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">pip</span> install django-cors-headers</code></pre></div>
 <p>安装过程如下：</p>
 <pre><code>Collecting django-cors-headers
   Downloading django-cors-headers-1.1.0.tar.gz
@@ -1631,7 +1631,7 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
 <p>依照国际惯例，我们还将用Ionic 2继续创建hello,world。</p>
 <h2 id="helloworld">hello,world</h2>
 <p>开始之前我们需要先安装Ionic的命令行工具，后面我们需要用这个工具来创建工程。</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">npm</span> install -g ionic@beta</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">npm</span> install -g ionic@beta</code></pre></div>
 <p>如果没有意外，我们将安装成功，然后可以使用<code>ionic</code>命令:</p>
 <p>它自带了一系列的工具来加速我们的开发，这些工具可以在后面的章节中学习到。</p>
 <pre><code>Available tasks: (use --help or -h for more info)
@@ -1672,7 +1672,7 @@ Successfully installed django-cors-headers-1.1.0</code></pre>
    docs  ...........  Opens up the documentation for Ionic
    generate  .......  Generate pages and components</code></pre>
 <p>现在，我们就可以用第一个命令<code>start</code>来创建我们的项目。</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> start growth-blog-app --v2</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">ionic</span> start growth-blog-app --v2</code></pre></div>
 <p>在这个过程中，它将下载Ionic 2项目的基础项目，并执行安装命令。</p>
 <pre><code>Creating Ionic app in folder /Users/fdhuang/repractise/growth-blog-app based on tabs project
 Downloading: https://github.com/driftyco/ionic2-app-base/archive/master.zip
@@ -1731,7 +1731,7 @@ Installing npm packages...</code></pre>
 <pre><code>ionic start growth-blog-app --v2 --ts</code></pre>
 <p><code>--ts</code>表示使用的是<code>typescript</code>来创建项目，安装的过程是一样的，不一样的是后面写的代码。</p>
 <p>执行相应的启动serve命令，我们就可以开始我们的项目了：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> serve</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">ionic</span> serve</code></pre></div>
 <p>这时候Ionic将做一些额外的事，才能启动我们的服务，如：</p>
 <ul>
 <li>删除<code>www/build</code>目录下的文件</li>
@@ -1741,42 +1741,42 @@ Installing npm packages...</code></pre>
 <li>等等</li>
 </ul>
 <p>最后，它将启动一个Web服务，URL为<a href="http://localhost:8100" class="uri">http://localhost:8100</a></p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="kw">Running</span> <span class="st">&#39;serve:before&#39;</span> gulp task before serve
-  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;clean&#39;</span>...
-  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;clean&#39;</span> after 6.07 ms
-  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;watch&#39;</span>...
-  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;sass&#39;</span>...
-  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;html&#39;</span>...
-  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;fonts&#39;</span>...
-  [<span class="kw">20</span>:59:16] Starting <span class="st">&#39;scripts&#39;</span>...
-  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;scripts&#39;</span> after 43 ms
-  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;html&#39;</span> after 51 ms
-  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;fonts&#39;</span> after 54 ms
-  [<span class="kw">20</span>:59:16] Finished <span class="st">&#39;sass&#39;</span> after 738 ms
-  <span class="kw">7.6</span> MB bytes written (5.62 seconds)
-  [<span class="kw">20</span>:59:22] Finished <span class="st">&#39;watch&#39;</span> after 6.62 s
-  [<span class="kw">20</span>:59:22] Starting <span class="st">&#39;serve:before&#39;</span>...
-  [<span class="kw">20</span>:59:22] Finished <span class="st">&#39;serve:before&#39;</span> after 3.87 μs
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">  <span class="ex">Running</span> <span class="st">&#39;serve:before&#39;</span> gulp task before serve
+  [<span class="ex">20</span>:59:16] Starting <span class="st">&#39;clean&#39;</span>...
+  [<span class="ex">20</span>:59:16] Finished <span class="st">&#39;clean&#39;</span> after 6.07 ms
+  [<span class="ex">20</span>:59:16] Starting <span class="st">&#39;watch&#39;</span>...
+  [<span class="ex">20</span>:59:16] Starting <span class="st">&#39;sass&#39;</span>...
+  [<span class="ex">20</span>:59:16] Starting <span class="st">&#39;html&#39;</span>...
+  [<span class="ex">20</span>:59:16] Starting <span class="st">&#39;fonts&#39;</span>...
+  [<span class="ex">20</span>:59:16] Starting <span class="st">&#39;scripts&#39;</span>...
+  [<span class="ex">20</span>:59:16] Finished <span class="st">&#39;scripts&#39;</span> after 43 ms
+  [<span class="ex">20</span>:59:16] Finished <span class="st">&#39;html&#39;</span> after 51 ms
+  [<span class="ex">20</span>:59:16] Finished <span class="st">&#39;fonts&#39;</span> after 54 ms
+  [<span class="ex">20</span>:59:16] Finished <span class="st">&#39;sass&#39;</span> after 738 ms
+  <span class="ex">7.6</span> MB bytes written (5.62 seconds)
+  [<span class="ex">20</span>:59:22] Finished <span class="st">&#39;watch&#39;</span> after 6.62 s
+  [<span class="ex">20</span>:59:22] Starting <span class="st">&#39;serve:before&#39;</span>...
+  [<span class="ex">20</span>:59:22] Finished <span class="st">&#39;serve:before&#39;</span> after 3.87 μs
 
-  <span class="kw">Running</span> live reload server: http://localhost:35729
-  <span class="kw">Watching</span>: www/**/*, !www/lib/**/*
-  √ <span class="kw">Running</span> dev server:  http://localhost:8100
-  <span class="kw">Ionic</span> server commands, enter:
-    <span class="kw">restart</span> or r to restart the client app from the root
-    <span class="kw">goto</span> or g and a url to have the app navigate to the given url
-    <span class="kw">consolelogs</span> or c to enable/disable console log output
-    <span class="kw">serverlogs</span> or s to enable/disable server log output
-    <span class="kw">quit</span> or q to shutdown the server and exit
-  <span class="kw">ionic</span> $</code></pre></div>
+  <span class="ex">Running</span> live reload server: http://localhost:35729
+  <span class="ex">Watching</span>: www/**/*, !www/lib/**/*
+  √ <span class="ex">Running</span> dev server:  http://localhost:8100
+  <span class="ex">Ionic</span> server commands, enter:
+    <span class="ex">restart</span> or r to restart the client app from the root
+    <span class="ex">goto</span> or g and a url to have the app navigate to the given url
+    <span class="ex">consolelogs</span> or c to enable/disable console log output
+    <span class="ex">serverlogs</span> or s to enable/disable server log output
+    <span class="ex">quit</span> or q to shutdown the server and exit
+  <span class="ex">ionic</span> $</code></pre></div>
 <p>接着，就可以打开相应的Web页面，如下图所示：</p>
 <figure>
 <img src="http://growth-in-action.phodal.com/images/ionic-web-view.jpg" alt="Ionic Web预览界面" /><figcaption>Ionic Web预览界面</figcaption>
 </figure>
 <h3 id="构建应用">构建应用</h3>
 <p>由于Ionic是基于Cordova的，我们需要安装Cordova业完成后续的工作。</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> npm install -g cordova</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> npm install -g cordova</code></pre></div>
 <p>为了构建不同的平台的应用，我们就需要添加不同的平台，如:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> platform add android</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">ionic</span> platform add android</code></pre></div>
 <p>上面的命令可以为项目添加Android平台的支持，过程如下面的日志所示：</p>
 <pre><code>Adding android project...
 Creating Cordova project for the Android platform:
@@ -1898,12 +1898,12 @@ export class BlogpostServices {
 <li>点击某一项时，将跳转到详情页，并去获取相应的API的数据，并渲染到页面上。</li>
 </ul>
 <p>好了，我们可以用ionic的生成命令来创建博客详情页。</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ionic</span> g page blog-detail --ts</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">ionic</span> g page blog-detail --ts</code></pre></div>
 <p>它将在app/pages目录下，生成下面的内容：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">app/pages/blog-detail/</span>
-├── <span class="kw">blog-detail.html</span>
-├── <span class="kw">blog-detail.ts</span>
-└── <span class="kw">blog-detail.scss</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">app/pages/blog-detail/</span>
+├── <span class="ex">blog-detail.html</span>
+├── <span class="ex">blog-detail.ts</span>
+└── <span class="ex">blog-detail.scss</span></code></pre></div>
 <p>我们可以遵循之前添加Django App的习惯，先添加Router。因此我们可以在<code>app.ts</code>添加新的Route:</p>
 <pre><code>const ROUTES = [
   {path: &#39;/app/blog/:id&#39;, component: BlogDetailPage}
@@ -2108,7 +2108,7 @@ authSuccess(token) {
 <p>只是我们的API似乎还不支持这样的功能。它的实现方式和我们之前的AutoComplete是一样的，也是搜索用户名：</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> <span class="bu">list</span>(<span class="va">self</span>, request):
     search_param <span class="op">=</span> <span class="va">self</span>.request.query_params.get(<span class="st">&#39;username&#39;</span>, <span class="va">None</span>)
-    <span class="cf">if</span> search_param <span class="op">is</span> <span class="op">not</span> <span class="va">None</span>:
+    <span class="cf">if</span> search_param <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:
         queryset <span class="op">=</span> User.objects.<span class="bu">filter</span>(username__contains<span class="op">=</span>search_param)
 
     serializer <span class="op">=</span> UserSerializer(queryset, many<span class="op">=</span><span class="va">True</span>)
@@ -2132,8 +2132,8 @@ authSuccess(token) {
 <span class="co">    &quot;&quot;&quot;</span>
 
     <span class="kw">def</span> has_permission(<span class="va">self</span>, request, view):
-        <span class="cf">if</span> (request.method <span class="op">in</span> SAFE_METHODS <span class="op">or</span>
-            request.user <span class="op">and</span>
+        <span class="cf">if</span> (request.method <span class="kw">in</span> SAFE_METHODS <span class="kw">or</span>
+            request.user <span class="kw">and</span>
             request.user.is_authenticated()):
             <span class="cf">return</span> <span class="va">True</span>
         <span class="cf">return</span> <span class="va">False</span>
@@ -2241,12 +2241,6 @@ authSuccess(token) {
         &#39;DIRS&#39;: [
             &#39;templates/&#39;
         ],
-        &#39;LOADERS&#39;: {
-                &#39;django_mobile.loader.Loader&#39;,
-                &#39;django.template.loaders.filesystem.Loader&#39;,
-                &#39;django.template.loaders.app_directories.Loader&#39;
-        },
-        &#39;APP_DIRS&#39;: True,
         &#39;OPTIONS&#39;: {
             &#39;context_processors&#39;:    [
                 &#39;django.template.context_processors.debug&#39;,
@@ -2257,7 +2251,10 @@ authSuccess(token) {
             ],
         },
     },
-]</code></pre>
+]
+
+# dirty fixed for https://github.com/gregmuellegger/django-mobile/issues/72
+TEMPLATE_LOADERS = TEMPLATES[0][&#39;OPTIONS&#39;][&#39;loaders&#39;]</code></pre>
 <p>我们在LOADERS中添加了<code>'django_mobile.loader.Loader'</code>，在<code>context_processors</code>中添加了<code>django_mobile.context_processors.flavour</code>。</p>
 <p>然后在template目录中创建<code>template/mobile/index.html</code>文件，即可。</p>
 <h2 id="前后端分离">前后端分离</h2>

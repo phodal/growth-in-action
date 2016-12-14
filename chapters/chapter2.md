@@ -133,16 +133,16 @@ git commit -m "create blogpost model"
 
 ```python
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     (r'^$', 'blogpost.views.index'),
     url(r'^blog/(?P<slug>[^\.]+).html', 'blogpost.views.view_post', name='view_blog_post'),
     url(r'^admin/', include(admin.site.urls))
-)
+]
 ```
 
 在上面的代码里，我们创建了两个route：

@@ -568,16 +568,16 @@ git commit -m "create blogpost model"
 
 ```python
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     (r'^$', 'blogpost.views.index'),
     url(r'^blog/(?P<slug>[^\.]+).html', 'blogpost.views.view_post', name='view_blog_post'),
     url(r'^admin/', include(admin.site.urls))
-)
+]
 ```
 
 在上面的代码里，我们创建了两个route：
@@ -1830,10 +1830,10 @@ from blogpost.api import BlogpostSet
 apiRouter = routers.DefaultRouter()
 apiRouter.register(r'blogpost', BlogpostSet)
 
-urlpatterns = patterns('',
+urlpatterns = [,
     ...
     url(r'^api/', include(apiRouter.urls)),
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 ```
 
 我们使用默认的Router来配置我们的URL，即DefaultRouter，它提供了一个非常简单的机制来自动检测URL规则。因此，我们只需要注册好我们的url——``blogpost``以及它值``BlogpostSet``即可。随后，我们再为其定义一个根URL即可:
@@ -2892,12 +2892,6 @@ TEMPLATES = [
         'DIRS': [
             'templates/'
         ],
-        'LOADERS': {
-                'django_mobile.loader.Loader',
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader'
-        },
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors':    [
                 'django.template.context_processors.debug',
@@ -2909,6 +2903,9 @@ TEMPLATES = [
         },
     },
 ]
+
+# dirty fixed for https://github.com/gregmuellegger/django-mobile/issues/72
+TEMPLATE_LOADERS = TEMPLATES[0]['OPTIONS']['loaders']
 ```      
 
 我们在LOADERS中添加了``'django_mobile.loader.Loader'``，在``context_processors``中添加了``django_mobile.context_processors.flavour``。

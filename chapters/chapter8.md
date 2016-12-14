@@ -39,12 +39,6 @@ TEMPLATES = [
         'DIRS': [
             'templates/'
         ],
-        'LOADERS': {
-                'django_mobile.loader.Loader',
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader'
-        },
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors':    [
                 'django.template.context_processors.debug',
@@ -56,6 +50,9 @@ TEMPLATES = [
         },
     },
 ]
+
+# dirty fixed for https://github.com/gregmuellegger/django-mobile/issues/72
+TEMPLATE_LOADERS = TEMPLATES[0]['OPTIONS']['loaders']
 ```      
 
 我们在LOADERS中添加了``'django_mobile.loader.Loader'``，在``context_processors``中添加了``django_mobile.context_processors.flavour``。
