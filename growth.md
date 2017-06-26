@@ -168,7 +168,7 @@ $ cd somewhere/virtualenvs/<project-name>/bin
 $ source activate
 ```
 
-停止使用只使用执行下面的命令即可：
+停止使用只需要执行下面的命令即可：
 
 ```
 $ deactivate
@@ -176,13 +176,13 @@ $ deactivate
 
 ####安装Django
 
-准备了这么久我们终于安装Django了，执行：
+准备了这么久我们终于要开始安装Django了，执行：
 
 ```
 $ pip install django
 ```
 
-那么我们并会开始下最新版本的Django，如下所示：
+开始下最新版本的Django，如下所示：
 
 ```
 Collecting django
@@ -312,7 +312,7 @@ DATABASES = {
 'django.db.backends.oracle'
 ```
 
-如果我们想使用别的数据库，那么可以在网上寻找的解决方案，如用于支持使用MongoDB的django-nonrel项目。不同的数据库有不同的配置，如下所示的是使用PostgreSQL的配置。
+如果我们想使用别的数据库，可以在网上寻找相应的解决方案，如用于支持使用MongoDB的django-nonrel项目。不同的数据库有不同的配置，如下所示的是使用PostgreSQL的配置。
 
 ```
 DATABASES = {
@@ -371,7 +371,7 @@ Superuser created successfully.
 
 ### 第一次提交
 
-在创建完应用后，我们就可以进行第一次提交，通常这样的提交的提交信息(commit message)是``init project``。如果在那之前，你没有执行``git init``来初始化git的话，那么我们就需要去执行这个命令。
+在创建完应用后，我们就可以进行第一次提交，通常初次提交的提交信息(commit message)是``init project``。如果在那之前，你没有执行``git init``来初始化git的话，那么我们就需要去执行这个命令。
 
 ```bash
 git init
@@ -399,7 +399,7 @@ git reset db.sqlite3
 
 ![第一次提交前的reset](http://growth-in-action.phodal.com/images/first-commit.png)
 
-上面的绿色文件代码这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名加入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
+上面的绿色文件代表这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名加入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
 
 ```
 *.pyc
@@ -520,7 +520,16 @@ class BlogpostAdmin(admin.ModelAdmin):
 admin.site.register(Blogpost, BlogpostAdmin)
 ```
 
-接着我们需要先将``blogpost``这个APP添加到``setting.py``中的``INSTALLED_APPS``字段中。然后做数据库迁移：
+接着我们需要先将``blogpost``这个APP添加到配置文件``blog/blog/settings.py``的``INSTALLED_APPS``字段中:
+```python
+INSTALLED_APPS = [ 
+    'blogpost.apps.BlogpostConfig',
+    'django.contrib.admin',
+    ...
+]
+```
+
+然后做数据库迁移：
 
 ```shelln
 python manage.py migrate
