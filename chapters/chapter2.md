@@ -85,7 +85,16 @@ class BlogpostAdmin(admin.ModelAdmin):
 admin.site.register(Blogpost, BlogpostAdmin)
 ```
 
-接着我们需要先将``blogpost``这个APP添加到``setting.py``中的``INSTALLED_APPS``字段中。然后做数据库迁移：
+接着我们需要先将``blogpost``这个APP添加到配置文件``blog/blog/settings.py``的``INSTALLED_APPS``字段中:
+```python
+INSTALLED_APPS = [ 
+    'blogpost.apps.BlogpostConfig',
+    'django.contrib.admin',
+    ...
+]
+```
+
+然后做数据库迁移：
 
 ```shelln
 python manage.py migrate
