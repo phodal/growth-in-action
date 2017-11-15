@@ -181,7 +181,7 @@ ionic serve
 
 接着，就可以打开相应的Web页面，如下图所示：
 
-![Ionic Web预览界面](http://growth-in-action.phodal.com/images/ionic-web-view.jpg)
+![Ionic Web预览界面](./images/ionic-web-view.jpg)
 
 ### 构建应用
 
@@ -453,7 +453,7 @@ export class BlogDetailPage {
 
 现在我们几乎已经完成了博客详情页的工作，我们可以直接通过URL来访问博客详情页：[http://localhost:8100/#/app/blog/1](http://localhost:8100/#/app/blog/1)。结果如下图所示：
 
-![访问博客详情页](http://growth-in-action.phodal.com/images/blog-detail-page.png)
+![访问博客详情页](./images/blog-detail-page.png)
 
 不过，这时候我们的列表页并没有和详情页关联到一起。我们还需要做一些额外的工作：
 

@@ -8,7 +8,7 @@ Django是一个高级的Python Web开发框架，它的目标是使得开发复�
 
 由于Django最初是被开发来用于管理劳伦斯出版集团旗下的一些以新闻内容为主的网站的。所以，我们可以发现在使用Django的很多网站里，都是用于作为CMS（内容管理系统）来使用的。使用Django的一些比较知名的网站如下图所示：
 
-![使用Django的网站](http://growth-in-action.phodal.com/images/who-use-django.jpg)
+![使用Django的网站](./images/who-use-django.jpg)
 
 Django是一个MTV框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：
 
@@ -39,7 +39,7 @@ Controller | Django itself
 
 Django的每一个模块在内部都称之为APP，在每个APP里都有自己的三层结构。如下图所示：
 
-![Django 应用架构](http://growth-in-action.phodal.com/images/django_app_arch.jpg)
+![Django 应用架构](./images/django_app_arch.jpg)
 
 这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。
 
@@ -308,7 +308,7 @@ Superuser created successfully.
 
 输入相应的用户名和密码，即可完成创建。然后访问 [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)，输入上面的用户名和密码就可以来到后台：
 
-![Django后台](http://growth-in-action.phodal.com/images/django-backend.jpg)
+![Django后台](./images/django-backend.jpg)
 
 ### 第一次提交
 
@@ -338,7 +338,7 @@ git reset db.sqlite3
 
 这时我们会将其变成下面的状态：
 
-![第一次提交前的reset](http://growth-in-action.phodal.com/images/first-commit.png)
+![第一次提交前的reset](./images/first-commit.png)
 
 上面的绿色文件代表这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名加入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
 
@@ -350,7 +350,7 @@ git reset db.sqlite3
 
 当我们添加完这个文件，git就会识别这个文件，并忽略原来的那些文件，如下图所示：
 
-![添加完gitignore文件后的效果](http://growth-in-action.phodal.com/images/git-ignore.png)  
+![添加完gitignore文件后的效果](./images/git-ignore.png)  
 
 我们只需要添加这个文件即可：
 

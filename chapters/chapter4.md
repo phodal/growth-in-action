@@ -104,11 +104,11 @@ Running migrations:
 
 当我们完成模板后，我们就需要登录后台，并添加对应的静态页面的配置：
 
-![管理员界面创建flatpage](http://growth-in-action.phodal.com/images/admin-flatpages-create.jpg)
+![管理员界面创建flatpage](./images/admin-flatpages-create.jpg)
 
 然后从高级选项中填写我们的静态页面的路径，我们就可以完成静态页面的创建。如下图所示：
 
-![flatpage高级选项](http://growth-in-action.phodal.com/images/flatpages-advance-option.png)
+![flatpage高级选项](./images/flatpages-advance-option.png)
 
 最后，还要有个链接加到首页的导航中：
 
@@ -214,7 +214,7 @@ url(r'^comments/', include('django_comments.urls')),
 
 遗憾的是，当我们刷新页面的时候，页面报错了，原因如下所示：
 
-![SITE_ID报错](http://growth-in-action.phodal.com/images/site_id_issue.jpg)
+![SITE_ID报错](./images/site_id_issue.jpg)
 
 我们还需要定义一个``SITE_ID``，添加下面的代码到``settings.py``文件中即可：
 
@@ -224,7 +224,7 @@ SITE_ID = 1
 
 然后，我们就可以从后台创建评论：
 
-![后台创建评论](http://growth-in-action.phodal.com/images/create-comment-backend.jpg)
+![后台创建评论](./images/create-comment-backend.jpg)
 
 Sitemap
 ---
@@ -440,22 +440,22 @@ class BlogSitemap(Sitemap):
 
 我们可以登录Google的Webmaster：[https://www.google.com/webmasters/tools/home?hl=zh-cn](https://www.google.com/webmasters/tools/home?hl=zh-cn)，然后点击添加属性来创建一个新的网站:
 
-![添加网站](http://growth-in-action.phodal.com/images/add-property.png)
+![添加网站](./images/add-property.png)
 
 这时候Google需要确认这个网站是你的，所以它提供几种方法来验证，除了下面的推荐方法：
 
-![推荐的验证方式](http://growth-in-action.phodal.com/images/google-add-website.png)
+![推荐的验证方式](./images/google-add-website.png)
 
 我们可以使用下面的这一些方法：
 
-![备选的难方法](http://growth-in-action.phodal.com/images/google-addition-method.png)
+![备选的难方法](./images/google-addition-method.png)
 
 我个人比较喜欢用HTML Tag的方式来实现
 
-![HTML标签验证](http://growth-in-action.phodal.com/images/html-tag.png)
+![HTML标签验证](./images/html-tag.png)
 
 在我们完成验证之后，我们就可以在后台手动提交Sitemap.xml了。
 
-![提交Sitemap.xml](http://growth-in-action.phodal.com/images/google-add-sitemap.png)
+![提交Sitemap.xml](./images/google-add-sitemap.png)
 
 点击上方的**添加/测试站点地图**即可。

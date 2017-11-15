@@ -119,11 +119,11 @@ python manage.py makemigrations
 
 进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。
 
-![Django后台界面](http://growth-in-action.phodal.com/images/django-admin-ui.png)
+![Django后台界面](./images/django-admin-ui.png)
 
 点击Blogpost的Add后，我们就会进入如下的添加博客界面：
 
-![Django添加博客](http://growth-in-action.phodal.com/images/admin-blog.png)
+![Django添加博客](./images/admin-blog.png)
 
 实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容交给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 

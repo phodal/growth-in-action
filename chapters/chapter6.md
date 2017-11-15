@@ -105,15 +105,15 @@ url(r'^api/', include(apiRouter.urls))
 
 现在，我们可以访问[http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)来访问我们现在的API。由于Django REST Framework提供了一个UI机制，所以我们可以在网页上直接看到我们所有的API：
 
-![Django REST Framework列表](http://growth-in-action.phodal.com/images/django-rest-framework-api-lists.png)
+![Django REST Framework列表](./images/django-rest-framework-api-lists.png)
 
 然后，点击页面中的[http://127.0.0.1:8000/api/blogpost/](http://127.0.0.1:8000/api/blogpost/)，我们就可以访问博客相关的API了，如下图所示:
 
-![博客API](http://growth-in-action.phodal.com/images/drf-blogppost-set-list.png)
+![博客API](./images/drf-blogppost-set-list.png)
 
 在页面上显示了所有的博客内容，在页面的下面有一个表单可以先让我们来创建数据：
 
-![创建博客的表单](http://growth-in-action.phodal.com/images/api-post-form.png)
+![创建博客的表单](./images/api-post-form.png)
 
 直接在表单中添加数据，我们就可以完成数据创建了。
 
@@ -125,18 +125,18 @@ curl -i  http://127.0.0.1:8000/api/blogpost/
 
 即可返回相应的结果：
 
-![CuRL API](http://growth-in-action.phodal.com/images/curl-api.png)
+![CuRL API](./images/curl-api.png)
 
 自动完成
 ---
 
 AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。以Google为例，Google在我们输入一些关键字的时候，会向我们推荐一些比较流行的词条可以让我们选择。
 
-![Google AutoComplete](http://growth-in-action.phodal.com/images/google-autocomplete.png)
+![Google AutoComplete](./images/google-autocomplete.png)
 
 同样的，我们也可以实现一个同样的效果用于我们的博客搜索：
 
-![自动完成](http://growth-in-action.phodal.com/images/autocomplete-example.png)
+![自动完成](./images/autocomplete-example.png)
 
 当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。
 

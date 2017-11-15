@@ -2,6 +2,57 @@
 序：如何成为全栈增长工程师？
 ===
 
+Phodal's Idea实战指南
+===
+
+关于作者
+---
+
+黄峰达（Phodal Huang）是一个创客、工程师、咨询师和作家。他毕业于西安文理学院电子信息工程专业，现作为一个咨询师就职于 ThoughtWorks 深圳。长期活跃于开源软件社区 GitHub，目前专注于物联网和前端领域。
+
+作为一个开源软件作者，著有 Growth、Stepping、Lan、Echoesworks 等软件。其中开源学习应用 Growth，广受读者和用户好评，可在 APP Store 及各大 Android 应用商店下载。
+
+作为一个技术作者，著有《自己动手设计物联网》（电子工业出版社）、《全栈应用开发：精益实践》（电子工业出版社，正在出版）。并在 GitHub 上开源有《Growth: 全栈增长工程师指南》、《GitHub 漫游指南》等七本电子书。
+
+作为技术专家，他为英国 Packt 出版社审阅有物联网书籍《Learning IoT》、《Smart IoT》，前端书籍《Angular 2 Serices》、《Getting started with Angular》等技术书籍。
+
+他热爱编程、写作、设计、旅行、hacking，你可以从他的个人网站：[https://www.phodal.com/](https://www.phodal.com/) 了解到更多的内容。
+
+其它相关信息：
+
+ - 微博：[http://weibo.com/phodal](http://weibo.com/phodal)
+ - GitHub： [https://github.com/phodal](https://github.com/phodal)
+ - 知乎：[https://www.zhihu.com/people/phodal](https://www.zhihu.com/people/phodal)
+ - SegmentFault：[https://segmentfault.com/u/phodal](https://segmentfault.com/u/phodal)
+
+当前为预览版，在使用的过程中遇到任何问题请及时与我联系。阅读过程中的问题，不妨在GitHub上提出来： [Issues](https://github.com/phodal/fe/issues)
+
+阅读过程中遇到语法错误、拼写错误、技术错误等等，不妨来个Pull Request，这样可以帮助到其他阅读这本电子书的童鞋。
+
+我的电子书：
+
+ * 《[GitHub 漫游指南](https://github.com/phodal/github-roam)》
+ * 《[我的职业是前端工程师](https://github.com/phodal/fe)》
+ * 《[Serverless 架构应用开发指南](https://github.com/phodal/serverless)》
+ * 《[Growth: 全栈增长工程师指南](https://github.com/phodal/growth-ebook)》
+ * 《[Phodal's Idea实战指南](https://github.com/phodal/ideabook)》
+ * 《[一步步搭建物联网系统](https://github.com/phodal/designiot)》
+ * 《[RePractise](https://github.com/phodal/repractise)》
+ * 《[Growth: 全栈增长工程师实战](https://github.com/phodal/growth-in-action)》
+
+我的微信公众号:
+
+![作者微信公众号：phodal-weixin](./images/wechat.jpg)
+
+支持作者，可以加入作者的小密圈:
+
+![小密圈](./images/xiaomiquan.jpg)
+
+或者转账：
+
+![支付宝](./images/alipay.png) ![微信](./images/wechat-pay.png)
+
+
 记得我们在《[RePractise前端篇: 前端演进史](http://mp.weixin.qq.com/s?src=3&timestamp=1463835081&ver=1&signature=z1onJvKn4TSrUmXm384CQUF1IZBVsLShsQ4DpmumN6xY0Gm5RR9XKdbf6ELzdRqg-mxdtxceTg-4-KrhYHZQC6wiSEWsP64vh0sl2Je4G16hnS6MsuZaD-u01HAENCSKoMhQiw0tu2y3-tSJsOML0w==)》中提到技术在最近十几年的飞速发展，当然最主要的就是：技术的复杂度不断地从应用层抽象到了框架层。虽说：
 
 > 技术的复杂度同力一样不会消失，也不会凭空产生，它总是从一个物体转移到另一个物体或一种形式转为另一种形式。
@@ -67,7 +118,7 @@ Django是一个高级的Python Web开发框架，它的目标是使得开发复�
 
 由于Django最初是被开发来用于管理劳伦斯出版集团旗下的一些以新闻内容为主的网站的。所以，我们可以发现在使用Django的很多网站里，都是用于作为CMS（内容管理系统）来使用的。使用Django的一些比较知名的网站如下图所示：
 
-![使用Django的网站](http://growth-in-action.phodal.com/images/who-use-django.jpg)
+![使用Django的网站](./images/who-use-django.jpg)
 
 Django是一个MTV框架，其架构模板看上去与传统的MVC架构并没有太大的区别。其对比如下表所示：
 
@@ -98,7 +149,7 @@ Controller | Django itself
 
 Django的每一个模块在内部都称之为APP，在每个APP里都有自己的三层结构。如下图所示：
 
-![Django 应用架构](http://growth-in-action.phodal.com/images/django_app_arch.jpg)
+![Django 应用架构](./images/django_app_arch.jpg)
 
 这样做不仅可以在开发的时候更容易理解系统，而且可以提高代码的可复用性——因为每一个APP都是独立的应用，在下次使用时我们只需要简单的复制和粘贴。
 
@@ -367,7 +418,7 @@ Superuser created successfully.
 
 输入相应的用户名和密码，即可完成创建。然后访问 [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)，输入上面的用户名和密码就可以来到后台：
 
-![Django后台](http://growth-in-action.phodal.com/images/django-backend.jpg)
+![Django后台](./images/django-backend.jpg)
 
 ### 第一次提交
 
@@ -397,7 +448,7 @@ git reset db.sqlite3
 
 这时我们会将其变成下面的状态：
 
-![第一次提交前的reset](http://growth-in-action.phodal.com/images/first-commit.png)
+![第一次提交前的reset](./images/first-commit.png)
 
 上面的绿色文件代表这几个文件都被添加了进去，蓝色则代表未添加的文件。为了避免手误产生一些问题，我们需要添加一个名为``.gitignore``文件用于将一些文件名加入忽略名单，如下是常用的python项目的``.gitignore``文件中的内容：
 
@@ -409,7 +460,7 @@ git reset db.sqlite3
 
 当我们添加完这个文件，git就会识别这个文件，并忽略原来的那些文件，如下图所示：
 
-![添加完gitignore文件后的效果](http://growth-in-action.phodal.com/images/git-ignore.png)  
+![添加完gitignore文件后的效果](./images/git-ignore.png)  
 
 我们只需要添加这个文件即可：
 
@@ -554,11 +605,11 @@ python manage.py makemigrations
 
 进入后台，我们就可以看到BLOGPOST的一栏里，就可以对其进行相关的操作。
 
-![Django后台界面](http://growth-in-action.phodal.com/images/django-admin-ui.png)
+![Django后台界面](./images/django-admin-ui.png)
 
 点击Blogpost的Add后，我们就会进入如下的添加博客界面：
 
-![Django添加博客](http://growth-in-action.phodal.com/images/admin-blog.png)
+![Django添加博客](./images/admin-blog.png)
 
 实际上，这样做的意义是将删除(Delete)、修改(Update)、添加(Create)这些内容交给用户后台来做，当然它也不需要在View/Template层来做。在我们的Template层中，我们只需要关心如何来显示这些数据。
 
@@ -895,11 +946,11 @@ class HomepageTestCase(LiveServerTestCase):
 
 运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：
 
-![Selenium Demo](http://growth-in-action.phodal.com/images/selenium-demo.jpg)
+![Selenium Demo](./images/selenium-demo.jpg)
 
 这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？两者从测试看是差不多的，但是从流程上看来说并不是如些。下图是页面渲染的时间线：
 
-![页面渲染时间线](http://growth-in-action.phodal.com/images/page-timing-overview.png)
+![页面渲染时间线](./images/page-timing-overview.png)
 
 请求从浏览器传到服务器要有一系列的过程，如重定向、缓存、DNS等等，最后直至返回对应的Response。我们用Django的测试框架只能实现到这一步，随后页面请请求对应的静态资料，再对页面进行渲染，在这个过程中页面的内容会发生一些变化。
 
@@ -1007,11 +1058,11 @@ INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 
 接着，打开[http://0.0.0.0:8080/](http://0.0.0.0:8080/)就可以进行后续的安装，如下图所示：
 
-![Jenkins安装过程](http://growth-in-action.phodal.com/images/jenkins-install.jpg)
+![Jenkins安装过程](./images/jenkins-install.jpg)
 
 慢慢等其安装完成：
 
-![Jenkins安装完成](http://growth-in-action.phodal.com/images/jenkins-getting-started.jpg)
+![Jenkins安装完成](./images/jenkins-getting-started.jpg)
 
 等安装完成后，我们就可以开始使用Jenkins来创建我们的任务了。
 
@@ -1027,7 +1078,7 @@ INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 
 如下图所示:
 
-![Jenkins设计Repo](http://growth-in-action.phodal.com/images/jenkins-repo-setup.jpg)
+![Jenkins设计Repo](./images/jenkins-repo-setup.jpg)
 
 然后就是构建触发器，一共有五种类型的触发器，意思也很容易理解：
 
@@ -1057,11 +1108,11 @@ pip install -r requirements.txt
 
 然后在保存后，我们可以尝试立即构建这个项目：
 
-![控制台输出](http://growth-in-action.phodal.com/images/build-console-ouput.jpg)
+![控制台输出](./images/build-console-ouput.jpg)
 
 在编写shell的过程中，我们要经过一些尝试，在这其中会经历一些失败的情形——即使是大部分有相关经验的程序员。如下图就是一次编写构建脚本引起的构建失败的例子：
 
-![Jenkins失败的构建](http://growth-in-action.phodal.com/images/jenkins-failure-setup.jpg)
+![Jenkins失败的构建](./images/jenkins-failure-setup.jpg)
 
 最后，我们就得到下面的一个shell脚本，我们就可以将其变成相应的运行CI的脚本。以便于它可以在其他环境中使用：
 
@@ -1188,11 +1239,11 @@ Running migrations:
 
 当我们完成模板后，我们就需要登录后台，并添加对应的静态页面的配置：
 
-![管理员界面创建flatpage](http://growth-in-action.phodal.com/images/admin-flatpages-create.jpg)
+![管理员界面创建flatpage](./images/admin-flatpages-create.jpg)
 
 然后从高级选项中填写我们的静态页面的路径，我们就可以完成静态页面的创建。如下图所示：
 
-![flatpage高级选项](http://growth-in-action.phodal.com/images/flatpages-advance-option.png)
+![flatpage高级选项](./images/flatpages-advance-option.png)
 
 最后，还要有个链接加到首页的导航中：
 
@@ -1298,7 +1349,7 @@ url(r'^comments/', include('django_comments.urls')),
 
 遗憾的是，当我们刷新页面的时候，页面报错了，原因如下所示：
 
-![SITE_ID报错](http://growth-in-action.phodal.com/images/site_id_issue.jpg)
+![SITE_ID报错](./images/site_id_issue.jpg)
 
 我们还需要定义一个``SITE_ID``，添加下面的代码到``settings.py``文件中即可：
 
@@ -1308,7 +1359,7 @@ SITE_ID = 1
 
 然后，我们就可以从后台创建评论：
 
-![后台创建评论](http://growth-in-action.phodal.com/images/create-comment-backend.jpg)
+![后台创建评论](./images/create-comment-backend.jpg)
 
 Sitemap
 ---
@@ -1524,23 +1575,23 @@ class BlogSitemap(Sitemap):
 
 我们可以登录Google的Webmaster：[https://www.google.com/webmasters/tools/home?hl=zh-cn](https://www.google.com/webmasters/tools/home?hl=zh-cn)，然后点击添加属性来创建一个新的网站:
 
-![添加网站](http://growth-in-action.phodal.com/images/add-property.png)
+![添加网站](./images/add-property.png)
 
 这时候Google需要确认这个网站是你的，所以它提供几种方法来验证，除了下面的推荐方法：
 
-![推荐的验证方式](http://growth-in-action.phodal.com/images/google-add-website.png)
+![推荐的验证方式](./images/google-add-website.png)
 
 我们可以使用下面的这一些方法：
 
-![备选的难方法](http://growth-in-action.phodal.com/images/google-addition-method.png)
+![备选的难方法](./images/google-addition-method.png)
 
 我个人比较喜欢用HTML Tag的方式来实现
 
-![HTML标签验证](http://growth-in-action.phodal.com/images/html-tag.png)
+![HTML标签验证](./images/html-tag.png)
 
 在我们完成验证之后，我们就可以在后台手动提交Sitemap.xml了。
 
-![提交Sitemap.xml](http://growth-in-action.phodal.com/images/google-add-sitemap.png)
+![提交Sitemap.xml](./images/google-add-sitemap.png)
 
 点击上方的**添加/测试站点地图**即可。
 
@@ -1556,7 +1607,7 @@ class BlogSitemap(Sitemap):
 
 它是一个支持响应式设计的框架，即页面的设计与开发应当根据用户行为以及设备环境(系统平台、屏幕尺寸、屏幕定向等)进行相应的响应和调整。如下图所示：
 
-![响应式设计](http://growth-in-action.phodal.com/images/responsive-design.png)
+![响应式设计](./images/responsive-design.png)
 
 我们在不同的设计上看到的是不同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。
 
@@ -1650,15 +1701,15 @@ class BlogSitemap(Sitemap):
 
 它在桌面下的效果大致如下图所示：
 
-![桌面浏览器下的Bootstrap导航](http://growth-in-action.phodal.com/images/bootstrap-nav-desktop.png)
+![桌面浏览器下的Bootstrap导航](./images/bootstrap-nav-desktop.png)
 
 而在移动浏览器下则是这样的效果：
 
-![移动设备上的导航](http://growth-in-action.phodal.com/images/nav-in-mobile.png)
+![移动设备上的导航](./images/nav-in-mobile.png)
 
 当我们点击右上角的菜单按钮时，会出现我们的菜单
 
-![点击导航后的结果](http://growth-in-action.phodal.com/images/nav-in-mobile-with-click.png)
+![点击导航后的结果](./images/nav-in-mobile-with-click.png)
 
 ### 添加标语
 
@@ -1710,9 +1761,9 @@ class BlogSitemap(Sitemap):
 
 它在桌面和自动设备上的效果如下图所示：
 
-![桌面设备效果](http://growth-in-action.phodal.com/images/desktop-blogposts.png)
+![桌面设备效果](./images/desktop-blogposts.png)
 
-![移动设备效果](http://growth-in-action.phodal.com/images/mobile-blogposts.png)
+![移动设备效果](./images/mobile-blogposts.png)
 
 ### 添加footer
 
@@ -1855,15 +1906,15 @@ url(r'^api/', include(apiRouter.urls))
 
 现在，我们可以访问[http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)来访问我们现在的API。由于Django REST Framework提供了一个UI机制，所以我们可以在网页上直接看到我们所有的API：
 
-![Django REST Framework列表](http://growth-in-action.phodal.com/images/django-rest-framework-api-lists.png)
+![Django REST Framework列表](./images/django-rest-framework-api-lists.png)
 
 然后，点击页面中的[http://127.0.0.1:8000/api/blogpost/](http://127.0.0.1:8000/api/blogpost/)，我们就可以访问博客相关的API了，如下图所示:
 
-![博客API](http://growth-in-action.phodal.com/images/drf-blogppost-set-list.png)
+![博客API](./images/drf-blogppost-set-list.png)
 
 在页面上显示了所有的博客内容，在页面的下面有一个表单可以先让我们来创建数据：
 
-![创建博客的表单](http://growth-in-action.phodal.com/images/api-post-form.png)
+![创建博客的表单](./images/api-post-form.png)
 
 直接在表单中添加数据，我们就可以完成数据创建了。
 
@@ -1875,18 +1926,18 @@ curl -i  http://127.0.0.1:8000/api/blogpost/
 
 即可返回相应的结果：
 
-![CuRL API](http://growth-in-action.phodal.com/images/curl-api.png)
+![CuRL API](./images/curl-api.png)
 
 自动完成
 ---
 
 AutoComplete是一个很有意思的功能，特别是当我们的文章很多的时候，我们可以让读者有机会能搜索到相应的功能。以Google为例，Google在我们输入一些关键字的时候，会向我们推荐一些比较流行的词条可以让我们选择。
 
-![Google AutoComplete](http://growth-in-action.phodal.com/images/google-autocomplete.png)
+![Google AutoComplete](./images/google-autocomplete.png)
 
 同样的，我们也可以实现一个同样的效果用于我们的博客搜索：
 
-![自动完成](http://growth-in-action.phodal.com/images/autocomplete-example.png)
+![自动完成](./images/autocomplete-example.png)
 
 当我们输入某一些关键字的时候，就会出现文章的标题，随后我们只需要点击相应的标题即可跳转到文章。
 
@@ -2241,7 +2292,7 @@ ionic serve
 
 接着，就可以打开相应的Web页面，如下图所示：
 
-![Ionic Web预览界面](http://growth-in-action.phodal.com/images/ionic-web-view.jpg)
+![Ionic Web预览界面](./images/ionic-web-view.jpg)
 
 ### 构建应用
 
@@ -2513,7 +2564,7 @@ export class BlogDetailPage {
 
 现在我们几乎已经完成了博客详情页的工作，我们可以直接通过URL来访问博客详情页：[http://localhost:8100/#/app/blog/1](http://localhost:8100/#/app/blog/1)。结果如下图所示：
 
-![访问博客详情页](http://growth-in-action.phodal.com/images/blog-detail-page.png)
+![访问博客详情页](./images/blog-detail-page.png)
 
 不过，这时候我们的列表页并没有和详情页关联到一起。我们还需要做一些额外的工作：
 

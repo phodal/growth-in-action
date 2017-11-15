@@ -10,7 +10,7 @@
 
 它是一个支持响应式设计的框架，即页面的设计与开发应当根据用户行为以及设备环境(系统平台、屏幕尺寸、屏幕定向等)进行相应的响应和调整。如下图所示：
 
-![响应式设计](http://growth-in-action.phodal.com/images/responsive-design.png)
+![响应式设计](./images/responsive-design.png)
 
 我们在不同的设计上看到的是不同的布局，这会依据我们的设备大小做出调整——使用媒体查询(media queries)实现。
 
@@ -104,15 +104,15 @@
 
 它在桌面下的效果大致如下图所示：
 
-![桌面浏览器下的Bootstrap导航](http://growth-in-action.phodal.com/images/bootstrap-nav-desktop.png)
+![桌面浏览器下的Bootstrap导航](./images/bootstrap-nav-desktop.png)
 
 而在移动浏览器下则是这样的效果：
 
-![移动设备上的导航](http://growth-in-action.phodal.com/images/nav-in-mobile.png)
+![移动设备上的导航](./images/nav-in-mobile.png)
 
 当我们点击右上角的菜单按钮时，会出现我们的菜单
 
-![点击导航后的结果](http://growth-in-action.phodal.com/images/nav-in-mobile-with-click.png)
+![点击导航后的结果](./images/nav-in-mobile-with-click.png)
 
 ### 添加标语
 
@@ -164,9 +164,9 @@
 
 它在桌面和自动设备上的效果如下图所示：
 
-![桌面设备效果](http://growth-in-action.phodal.com/images/desktop-blogposts.png)
+![桌面设备效果](./images/desktop-blogposts.png)
 
-![移动设备效果](http://growth-in-action.phodal.com/images/mobile-blogposts.png)
+![移动设备效果](./images/mobile-blogposts.png)
 
 ### 添加footer
 

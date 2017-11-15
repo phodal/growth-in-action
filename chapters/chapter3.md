@@ -38,11 +38,11 @@ class HomepageTestCase(LiveServerTestCase):
 
 运行上面的测试就会启动一个浏览器，并且会在浏览器上进行相应的操作。如下图所示：
 
-![Selenium Demo](http://growth-in-action.phodal.com/images/selenium-demo.jpg)
+![Selenium Demo](./images/selenium-demo.jpg)
 
 这时你可能会产生一些疑惑，这些内容我们不是已经测试过了么？两者从测试看是差不多的，但是从流程上看来说并不是如些。下图是页面渲染的时间线：
 
-![页面渲染时间线](http://growth-in-action.phodal.com/images/page-timing-overview.png)
+![页面渲染时间线](./images/page-timing-overview.png)
 
 请求从浏览器传到服务器要有一系列的过程，如重定向、缓存、DNS等等，最后直至返回对应的Response。我们用Django的测试框架只能实现到这一步，随后页面请请求对应的静态资料，再对页面进行渲染，在这个过程中页面的内容会发生一些变化。
 
@@ -150,11 +150,11 @@ INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 
 接着，打开[http://0.0.0.0:8080/](http://0.0.0.0:8080/)就可以进行后续的安装，如下图所示：
 
-![Jenkins安装过程](http://growth-in-action.phodal.com/images/jenkins-install.jpg)
+![Jenkins安装过程](./images/jenkins-install.jpg)
 
 慢慢等其安装完成：
 
-![Jenkins安装完成](http://growth-in-action.phodal.com/images/jenkins-getting-started.jpg)
+![Jenkins安装完成](./images/jenkins-getting-started.jpg)
 
 等安装完成后，我们就可以开始使用Jenkins来创建我们的任务了。
 
@@ -170,7 +170,7 @@ INFO: Started ServerConnector@733a9ac6{HTTP/1.1}{0.0.0.0:8080}
 
 如下图所示:
 
-![Jenkins设计Repo](http://growth-in-action.phodal.com/images/jenkins-repo-setup.jpg)
+![Jenkins设计Repo](./images/jenkins-repo-setup.jpg)
 
 然后就是构建触发器，一共有五种类型的触发器，意思也很容易理解：
 
@@ -200,11 +200,11 @@ pip install -r requirements.txt
 
 然后在保存后，我们可以尝试立即构建这个项目：
 
-![控制台输出](http://growth-in-action.phodal.com/images/build-console-ouput.jpg)
+![控制台输出](./images/build-console-ouput.jpg)
 
 在编写shell的过程中，我们要经过一些尝试，在这其中会经历一些失败的情形——即使是大部分有相关经验的程序员。如下图就是一次编写构建脚本引起的构建失败的例子：
 
-![Jenkins失败的构建](http://growth-in-action.phodal.com/images/jenkins-failure-setup.jpg)
+![Jenkins失败的构建](./images/jenkins-failure-setup.jpg)
 
 最后，我们就得到下面的一个shell脚本，我们就可以将其变成相应的运行CI的脚本。以便于它可以在其他环境中使用：
 
